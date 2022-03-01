@@ -1,0 +1,20 @@
+Blocks:
+  COAL_ORE:
+    Name: "Small_Coal"
+    Price: 100
+  IRON_ORE:
+    Name: "Small_Iron"
+    Price: 200
+  DIAMOND_ORE:
+    Name: "Small_Diamond"
+    Price: 300
+  COAL_BLOCK:
+    Name: "Big_Coal"
+    Price: 150
+  IRON_BLOCK:
+    Name: "Big_Iron"
+    Price: 250
+  DIAMOND_BLOCK:
+    Name: "Big_Diamond"
+    Price: 350
+Default_Max_Storage: 10000

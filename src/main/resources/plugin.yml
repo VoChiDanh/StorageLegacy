@@ -1,0 +1,14 @@
+name: Storage
+version: '${project.version}'
+main: net.danh.storage.Storage
+api-version: 1.13
+authors: [ VoChiDanh ]
+softdepend:
+  - Vault
+  - PlaceholderAPI
+commands:
+  Storage:
+    aliases:
+      - store
+      - kho
+    description: Storage Commands
