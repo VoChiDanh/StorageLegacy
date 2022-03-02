@@ -1,6 +1,5 @@
 package net.danh.storage.Commands;
 
-import net.danh.storage.Manager.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Sell.SellItems;
 
 public class Commands implements CommandExecutor {
@@ -19,15 +19,23 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (label.equalsIgnoreCase("Storage")) {
             if (args.length == 0) {
-                for (String user : Files.getlanguagefile().getStringList("Help_User")) {
-                    sender.sendMessage(Files.colorize(user));
+                for (String user : getlanguagefile().getStringList("Help_User")) {
+                    sender.sendMessage(colorize(user));
                 }
                 if (sender.hasPermission("Storage.admin")) {
-                    for (String user : Files.getlanguagefile().getStringList("Help_Admin")) {
-                        sender.sendMessage(Files.colorize(user));
+                    for (String user : getlanguagefile().getStringList("Help_Admin")) {
+                        sender.sendMessage(colorize(user));
                     }
                 }
                 return true;
+            }
+            if (args.length == 1) {
+                if (sender.hasPermission("Storage.admin")) {
+                    if (args[0].equalsIgnoreCase("reload")) {
+                        reloadfiles();
+                        sender.sendMessage(colorize("&aDone"));
+                    }
+                }
             }
             if (args.length == 3) {
                 if (sender instanceof Player) {
