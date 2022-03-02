@@ -30,9 +30,9 @@ public class BlockBreak implements Listener {
         }
         e.setDropItems(false);
         e.getBlock().getDrops().clear();
-        addStorage(p, items, 1);
         if (getMaxStorage(p, items) == 0) {
             setMaxStorage(p, items, getconfigfile().getInt("Default_Max_Storage"));
         }
+        addStorage(p, items, 1);
     }
 }

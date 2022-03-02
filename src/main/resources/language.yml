@@ -3,3 +3,4 @@ Help_Admin:
   - "&9/Storage [set/add/remove] [Player] [Items]"
 Help_User:
   - "&9/Storage sell [Items] [amount]"
+Sell: "&a+ %money%$ &7| &3%item%"

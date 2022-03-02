@@ -1,6 +1,5 @@
 package net.danh.storage.Manager;
 
-import net.danh.storage.Storage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -13,6 +12,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.danh.storage.Storage.get;
+
 public class Files {
 
     public final static char COLOR_CHAR = ChatColor.COLOR_CHAR;
@@ -20,12 +21,12 @@ public class Files {
     private static FileConfiguration config, language, data;
 
     public static void createfiles() {
-        configFile = new File(Storage.get().getDataFolder(), "config.yml");
-        languageFile = new File(Storage.get().getDataFolder(), "language.yml");
-        dataFile = new File(Storage.get().getDataFolder(), "data.yml");
-        if (!configFile.exists()) Storage.get().saveResource("config.yml", false);
-        if (!languageFile.exists()) Storage.get().saveResource("language.yml", false);
-        if (!dataFile.exists()) Storage.get().saveResource("data.yml", false);
+        configFile = new File(get().getDataFolder(), "config.yml");
+        languageFile = new File(get().getDataFolder(), "language.yml");
+        dataFile = new File(get().getDataFolder(), "data.yml");
+        if (!configFile.exists()) get().saveResource("config.yml", false);
+        if (!languageFile.exists()) get().saveResource("language.yml", false);
+        if (!dataFile.exists()) get().saveResource("data.yml", false);
         config = new YamlConfiguration();
         language = new YamlConfiguration();
         data = new YamlConfiguration();

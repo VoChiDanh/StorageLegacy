@@ -19,13 +19,13 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (label.equalsIgnoreCase("Storage")) {
             if (args.length == 0) {
+                for (String user : Files.getlanguagefile().getStringList("Help_User")) {
+                    sender.sendMessage(Files.colorize(user));
+                }
                 if (sender.hasPermission("Storage.admin")) {
                     for (String user : Files.getlanguagefile().getStringList("Help_Admin")) {
                         sender.sendMessage(Files.colorize(user));
                     }
-                }
-                for (String user : Files.getlanguagefile().getStringList("Help_User")) {
-                    sender.sendMessage(Files.colorize(user));
                 }
                 return true;
             }

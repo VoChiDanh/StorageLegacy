@@ -1,11 +1,12 @@
 package net.danh.storage.Manager;
 
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.removeStorage;
-import static net.danh.storage.Manager.Files.getconfigfile;
+import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Storage.economy;
 
 public class Sell {
@@ -21,6 +22,14 @@ public class Sell {
             }
         }
         removeStorage(p, name, amount);
-        economy.depositPlayer(p, price * amount);
+        int money = price * amount;
+        EconomyResponse r = economy.depositPlayer(p, money);
+        if (r.transactionSuccess()) {
+            p.sendMessage(colorize(getlanguagefile().getString("Sell")
+                    .replaceAll("%money%", String.valueOf(money))
+                    .replaceAll("%item%", name.replaceAll("_", " "))));
+        } else {
+            p.sendMessage(colorize("&cError!"));
+        }
     }
 }
