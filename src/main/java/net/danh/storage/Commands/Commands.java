@@ -1,6 +1,7 @@
 package net.danh.storage.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,8 @@ import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Sell.SellItems;
+import static net.danh.storage.Manager.Items.RemoveItems;
+import static net.danh.storage.Manager.Items.SellItems;
 
 public class Commands implements CommandExecutor {
 
@@ -40,8 +42,18 @@ public class Commands implements CommandExecutor {
             if (args.length == 3) {
                 if (sender instanceof Player) {
                     if (args[0].equalsIgnoreCase("sell")) {
-                        if (Integer.parseInt(args[2]) > 0) {
-                            SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                        if (Material.getMaterial(args[1]) != null) {
+                            if (Integer.parseInt(args[2]) > 0) {
+                                SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            }
+                        }
+                        return true;
+                    }
+                    if (args[0].equalsIgnoreCase("take")) {
+                        if (Material.getMaterial(args[1]) != null) {
+                            if (Integer.parseInt(args[2]) > 0) {
+                                RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            }
                         }
                         return true;
                     }

@@ -3,5 +3,7 @@ Help_Admin:
   - "&9/Storage [set/add/remove] [Player] [Items] [Amount]"
 Help_User:
   - "&9/Storage sell [Items] [amount]"
+  - "&9/Storage take [Items] [Amount]"
 Sell: "&a+ %money%$ &7| &3%item%"
-Not_Enough: "&cYou do not have enough item to sell!"
+Not_Enough: "&cYou do not have enough item!"
+Take_Item: "&aYou receive %blocks% x%amount%"
