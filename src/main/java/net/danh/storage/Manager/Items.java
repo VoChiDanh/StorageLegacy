@@ -48,7 +48,7 @@ public class Items {
             int money = price * amount;
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {
-                p.sendMessage(colorize(getlanguagefile().getString("Items")
+                p.sendMessage(colorize(getlanguagefile().getString("Sell")
                         .replaceAll("%money%", String.valueOf(money))
                         .replaceAll("%item%", name.replaceAll("_", " "))));
             } else {
