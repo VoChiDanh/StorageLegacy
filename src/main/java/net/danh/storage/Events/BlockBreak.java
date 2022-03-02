@@ -6,6 +6,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
+import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.Objects;
 
@@ -19,6 +20,7 @@ public class BlockBreak implements Listener {
         Player p = e.getPlayer();
         String blocks = e.getBlock().getType().toString();
         String items = null;
+        NMSAssistant nms = new NMSAssistant();
         for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
             if (blocks.equalsIgnoreCase(getBlockType)) {
                 items = getconfigfile().getString("Blocks." + blocks + ".Name");
@@ -28,7 +30,9 @@ public class BlockBreak implements Listener {
         if (items == null) {
             return;
         }
-        e.setDropItems(false);
+        if (nms.isVersionGreaterThan(11)) {
+            e.setDropItems(false);
+        }
         e.getBlock().getDrops().clear();
         if (getMaxStorage(p, items) == 0) {
             setMaxStorage(p, items, getconfigfile().getInt("Default_Max_Storage"));

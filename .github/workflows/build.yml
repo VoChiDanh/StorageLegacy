@@ -18,8 +18,8 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "v1.0"
+          automatic_release_tag: "v1.1"
           prerelease: false
-          title: "Storage - v1.0"
+          title: "Storage - v1.1-SNAPSHOT"
           files: |
             ./target/Storage.jar
