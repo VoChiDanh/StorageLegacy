@@ -4,9 +4,9 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Storage.*;
+import static net.danh.storage.Manager.Data.removeStorage;
+import static net.danh.storage.Manager.Files.getconfigfile;
+import static net.danh.storage.Storage.economy;
 
 public class Sell {
 

@@ -19,6 +19,7 @@ public class Data {
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
         if (getMaxStorage(p, item) <= (getStorage(p, item) + amount)) {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item) + amount);
+            p.sendMessage(Files.colorize("&a+ " + amount + " " + item.replaceAll("_", " ")));
         } else {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getMaxStorage(p, item));
             p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))

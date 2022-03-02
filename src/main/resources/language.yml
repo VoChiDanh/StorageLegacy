@@ -1,1 +1,5 @@
 Full_Storage: "&c%item%&6 storage has reached its limit"
+Help_Admin:
+  - "&9/Storage [set/add/remove] [Player] [Items]"
+Help_User:
+  - "&9/Storage sell [Items] [amount]"

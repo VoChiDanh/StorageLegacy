@@ -1,5 +1,6 @@
 package net.danh.storage.Commands;
 
+import net.danh.storage.Manager.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,13 +11,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Sell.*;
+import static net.danh.storage.Manager.Sell.SellItems;
 
 public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (label.equalsIgnoreCase("Storage")) {
+            if (args.length == 0) {
+                if (sender.hasPermission("Storage.admin")) {
+                    for (String user : Files.getlanguagefile().getStringList("Help_Admin")) {
+                        sender.sendMessage(Files.colorize(user));
+                    }
+                }
+                for (String user : Files.getlanguagefile().getStringList("Help_User")) {
+                    sender.sendMessage(Files.colorize(user));
+                }
+                return true;
+            }
             if (args.length == 3) {
                 if (sender instanceof Player) {
                     if (args[0].equalsIgnoreCase("sell")) {
