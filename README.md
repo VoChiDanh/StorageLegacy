@@ -1,8 +1,6 @@
 # Storage  [1.8.x - 1.18.x]
 
-> When you breaking block and if that block
-> have list in config.yml you would be added item
-> to storage
+> You will have a virtual inventory that will contain the blocks listed in the config and you can sell it Or get that block by physical block or get that block by physical block
 
 ## Commands
 
