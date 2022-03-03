@@ -1,7 +1,6 @@
 # Storage  [1.8.x - 1.18.x]
 
-> You will have a virtual inventory that will contain the blocks listed in the config and you can sell it or get that block by physical block
-
+> You will have a virtual storage to storage listed blocks in config, when you mine block was listed in config, you'll get block to virtual storage. You can sell it or take it to physical item
 ## Commands
 
 > /Storage [add/set/remove] [Player] [Item] [Amount] - Add/Set/Remove Item in Player's Storage
