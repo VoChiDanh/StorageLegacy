@@ -1,11 +1,11 @@
 package net.danh.storage.Manager;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,8 +82,8 @@ public class Files {
     public static String colorize(String input) {
 
         input = ChatColor.translateAlternateColorCodes('&', input);
-
-        if (Bukkit.getVersion().contains("1.16") || Bukkit.getVersion().contains("1.17") || Bukkit.getVersion().contains("1.18")) {
+        NMSAssistant nms = new NMSAssistant();
+        if (nms.isVersionGreaterThan(15)) {
             input = translateHexColorCodes("\\&#", "", input);
         }
 

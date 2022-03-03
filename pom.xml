@@ -92,9 +92,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Preponderous-Software</groupId>
+            <groupId>com.github.VoChiDanh</groupId>
             <artifactId>Ponder</artifactId>
-            <version>v1.0</version>
+            <version>8000fc7309</version>
         </dependency>
     </dependencies>
 </project>
