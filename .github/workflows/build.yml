@@ -20,6 +20,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "v1.1"
           prerelease: false
-          title: "Storage - v1.1-SNAPSHOT"
+          title: "v1.1-SNAPSHOT Build 1"
           files: |
             ./target/Storage.jar
