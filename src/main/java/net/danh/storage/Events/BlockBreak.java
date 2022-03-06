@@ -45,7 +45,7 @@ public class BlockBreak implements Listener {
             setMaxStorage(p, items, getconfigfile().getInt("Default_Max_Storage"));
         }
         if (p.getItemInHand().getItemMeta().hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
-            if (Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Chance.Min"), Files.getconfigfile().getInt("Fortune.Chance.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * Files.getconfigfile().getInt("Fortune.Chance.Player"))) {
+            if (Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Chance.System.Min"), Files.getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * Files.getconfigfile().getInt("Fortune.Chance.Player"))) {
                 int fortune = Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Drop.Min"), Files.getconfigfile().getInt("Fortune.Drop.Max"));
                 addStorage(p, items, 1 + fortune);
             } else {

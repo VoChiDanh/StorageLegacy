@@ -16,7 +16,7 @@ public class Items {
     private static String block;
 
     public static void RemoveItems(Player p, String name, Integer amount) {
-        if (getStorage(p, name) >= amount) {
+        if (getStorage(p, getconfigfile().getString("Blocks." + name + ".Name")) >= amount) {
             for (String getBlockType : getconfigfile().getConfigurationSection("Blocks.").getKeys(false)) {
                 if (name.equalsIgnoreCase(getBlockType)) {
                     block = getconfigfile().getString("Blocks." + name + ".Name");
@@ -27,7 +27,7 @@ public class Items {
             removeStorage(p, block, amount);
             p.getInventory().addItem(items);
             p.sendMessage(colorize(getlanguagefile().getString("Take_Item")
-                    .replaceAll("%blocks%", name.replaceAll("_", " "))
+                    .replaceAll("%blocks%", block.replaceAll("_", " "))
                     .replaceAll("%amount%", String.valueOf(amount))));
         } else {
             p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
@@ -36,7 +36,7 @@ public class Items {
 
 
     public static void SellItems(Player p, String name, Integer amount) {
-        if (getStorage(p, name) >= amount) {
+        if (getStorage(p, getconfigfile().getString("Blocks." + name + ".Name")) >= amount) {
             for (String getBlockType : getconfigfile().getConfigurationSection("Blocks.").getKeys(false)) {
                 if (name.equalsIgnoreCase(getBlockType)) {
                     price = getconfigfile().getInt("Blocks." + name + ".Price");
