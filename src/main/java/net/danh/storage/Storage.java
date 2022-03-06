@@ -1,7 +1,5 @@
 package net.danh.storage;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Hook.PlaceholderAPI;
@@ -9,22 +7,14 @@ import net.danh.storage.Manager.Files;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.logging.Level;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
 
@@ -66,7 +56,8 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
 
-    private ArrayList<Listener> initializeListeners() {
+    @Contract(" -> new")
+    private @NotNull ArrayList<Listener> initializeListeners() {
         return new ArrayList<>(Arrays.asList(
                 new BlockBreak()
         ));
