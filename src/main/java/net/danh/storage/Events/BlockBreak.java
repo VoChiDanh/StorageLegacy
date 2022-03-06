@@ -20,6 +20,9 @@ public class BlockBreak implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreaking(@NotNull BlockBreakEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
         Player p = e.getPlayer();
         String blocks = e.getBlock().getType().toString();
         String items = null;
