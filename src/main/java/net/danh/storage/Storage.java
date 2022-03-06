@@ -56,55 +56,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
         Files.createfiles();
-        (new BukkitRunnable() {
-            public void run() {
-                try {
-                    String tagname;
-                    String version;
-                    String body;
-                    String name;
-                    String plugins = getDescription().getName();
-                    URL api = new URL("https://api.github.com/repos/VoChiDanh/" + plugins + "/releases/latest");
-                    URLConnection con = api.openConnection();
-                    con.setConnectTimeout(15000);
-                    con.setReadTimeout(15000);
-
-                    JsonObject json = new JsonParser().parse(new InputStreamReader(con.getInputStream())).getAsJsonObject();
-                    tagname = json.get("tag_name").getAsString();
-                    version = getDescription().getVersion();
-                    body = json.get("body").getAsString();
-                    name = json.get("name").getAsString();
-
-                    String parsename = name.replaceAll("v", "");
-                    String parsebody = body.replaceAll("## Commits", "");
-                    if (!(parsename.equalsIgnoreCase(version))) {
-                        URL download = new URL("https://github.com/VoChiDanh/" + plugins + "/releases/download/" + tagname + "/" + plugins + ".jar");
-                        getLogger().log(Level.INFO, Files.colorize("&eDownloading " + name + "! &6Your version is &6v" + version));
-                        getLogger().log(Level.INFO, Files.colorize("&aUpdate log: " + parsebody));
-                        new BukkitRunnable() {
-
-                            @Override
-                            public void run() {
-                                try {
-                                    InputStream in = download.openStream();
-                                    File temp = new File("plugins/" + plugins + "/update/");
-                                    if (!temp.exists()) {
-                                        temp.mkdir();
-                                    }
-                                    Path path = new File("plugins/" + plugins + "/update/" + File.separator + "" + plugins + ".jar").toPath();
-                                    java.nio.file.Files.copy(in, path, StandardCopyOption.REPLACE_EXISTING);
-                                    getLogger().log(Level.INFO, Files.colorize("&6Download finished, stop the server and check new jar in " + plugins + " folder to get the new update"));
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }.runTaskLaterAsynchronously(instance, 1);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).runTaskTimer(this, 20L, 20L);
     }
 
     @Override
