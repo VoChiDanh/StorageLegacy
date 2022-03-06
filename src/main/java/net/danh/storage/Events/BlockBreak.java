@@ -1,5 +1,8 @@
 package net.danh.storage.Events;
 
+import net.danh.storage.Manager.Data;
+import net.danh.storage.Manager.Files;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,13 +33,23 @@ public class BlockBreak implements Listener {
         if (items == null) {
             return;
         }
+        e.getBlock().getDrops().clear();
         if (nms.isVersionGreaterThan(11)) {
             e.setDropItems(false);
         }
-        e.getBlock().getDrops().clear();
+
         if (getMaxStorage(p, items) == 0) {
             setMaxStorage(p, items, getconfigfile().getInt("Default_Max_Storage"));
         }
-        addStorage(p, items, 1);
+        if (p.getItemInHand().getItemMeta().hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
+            if (Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Chance.Min"), Files.getconfigfile().getInt("Fortune.Chance.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * Files.getconfigfile().getInt("Fortune.Chance.Player"))) {
+                int fortune = Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Drop.Min"), Files.getconfigfile().getInt("Fortune.Drop.Max"));
+                addStorage(p, items, 1 + fortune);
+            } else {
+                addStorage(p, items, 1);
+            }
+        } else {
+            addStorage(p, items, 1);
+        }
     }
 }

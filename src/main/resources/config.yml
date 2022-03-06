@@ -18,3 +18,12 @@ Blocks:
     Name: "Big_Diamond"
     Price: 350
 Default_Max_Storage: 10000
+Fortune:
+  Chance:
+    Player: 10 # level fortune * 10, lv 2 => 20%
+    System:
+      Min: 1
+      Max: 100
+  Drop:
+    Min: 1
+    Max: 5

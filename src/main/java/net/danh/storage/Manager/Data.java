@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Data {
 
@@ -59,5 +60,10 @@ public class Data {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".max", 0);
         }
         Files.savedata();
+    }
+
+    public static int getRandomInt(int min, int max) {
+        Random r = new Random();
+        return r.nextInt(max - min) + min;
     }
 }
