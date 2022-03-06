@@ -99,8 +99,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
                                 }
                             }
                         }.runTaskLaterAsynchronously(instance, 1);
-                    } else {
-                        getLogger().log(Level.INFO, Files.colorize("&aYou are on latest build"));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
