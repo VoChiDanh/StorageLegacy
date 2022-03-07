@@ -45,6 +45,8 @@ public class Commands implements CommandExecutor {
                         if (Material.getMaterial(args[1]) != null) {
                             if (Integer.parseInt(args[2]) > 0) {
                                 SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            } else {
+                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
                             }
                         }
                         return true;
@@ -53,6 +55,8 @@ public class Commands implements CommandExecutor {
                         if (Material.getMaterial(args[1]) != null) {
                             if (Integer.parseInt(args[2]) > 0) {
                                 RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            } else {
+                                RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
                             }
                         }
                         return true;
