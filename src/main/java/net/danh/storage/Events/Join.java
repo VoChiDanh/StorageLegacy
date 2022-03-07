@@ -14,10 +14,10 @@ public class Join implements Listener {
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
         if (!autoSmelt(p)) {
-            setautoSmelt(p, false);
+            setautoSmelt(p, true);
         }
         if (!autoPick(p)) {
-            setautoPick(p, false);
+            setautoPick(p, true);
         }
     }
 }

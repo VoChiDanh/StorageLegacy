@@ -39,6 +39,10 @@ public class Items {
     }
 
 
+    public static String getName(String name){
+        return getconfigfile().getString("Blocks." + name + ".Name");
+    }
+
     public static void SellItems(Player p, String name, Integer amount) {
         if (getStorage(p, getconfigfile().getString("Blocks." + name + ".Name")) >= amount) {
             for (String getBlockType : getconfigfile().getConfigurationSection("Blocks.").getKeys(false)) {

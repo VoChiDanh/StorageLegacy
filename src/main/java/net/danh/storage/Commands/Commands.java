@@ -12,8 +12,7 @@ import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Items.RemoveItems;
-import static net.danh.storage.Manager.Items.SellItems;
+import static net.danh.storage.Manager.Items.*;
 
 public class Commands implements CommandExecutor {
 
@@ -22,18 +21,14 @@ public class Commands implements CommandExecutor {
         if (label.equalsIgnoreCase("APick")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
-                    if (sender.hasPermission("Storage.APick")) {
-                        setautoPick(((Player) sender).getPlayer(), !autoPick(((Player) sender).getPlayer()));
-                    }
+                    setautoPick(((Player) sender).getPlayer(), !autoPick(((Player) sender).getPlayer()));
                 }
             }
         }
         if (label.equalsIgnoreCase("ASmelt")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
-                    if (sender.hasPermission("Storage.ASmelt")) {
-                        setautoSmelt(((Player) sender).getPlayer(), !autoSmelt(((Player) sender).getPlayer()));
-                    }
+                    setautoSmelt(((Player) sender).getPlayer(), !autoSmelt(((Player) sender).getPlayer()));
                 }
             }
         }
@@ -63,8 +58,8 @@ public class Commands implements CommandExecutor {
                         if (Material.getMaterial(args[1]) != null) {
                             if (Integer.parseInt(args[2]) > 0) {
                                 SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                            } else {
-                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
+                            } else if (Integer.parseInt(args[2]) == 0) {
+                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), getName(args[1])));
                             }
                         }
                         return true;
@@ -73,8 +68,8 @@ public class Commands implements CommandExecutor {
                         if (Material.getMaterial(args[1]) != null) {
                             if (Integer.parseInt(args[2]) > 0) {
                                 RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                            } else {
-                                RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
+                            } else if (Integer.parseInt(args[2]) == 0) {
+                                RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), getName(args[1])));
                             }
                         }
                         return true;
