@@ -23,6 +23,9 @@ public class Items {
                     break;
                 }
             }
+            if (name.contains("_ORE")) {
+                name = getconfigfile().getString("Blocks." + name + ".Convert");
+            }
             ItemStack items = new ItemStack(Material.getMaterial(name), amount);
             removeStorage(p, block, amount);
             p.getInventory().addItem(items);
@@ -40,11 +43,11 @@ public class Items {
             for (String getBlockType : getconfigfile().getConfigurationSection("Blocks.").getKeys(false)) {
                 if (name.equalsIgnoreCase(getBlockType)) {
                     price = getconfigfile().getInt("Blocks." + name + ".Price");
-                    name = getconfigfile().getString("Blocks." + name + ".Name");
+                    block = getconfigfile().getString("Blocks." + name + ".Name");
                     break;
                 }
             }
-            removeStorage(p, name, amount);
+            removeStorage(p, block, amount);
             int money = price * amount;
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {

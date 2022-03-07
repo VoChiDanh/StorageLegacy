@@ -2,12 +2,15 @@ Blocks:
   COAL_ORE:
     Name: "Small_Coal"
     Price: 100
+    Convert: COAL
   IRON_ORE:
     Name: "Small_Iron"
     Price: 200
+    Convert: IRON_INGOT
   DIAMOND_ORE:
     Name: "Small_Diamond"
     Price: 300
+    Conver: DIAMOND
   COAL_BLOCK:
     Name: "Big_Coal"
     Price: 150
