@@ -27,32 +27,34 @@ public class BlockBreak implements Listener {
         String blocks = e.getBlock().getType().toString();
         String items = null;
         NMSAssistant nms = new NMSAssistant();
-        for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-            if (blocks.equalsIgnoreCase(getBlockType)) {
-                items = getconfigfile().getString("Blocks." + blocks + ".Name");
-                break;
+        if (autoPick(p)) {
+            for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                if (blocks.equalsIgnoreCase(getBlockType)) {
+                    items = getconfigfile().getString("Blocks." + blocks + ".Name");
+                    break;
+                }
             }
-        }
-        if (items == null) {
-            return;
-        }
-        e.getBlock().getDrops().clear();
-        if (nms.isVersionGreaterThan(11)) {
-            e.setDropItems(false);
-        }
+            if (items == null) {
+                return;
+            }
+            e.getBlock().getDrops().clear();
+            if (nms.isVersionGreaterThan(11)) {
+                e.setDropItems(false);
+            }
 
-        if (getMaxStorage(p, items) == 0) {
-            setMaxStorage(p, items, getconfigfile().getInt("Default_Max_Storage"));
-        }
-        if (p.getItemInHand().getItemMeta().hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
-            if (Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Chance.System.Min"), Files.getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * Files.getconfigfile().getInt("Fortune.Chance.Player"))) {
-                int fortune = Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Drop.Min"), Files.getconfigfile().getInt("Fortune.Drop.Max"));
-                addStorage(p, items, 1 + fortune);
+            if (getMaxStorage(p, items) == 0) {
+                setMaxStorage(p, items, getconfigfile().getInt("Default_Max_Storage"));
+            }
+            if (p.getItemInHand().getItemMeta().hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
+                if (Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Chance.System.Min"), Files.getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * Files.getconfigfile().getInt("Fortune.Chance.Player"))) {
+                    int fortune = Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Drop.Min"), Files.getconfigfile().getInt("Fortune.Drop.Max"));
+                    addStorage(p, items, 1 + fortune);
+                } else {
+                    addStorage(p, items, 1);
+                }
             } else {
                 addStorage(p, items, 1);
             }
-        } else {
-            addStorage(p, items, 1);
         }
     }
 }

@@ -66,4 +66,20 @@ public class Data {
         Random r = new Random();
         return r.nextInt(max - min) + min;
     }
+
+    public static boolean autoSmelt(@NotNull Player p) {
+        return Files.getdatafile().getBoolean("players." + p.getName() + ".auto.Smelt");
+    }
+
+    public static void setautoSmelt(@NotNull Player p, boolean Boolean) {
+        Files.getdatafile().set("players." + p.getName() + ".auto.Smelt", Boolean);
+    }
+
+    public static boolean autoPick(@NotNull Player p) {
+        return Files.getdatafile().getBoolean("players." + p.getName() + ".auto.Pick");
+    }
+
+    public static void setautoPick(@NotNull Player p, boolean Boolean) {
+        Files.getdatafile().set("players." + p.getName() + ".auto.Pick", Boolean);
+    }
 }

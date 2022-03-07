@@ -2,6 +2,7 @@ package net.danh.storage;
 
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Events.BlockBreak;
+import net.danh.storage.Events.Join;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Files;
 import net.milkbowl.vault.economy.Economy;
@@ -45,6 +46,8 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
         Files.createfiles();
     }
 
@@ -59,7 +62,8 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {
         return new ArrayList<>(Arrays.asList(
-                new BlockBreak()
+                new BlockBreak(),
+                new Join()
         ));
     }
 

@@ -19,6 +19,24 @@ public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (label.equalsIgnoreCase("APick")) {
+            if (args.length == 0) {
+                if (sender instanceof Player) {
+                    if (sender.hasPermission("Storage.APick")) {
+                        setautoPick(((Player) sender).getPlayer(), !autoPick(((Player) sender).getPlayer()));
+                    }
+                }
+            }
+        }
+        if (label.equalsIgnoreCase("ASmelt")) {
+            if (args.length == 0) {
+                if (sender instanceof Player) {
+                    if (sender.hasPermission("Storage.ASmelt")) {
+                        setautoSmelt(((Player) sender).getPlayer(), !autoSmelt(((Player) sender).getPlayer()));
+                    }
+                }
+            }
+        }
         if (label.equalsIgnoreCase("Storage")) {
             if (args.length == 0) {
                 for (String user : getlanguagefile().getStringList("Help_User")) {

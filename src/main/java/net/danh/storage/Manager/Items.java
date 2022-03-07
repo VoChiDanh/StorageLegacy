@@ -5,8 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import static net.danh.storage.Manager.Data.getStorage;
-import static net.danh.storage.Manager.Data.removeStorage;
+import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Storage.economy;
 
@@ -23,8 +22,10 @@ public class Items {
                     break;
                 }
             }
-            if (name.contains("_ORE")) {
-                name = getconfigfile().getString("Blocks." + name + ".Convert");
+            if (autoSmelt(p)) {
+                if (name.contains("_ORE")) {
+                    name = getconfigfile().getString("Blocks." + name + ".Convert");
+                }
             }
             ItemStack items = new ItemStack(Material.getMaterial(name), amount);
             removeStorage(p, block, amount);
