@@ -73,6 +73,7 @@ public class Data {
 
     public static void setautoSmelt(@NotNull Player p, boolean Boolean) {
         Files.getdatafile().set("players." + p.getName() + ".auto.Smelt", Boolean);
+        Files.savedata();
     }
 
     public static boolean autoPick(@NotNull Player p) {
@@ -81,5 +82,6 @@ public class Data {
 
     public static void setautoPick(@NotNull Player p, boolean Boolean) {
         Files.getdatafile().set("players." + p.getName() + ".auto.Pick", Boolean);
+        Files.savedata();
     }
 }
