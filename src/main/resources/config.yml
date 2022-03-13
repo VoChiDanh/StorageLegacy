@@ -1,3 +1,7 @@
+Blacklist-World:
+  - example1
+  - world2
+Message_Type: ACTION_BAR #ACTION_BAR / CHAT
 Blocks:
   COAL_ORE:
     Name: "Small_Coal"

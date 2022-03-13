@@ -1,5 +1,7 @@
 package net.danh.storage.Manager;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,9 +32,10 @@ public class Items {
             ItemStack items = new ItemStack(Material.getMaterial(name), amount);
             removeStorage(p, block, amount);
             p.getInventory().addItem(items);
-            p.sendMessage(colorize(getlanguagefile().getString("Take_Item")
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message_Type")),
+                    new TranslatableComponent(colorize(getlanguagefile().getString("Take_Item")
                     .replaceAll("%blocks%", block.replaceAll("_", " "))
-                    .replaceAll("%amount%", String.valueOf(amount))));
+                    .replaceAll("%amount%", String.valueOf(amount)))));
         } else {
             p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
         }
@@ -56,9 +59,10 @@ public class Items {
             int money = price * amount;
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {
-                p.sendMessage(colorize(getlanguagefile().getString("Sell")
+                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message_Type")),
+                        new TranslatableComponent(colorize(getlanguagefile().getString("Sell")
                         .replaceAll("%money%", String.valueOf(money))
-                        .replaceAll("%item%", name.replaceAll("_", " "))));
+                        .replaceAll("%item%", name.replaceAll("_", " ")))));
             } else {
                 p.sendMessage(colorize("&cError!"));
             }
