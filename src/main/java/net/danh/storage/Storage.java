@@ -4,9 +4,9 @@ import net.danh.storage.Commands.Commands;
 import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Hook.PlaceholderAPI;
-import net.danh.storage.Hook.SuperiorSkyblock2;
 import net.danh.storage.Manager.Files;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.Contract;
@@ -16,7 +16,6 @@ import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
@@ -46,16 +45,11 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         } else {
             getLogger().info(Files.colorize("&cUnsuccessfully hooked with PlaceholderAPI"));
         }
-        if (getServer().getPluginManager().isPluginEnabled("SuperiorSkyblock2")) {
-            getLogger().info(Files.colorize("&aSuccessfully hooked with SuperiorSkyblock2!"));
-            registerEventSS2();
-        } else {
-            getLogger().info(Files.colorize("&cUnsuccessfully hooked with SuperiorSkyblock2"));
-        }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
+        new Metrics(this, 14622);
         Files.createfiles();
     }
 
@@ -80,22 +74,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
      */
     private void registerEventHandlers() {
         ArrayList<Listener> listeners = initializeListeners();
-        EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
-        eventHandlerRegistry.registerEventHandlers(listeners, this);
-    }
-
-    @Contract(" -> new")
-    private @NotNull ArrayList<Listener> initializeListenersss2() {
-        return new ArrayList<>(Collections.singletonList(
-                new SuperiorSkyblock2()
-        ));
-    }
-
-    /**
-     * Registers the event handlers of the plugin using Ponder.
-     */
-    private void registerEventSS2() {
-        ArrayList<Listener> listeners = initializeListenersss2();
         EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
         eventHandlerRegistry.registerEventHandlers(listeners, this);
     }

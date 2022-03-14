@@ -28,7 +28,9 @@ public class Commands implements CommandExecutor {
         if (label.equalsIgnoreCase("ASmelt")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
-                    setautoSmelt(((Player) sender).getPlayer(), !autoSmelt(((Player) sender).getPlayer()));
+                    if (sender.hasPermission("storage.asmelt")) {
+                        setautoSmelt(((Player) sender).getPlayer(), !autoSmelt(((Player) sender).getPlayer()));
+                    }
                 }
             }
         }

@@ -4,6 +4,9 @@ Blacklist-World:
 Message:
   TAKE: CHAT #ACTION_BAR / CHAT
   RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
+Boolean:
+  True: "On"
+  False: "Off"
 Blocks:
   COAL_ORE:
     Name: "Small_Coal"

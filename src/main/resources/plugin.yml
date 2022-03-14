@@ -6,7 +6,6 @@ authors: [ VoChiDanh ]
 softdepend:
   - Vault
   - PlaceholderAPI
-  - SuperiorSkyblock2
 commands:
   Storage:
     aliases:

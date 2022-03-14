@@ -13,7 +13,7 @@
 
     <properties>
         <java.version>8</java.version>
-        <devbuild.number>Build 8</devbuild.number>
+        <devbuild.number>Build 9</devbuild.number>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -71,10 +71,6 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
-        <repository>
-            <id>bg-repo</id>
-            <url>https://repo.bg-software.com/repository/api/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -102,10 +98,10 @@
             <version>8000fc7309</version>
         </dependency>
         <dependency>
-            <groupId>com.bgsoftware</groupId>
-            <artifactId>SuperiorSkyblockAPI</artifactId>
-            <version>1.9.0</version>
-            <scope>provided</scope>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>3.0.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

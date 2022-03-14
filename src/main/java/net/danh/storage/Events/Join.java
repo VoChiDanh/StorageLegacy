@@ -14,7 +14,11 @@ public class Join implements Listener {
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
         if (!autoSmelt(p)) {
-            setautoSmelt(p, true);
+            if (p.hasPermission("storage.asmelt")) {
+                setautoSmelt(p, true);
+            } else {
+                setautoPick(p, false);
+            }
         }
         if (!autoPick(p)) {
             setautoPick(p, true);
