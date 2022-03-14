@@ -15,11 +15,8 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: "actions/upload-artifact@v3"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "v1.1"
-          prerelease: false
-          title: "v1.1-SNAPSHOT Build 9"
-          files: |
-            ./target/Storage.jar
+          name: "[DevBuild] Storage"
+          path: ./target/Storage.jar
+

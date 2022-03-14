@@ -5,10 +5,12 @@ import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
@@ -31,6 +33,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
+        Metrics metrics = new Metrics(this, 14622);
         if (!setupEconomy()) {
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
@@ -49,8 +52,22 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
-        new Metrics(this, 14622);
         Files.createfiles();
+        (new BukkitRunnable() {
+            public void run() {
+                try {
+                    SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
+                    if (updater.checkForUpdates())
+                        getLogger().info(Files.colorize("&#f5602fAn update was found!"));
+                    getLogger().info(Files.colorize("&#77ff73New version: " + updater.getLatestVersion()));
+                    getLogger().info(Files.colorize("&#77ff73Your version: " + Storage.get().getDescription().getVersion()));
+                    getLogger().info(Files.colorize("&#fffd73Download: " + updater.getResourceURL()));
+                } catch (Exception e) {
+                    getLogger().warning("Could not check for updates! Stacktrace:");
+                    e.printStackTrace();
+                }
+            }
+        }).runTaskTimer(this, 3600 * 20L, 3600 * 20L);
     }
 
     @Override
