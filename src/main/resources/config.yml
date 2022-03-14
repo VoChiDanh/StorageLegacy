@@ -1,7 +1,9 @@
 Blacklist-World:
   - example1
   - world2
-Message_Type: ACTION_BAR #ACTION_BAR / CHAT
+Message:
+  TAKE: CHAT #ACTION_BAR / CHAT
+  RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
 Blocks:
   COAL_ORE:
     Name: "Small_Coal"
@@ -14,7 +16,7 @@ Blocks:
   DIAMOND_ORE:
     Name: "Small_Diamond"
     Price: 300
-    Conver: DIAMOND
+    Convert: DIAMOND
   COAL_BLOCK:
     Name: "Big_Coal"
     Price: 150

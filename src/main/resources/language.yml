@@ -10,3 +10,5 @@ Help_User:
 Sell: "&a+ %money%$ &7| &3%item%"
 Not_Enough: "&cYou do not have enough item!"
 Take_Item: "&aYou receive %blocks% x%amount%"
+Receive_Item: "&a+ %item% %amount%"
+Remove_Item: "&c- %item% %amount%"

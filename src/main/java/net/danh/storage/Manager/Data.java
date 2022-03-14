@@ -1,5 +1,7 @@
 package net.danh.storage.Manager;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +22,11 @@ public class Data {
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
         if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item) + amount);
-            p.sendMessage(Files.colorize("&a+ " + amount + " " + item.replaceAll("_", " ")));
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
+                    new TranslatableComponent(Files.colorize(Files.getlanguagefile().getString("Receive_Item")
+                            .replaceAll("%item%", item.replaceAll("_", " ")
+                                    .replaceAll("-", " "))
+                            .replaceAll("%amount%", String.valueOf(amount)))));
         } else {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getMaxStorage(p, item));
             p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
@@ -36,6 +42,11 @@ public class Data {
         } else {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", 0);
         }
+        p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
+                new TranslatableComponent(Files.colorize(Files.getlanguagefile().getString("Remove_Item")
+                        .replaceAll("%item%", item.replaceAll("_", " ")
+                                .replaceAll("-", " "))
+                        .replaceAll("%amount%", String.valueOf(amount)))));
         Files.savedata();
     }
 

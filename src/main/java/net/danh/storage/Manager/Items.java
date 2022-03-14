@@ -32,7 +32,7 @@ public class Items {
             ItemStack items = new ItemStack(Material.getMaterial(name), amount);
             removeStorage(p, block, amount);
             p.getInventory().addItem(items);
-            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message_Type")),
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                     new TranslatableComponent(colorize(getlanguagefile().getString("Take_Item")
                     .replaceAll("%blocks%", block.replaceAll("_", " "))
                     .replaceAll("%amount%", String.valueOf(amount)))));
@@ -59,7 +59,7 @@ public class Items {
             int money = price * amount;
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {
-                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message_Type")),
+                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                         new TranslatableComponent(colorize(getlanguagefile().getString("Sell")
                         .replaceAll("%money%", String.valueOf(money))
                         .replaceAll("%item%", name.replaceAll("_", " ")))));
