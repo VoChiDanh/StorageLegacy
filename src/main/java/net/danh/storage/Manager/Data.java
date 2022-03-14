@@ -24,13 +24,13 @@ public class Data {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item) + amount);
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
                     new TranslatableComponent(Files.colorize(Files.getlanguagefile().getString("Receive_Item")
-                            .replaceAll("%item%", item.replaceAll("_", " ")
+                            .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                     .replaceAll("-", " "))
                             .replaceAll("%amount%", String.valueOf(amount)))));
         } else {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getMaxStorage(p, item));
             p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
-                    .replaceAll("%item%", item.replaceAll("_", " ")
+                    .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                             .replaceAll("-", " "))));
         }
         Files.savedata();
@@ -44,7 +44,7 @@ public class Data {
         }
         p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
                 new TranslatableComponent(Files.colorize(Files.getlanguagefile().getString("Remove_Item")
-                        .replaceAll("%item%", item.replaceAll("_", " ")
+                        .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                 .replaceAll("-", " "))
                         .replaceAll("%amount%", String.valueOf(amount)))));
         Files.savedata();

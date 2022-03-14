@@ -12,7 +12,8 @@ import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Items.*;
+import static net.danh.storage.Manager.Items.RemoveItems;
+import static net.danh.storage.Manager.Items.SellItems;
 
 public class Commands implements CommandExecutor {
 
@@ -61,7 +62,7 @@ public class Commands implements CommandExecutor {
                             if (Integer.parseInt(args[2]) > 0) {
                                 SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                             } else if (Integer.parseInt(args[2]) == 0) {
-                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), getName(args[1])));
+                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
                             }
                         }
                         return true;
@@ -71,7 +72,7 @@ public class Commands implements CommandExecutor {
                             if (Integer.parseInt(args[2]) > 0) {
                                 RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                             } else if (Integer.parseInt(args[2]) == 0) {
-                                RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), getName(args[1])));
+                                RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
                             }
                         }
                         return true;
@@ -80,37 +81,41 @@ public class Commands implements CommandExecutor {
             }
             if (args.length == 5) {
                 if (args[0].equalsIgnoreCase("storage")) {
-                    if (args[1].equalsIgnoreCase("set")) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                    if (Material.getMaterial(args[3]) != null) {
+                        if (args[1].equalsIgnoreCase("set")) {
+                            if (Bukkit.getPlayer(args[2]) != null) {
+                                setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            }
                         }
-                    }
-                    if (args[1].equalsIgnoreCase("add")) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                        if (args[1].equalsIgnoreCase("add")) {
+                            if (Bukkit.getPlayer(args[2]) != null) {
+                                addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            }
                         }
-                    }
-                    if (args[1].equalsIgnoreCase("remove")) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                        if (args[1].equalsIgnoreCase("remove")) {
+                            if (Bukkit.getPlayer(args[2]) != null) {
+                                removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            }
                         }
                     }
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("maxstorage")) {
-                    if (args[1].equalsIgnoreCase("set")) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                    if (Material.getMaterial(args[3]) != null) {
+                        if (args[1].equalsIgnoreCase("set")) {
+                            if (Bukkit.getPlayer(args[2]) != null) {
+                                setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            }
                         }
-                    }
-                    if (args[1].equalsIgnoreCase("add")) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                        if (args[1].equalsIgnoreCase("add")) {
+                            if (Bukkit.getPlayer(args[2]) != null) {
+                                addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            }
                         }
-                    }
-                    if (args[1].equalsIgnoreCase("remove")) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                        if (args[1].equalsIgnoreCase("remove")) {
+                            if (Bukkit.getPlayer(args[2]) != null) {
+                                removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            }
                         }
                     }
                     return true;
