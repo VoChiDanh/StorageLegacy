@@ -1,7 +1,11 @@
 package net.danh.storage.Events;
 
-import net.danh.storage.Manager.Data;
-import net.danh.storage.Manager.Files;
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.bukkit.RegionContainer;
+import com.sk89q.worldguard.bukkit.RegionQuery;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +29,19 @@ public class BlockBreak implements Listener {
         String blocks = e.getBlock().getType().toString();
         String items = null;
         NMSAssistant nms = new NMSAssistant();
-        List<String> w = Files.getconfigfile().getStringList("Blacklist-World");
+        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
+        Location loc = new Location(p.getWorld(), e.getBlock().getLocation().getBlockX(), e.getBlock().getLocation().getBlockY(), e.getBlock().getLocation().getBlockZ());
+        RegionContainer container = WorldGuardPlugin.inst().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        if (!query.testState(loc, localPlayer, DefaultFlag.BLOCK_BREAK) && !p.hasPermission("Storage.admin")) {
+            e.setCancelled(true);
+            return;
+        }
+        e.getBlock().getDrops().clear();
+        if (nms.isVersionGreaterThan(11)) {
+            e.setDropItems(false);
+        }
+        List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {
             if (autoPick(p)) {
                 for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
@@ -37,16 +53,12 @@ public class BlockBreak implements Listener {
                 if (items == null) {
                     return;
                 }
-                e.getBlock().getDrops().clear();
-                if (nms.isVersionGreaterThan(11)) {
-                    e.setDropItems(false);
-                }
                 if (getMaxStorage(p, blocks) == 0) {
                     setMaxStorage(p, blocks, getconfigfile().getInt("Default_Max_Storage"));
                 }
                 if (p.getItemInHand() != null && p.getItemInHand().getItemMeta().hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
-                    if (Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Chance.System.Min"), Files.getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * Files.getconfigfile().getInt("Fortune.Chance.Player"))) {
-                        int fortune = Data.getRandomInt(Files.getconfigfile().getInt("Fortune.Drop.Min"), Files.getconfigfile().getInt("Fortune.Drop.Max"));
+                    if (getRandomInt(getconfigfile().getInt("Fortune.Chance.System.Min"), getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getItemInHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * getconfigfile().getInt("Fortune.Chance.Player"))) {
+                        int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
                         addStorage(p, blocks, 1 + fortune);
                     } else {
                         addStorage(p, blocks, 1);

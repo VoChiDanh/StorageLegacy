@@ -22,8 +22,8 @@
 
 [![vault](https://img.shields.io/badge/Vault-1.7-blue?style="badge)](https://www.spigotmc.org/resources/34315/)
 [![placeholderapi](https://img.shields.io/badge/PlaceholderAPI-2.11.11-blue?style="badge)](https://www.spigotmc.org/resources/6245/) <br>
+[![worldguard](https://img.shields.io/badge/WorldGuard-6+-blue?style="badge)](https://dev.bukkit.org/projects/worldguard/files) 
 
 ## Project Status
 
-![GitHub Release](https://img.shields.io/github/release/VoChiDanh/Storage.svg?style=badge)
 ![status](https://img.shields.io/badge/Project--Status-Active-green?style=badge) 

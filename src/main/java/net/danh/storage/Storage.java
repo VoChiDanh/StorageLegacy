@@ -19,6 +19,7 @@ import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
 
@@ -39,14 +40,23 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        if (getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
+            if (getServer().getPluginManager().getPlugin("WorldGuard").getDescription().getVersion().startsWith("6")) {
+                getLogger().log(Level.INFO, "Successfully hooked with WorldGuard!");
+            } else {
+                getLogger().log(Level.INFO, "Unsuccessfully hooked with WorldGuard! You need WorldGuard v6!");
+                getServer().getPluginManager().disablePlugin(this);
+                return;
+            }
+        }
         if (getServer().getPluginManager().isPluginEnabled("Vault")) {
-            getLogger().info(Files.colorize("&aSuccessfully hooked with Vault!"));
+            getLogger().log(Level.INFO, "Successfully hooked with Vault!");
         }
         if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            getLogger().info(Files.colorize("&aSuccessfully hooked with PlaceholderAPI!"));
+            getLogger().log(Level.INFO, "&aSuccessfully hooked with PlaceholderAPI!");
             new PlaceholderAPI().register();
         } else {
-            getLogger().info(Files.colorize("&cUnsuccessfully hooked with PlaceholderAPI"));
+            getLogger().log(Level.INFO, "Unsuccessfully hooked with PlaceholderAPI");
         }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());

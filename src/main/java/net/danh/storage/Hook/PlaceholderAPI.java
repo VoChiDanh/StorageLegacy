@@ -46,6 +46,10 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             String material = identifier.substring(6);
             return String.valueOf(Items.getPrice(material));
         }
+        if (identifier.startsWith("count_")) {
+            String name = identifier.substring(6);
+            return String.valueOf(Data.getMaxStorage(p, name) - Data.getStorage(p, name));
+        }
         if (identifier.startsWith("auto_")) {
             String name = identifier.substring(5);
             if (name.contains("smelt")) {
