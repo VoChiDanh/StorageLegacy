@@ -17,7 +17,7 @@
     </properties>
 
     <build>
-        <finalName>${project.name}</finalName>
+        <finalName>${project.name}-Legacy</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
