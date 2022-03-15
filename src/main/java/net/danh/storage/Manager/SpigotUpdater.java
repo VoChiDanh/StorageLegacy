@@ -12,9 +12,9 @@ import java.net.URLConnection;
 public class SpigotUpdater {
 
     private final int project;
+    private final JavaPlugin plugin;
     private URL checkURL;
     private String newVersion;
-    private final JavaPlugin plugin;
 
     public SpigotUpdater(@NotNull JavaPlugin plugin, int projectID) {
         this.plugin = plugin;
