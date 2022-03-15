@@ -1,11 +1,12 @@
 package net.danh.storage.Events;
 
+import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldguard.LocalPlayer;
-import com.sk89q.worldguard.bukkit.RegionContainer;
-import com.sk89q.worldguard.bukkit.RegionQuery;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.flags.DefaultFlag;
-import org.bukkit.Location;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
-import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,19 +28,16 @@ public class BlockBreak implements Listener {
         Player p = e.getPlayer();
         String blocks = e.getBlock().getType().toString();
         String items = null;
-        NMSAssistant nms = new NMSAssistant();
         LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
-        Location loc = new Location(p.getWorld(), e.getBlock().getLocation().getBlockX(), e.getBlock().getLocation().getBlockY(), e.getBlock().getLocation().getBlockZ());
-        RegionContainer container = WorldGuardPlugin.inst().getRegionContainer();
+        Location loc = new com.sk89q.worldedit.util.Location(localPlayer.getWorld(), e.getBlock().getLocation().getBlockX(), e.getBlock().getLocation().getBlockY(), e.getBlock().getLocation().getBlockZ());
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
-        if (!query.testState(loc, localPlayer, DefaultFlag.BLOCK_BREAK) && !p.hasPermission("Storage.admin")) {
+        if (!query.testState(loc, localPlayer, Flags.BLOCK_BREAK) && !p.hasPermission("Storage.admin")) {
             e.setCancelled(true);
             return;
         }
         e.getBlock().getDrops().clear();
-        if (nms.isVersionGreaterThan(11)) {
-            e.setDropItems(false);
-        }
+        e.setDropItems(false);
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {
             if (autoPick(p)) {
