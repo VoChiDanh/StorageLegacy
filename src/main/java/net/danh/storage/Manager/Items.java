@@ -24,13 +24,13 @@ public class Items {
                     break;
                 }
             }
+            removeStorage(p, name, amount);
             if (autoSmelt(p)) {
                 if (name.contains("_ORE")) {
                     name = getconfigfile().getString("Blocks." + name + ".Convert");
                 }
             }
             ItemStack items = new ItemStack(Material.getMaterial(name), amount);
-            removeStorage(p, name, amount);
             p.getInventory().addItem(items);
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                     new TranslatableComponent(colorize(getlanguagefile().getString("Take_Item")
