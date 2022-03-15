@@ -30,7 +30,7 @@ public class Items {
                 }
             }
             ItemStack items = new ItemStack(Material.getMaterial(name), amount);
-            removeStorage(p, block, amount);
+            removeStorage(p, name, amount);
             p.getInventory().addItem(items);
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                     new TranslatableComponent(colorize(getlanguagefile().getString("Take_Item")
@@ -55,7 +55,7 @@ public class Items {
                     break;
                 }
             }
-            removeStorage(p, block, amount);
+            removeStorage(p, name, amount);
             int money = price * amount;
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {
