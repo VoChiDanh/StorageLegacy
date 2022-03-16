@@ -5,6 +5,7 @@ Help_Admin:
 Help_User:
   - "&9/Storage sell [Items] [amount] - Sell Block"
   - "&9/Storage take [Items] [Amount] - Take Block"
+  - "&9/Storage add [Items] [Amount] - Add Block"
   - "&9/APick - Toggle Auto Pickup "
   - "&9/ASmelt - Toggle Auto Smelt"
 Sell: "&a+ %money%$ &7| &3%item%"
@@ -12,3 +13,4 @@ Not_Enough: "&cYou do not have enough item!"
 Take_Item: "&aYou receive %blocks% x%amount%"
 Receive_Item: "&a+ %item% %amount%"
 Remove_Item: "&c- %item% %amount%"
+Not_Correct_Item: "&aYou need pick correct item!"

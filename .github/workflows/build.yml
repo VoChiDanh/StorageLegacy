@@ -19,4 +19,20 @@ jobs:
         with:
           name: "[DevBuild] Storage"
           path: ./target/Storage.jar
+      - uses: jungwinter/split@v2
+        id: split
+        with:
+          msg: ${{github.repository}}
+          separator: "/"
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v4.0.0
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ steps.split.outputs._1 }}"
+          embed-title: "${{ steps.split.outputs._1 }} Dev Build"
+          avatar-url: "https://github.com/${{ steps.split.outputs._0 }}.png"
+          embed-color: "65280"
+          embed-description: |
+            ${{ github.event.head_commit.message }}
+          filename: ./target/Storage.jar
 

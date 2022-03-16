@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Objects;
+
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Storage.economy;
@@ -18,7 +20,7 @@ public class Items {
 
     public static void RemoveItems(Player p, String name, Integer amount) {
         if (getStorage(p, name) >= amount) {
-            for (String getBlockType : getconfigfile().getConfigurationSection("Blocks.").getKeys(false)) {
+            for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                 if (name.equalsIgnoreCase(getBlockType)) {
                     block = getconfigfile().getString("Blocks." + name + ".Name");
                     break;
@@ -30,10 +32,10 @@ public class Items {
                     name = getconfigfile().getString("Blocks." + name + ".Convert");
                 }
             }
-            ItemStack items = new ItemStack(Material.getMaterial(name), amount);
+            ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
             p.getInventory().addItem(items);
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
-                    new TranslatableComponent(colorize(getlanguagefile().getString("Take_Item")
+                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
                             .replaceAll("%blocks%", block.replaceAll("_", " "))
                             .replaceAll("%amount%", String.valueOf(amount)))));
         } else {
@@ -48,7 +50,7 @@ public class Items {
 
     public static void SellItems(Player p, String name, Integer amount) {
         if (getStorage(p, name) >= amount) {
-            for (String getBlockType : getconfigfile().getConfigurationSection("Blocks.").getKeys(false)) {
+            for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                 if (name.equalsIgnoreCase(getBlockType)) {
                     price = getconfigfile().getInt("Blocks." + name + ".Price");
                     block = getconfigfile().getString("Blocks." + name + ".Name");
@@ -60,7 +62,7 @@ public class Items {
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {
                 p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
-                        new TranslatableComponent(colorize(getlanguagefile().getString("Sell")
+                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Sell"))
                                 .replaceAll("%money%", String.valueOf(money))
                                 .replaceAll("%item%", block.replaceAll("_", " ")))));
             } else {
