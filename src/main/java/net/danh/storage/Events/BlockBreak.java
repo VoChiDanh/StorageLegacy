@@ -38,7 +38,7 @@ public class BlockBreak implements Listener {
             return;
         }
         e.getBlock().getDrops().clear();
-        if (nms.isVersionGreaterThan(11)) {
+        if (nms.isVersion(12)) {
             e.setDropItems(false);
         }
         List<String> w = getconfigfile().getStringList("Blacklist-World");

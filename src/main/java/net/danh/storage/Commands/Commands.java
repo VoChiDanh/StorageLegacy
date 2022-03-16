@@ -1,5 +1,7 @@
 package net.danh.storage.Commands;
 
+import net.danh.storage.Manager.Data;
+import net.danh.storage.Manager.Files;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -73,6 +75,21 @@ public class Commands implements CommandExecutor {
                                 RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                             } else if (Integer.parseInt(args[2]) == 0) {
                                 RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(((Player) sender).getPlayer(), args[1]));
+                            }
+                        }
+                        return true;
+                    }
+                    if (args[0].equalsIgnoreCase("add")) {
+                        if (Material.getMaterial(args[1]) != null && ((Player) sender).getPlayer().getItemInHand() != null) {
+                            if (((Player) sender).getPlayer().getItemInHand().getType() == Material.getMaterial(args[1])) {
+                                if (Integer.parseInt(args[2]) <= ((Player) sender).getPlayer().getItemInHand().getAmount()) {
+                                    Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                    ((Player) sender).getPlayer().getItemInHand().setAmount(Integer.parseInt(args[2]));
+                                } else {
+                                    sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
+                                }
+                            } else {
+                                sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Correct_Item")));
                             }
                         }
                         return true;
