@@ -7,7 +7,6 @@ Message:
 Boolean:
   True: "On"
   False: "Off"
-Number_Format: "#.###"
 Blocks:
   COAL_ORE:
     Name: "Small_Coal"

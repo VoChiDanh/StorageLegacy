@@ -74,11 +74,17 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         }
         if (identifier.startsWith("used_")) {
             String name = identifier.substring(5);
-            return Math.ceil((Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100) + "%";
+            float min = Data.getStorage(p, name);
+            float max = Data.getMaxStorage(p, name);
+            double n = (min / max) * 100;
+            return n + "%";
         }
         if (identifier.startsWith("empty_")) {
             String name = identifier.substring(6);
-            return Math.ceil(((Data.getMaxStorage(p, name) - Data.getStorage(p, name)) / Data.getMaxStorage(p, name)) * 100) + "%";
+            float min = Data.getMaxStorage(p, name) - Data.getStorage(p, name);
+            float max = Data.getMaxStorage(p, name);
+            double n = (min / max) * 100;
+            return n + "%";
         }
         return null;
     }
