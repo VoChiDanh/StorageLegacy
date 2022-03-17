@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -80,17 +81,16 @@ public class Commands implements CommandExecutor {
                         return true;
                     }
                     if (args[0].equalsIgnoreCase("add")) {
-                        if (Material.getMaterial(args[1]) != null && ((Player) sender).getPlayer().getItemInHand() != null) {
-                            if (((Player) sender).getPlayer().getItemInHand().getType() == Material.getMaterial(args[1])) {
-                                if (Integer.parseInt(args[2]) <= ((Player) sender).getPlayer().getItemInHand().getAmount()) {
-                                    Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                                    ((Player) sender).getPlayer().getItemInHand().setAmount(Integer.parseInt(args[2]));
-                                } else {
-                                    sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
-                                }
+                        if (Material.getMaterial(args[1]) != null) {
+                            ItemStack items = new ItemStack(Material.getMaterial(args[1]), Integer.parseInt(args[2]));
+                            if (((Player) sender).getPlayer().getInventory().contains(items)) {
+                                ((Player) sender).getPlayer().getInventory().remove(items);
+                                Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                             } else {
-                                sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Correct_Item")));
+                                sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
                             }
+                        } else {
+                            sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Correct_Item")));
                         }
                         return true;
                     }

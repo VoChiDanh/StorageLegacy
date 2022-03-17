@@ -39,7 +39,7 @@ jobs:
           username: "${{ steps.split.outputs._1 }}"
           embed-title: "Development Builds"
           avatar-url: "https://github.com/${{ steps.split.outputs._0 }}.png"
-          embed-footer-text: "${{ steps.split.outputs._1 }} Build #${{ steps.current-time.outputs.day }}${{ steps.current-time.outputs.month }}${{ steps.current-time.outputs.year }}${{ steps.current-time.outputs.hour }}${{ steps.current-time.outputs.minute }}"
+          embed-footer-text: "${{ steps.split.outputs._1 }} Build #${{ steps.current-time.outputs.month }}${{ steps.current-time.outputs.day }}${{ steps.current-time.outputs.hour }}${{ steps.current-time.outputs.minute }}"
           embed-color: "65280"
           embed-description: |
             ${{ github.event.head_commit.message }}
