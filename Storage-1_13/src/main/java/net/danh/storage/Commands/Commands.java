@@ -111,18 +111,21 @@ public class Commands implements CommandExecutor {
                                             setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
                                         }
                                         setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        sender.sendMessage(colorize("&aDone"));
                                     }
                                     if (args[1].equalsIgnoreCase("add")) {
                                         if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
                                             setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
                                         }
                                         addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        sender.sendMessage(colorize("&aDone"));
                                     }
                                     if (args[1].equalsIgnoreCase("remove")) {
                                         if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
                                             setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
                                         }
                                         removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        sender.sendMessage(colorize("&aDone"));
                                     }
                                 }
                             }
@@ -133,15 +136,20 @@ public class Commands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("maxstorage")) {
                     if (Material.getMaterial(args[3]) != null) {
                         if (Bukkit.getPlayer(args[2]) != null) {
-                            if (sender.hasPermission("Storage.admin")) {
-                                if (args[1].equalsIgnoreCase("set")) {
-                                    setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                }
-                                if (args[1].equalsIgnoreCase("add")) {
-                                    addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                }
-                                if (args[1].equalsIgnoreCase("remove")) {
-                                    removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                            if (Integer.parseInt(args[4]) >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                if (sender.hasPermission("Storage.admin")) {
+                                    if (args[1].equalsIgnoreCase("set")) {
+                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        sender.sendMessage(colorize("&aDone"));
+                                    }
+                                    if (args[1].equalsIgnoreCase("add")) {
+                                        addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        sender.sendMessage(colorize("&aDone"));
+                                    }
+                                    if (args[1].equalsIgnoreCase("remove")) {
+                                        removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        sender.sendMessage(colorize("&aDone"));
+                                    }
                                 }
                             }
                         }
