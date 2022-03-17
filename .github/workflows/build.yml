@@ -47,6 +47,8 @@ jobs:
       - name: Discord Webhook Action 2
         uses: tsickert/discord-webhook@v4.0.0
         with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          username: "${{ steps.split.outputs._1 }}"
           filename: ./Storage-Legacy/target/Storage-Legacy.jar
 
 
