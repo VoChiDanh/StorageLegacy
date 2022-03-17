@@ -77,11 +77,17 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             return "";
         }
 
-        if (identifier.startsWith("percent_")) {
+        if (identifier.startsWith("used_")) {
             DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
             df.setRoundingMode(RoundingMode.CEILING);
             String name = identifier.substring(8);
-            return df.format((Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100) + "%";
+            return df.format((Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100L) + "%";
+        }
+        if (identifier.startsWith("empty_")) {
+            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
+            df.setRoundingMode(RoundingMode.CEILING);
+            String name = identifier.substring(8);
+            return df.format(((Data.getMaxStorage(p, name) - Data.getStorage(p, name)) / Data.getMaxStorage(p, name)) * 100L) + "%";
         }
         return null;
     }
