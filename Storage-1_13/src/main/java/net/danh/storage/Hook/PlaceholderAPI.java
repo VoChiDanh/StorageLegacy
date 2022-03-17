@@ -8,10 +8,6 @@ import net.danh.storage.Storage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.Objects;
-
 public class PlaceholderAPI extends PlaceholderExpansion {
     @Override
     public @NotNull String getIdentifier() {
@@ -77,16 +73,12 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             return "";
         }
         if (identifier.startsWith("used_")) {
-            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
-            df.setRoundingMode(RoundingMode.CEILING);
             String name = identifier.substring(5);
-            return df.format((Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100L) + "%";
+            return Math.ceil((Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100) + "%";
         }
         if (identifier.startsWith("empty_")) {
-            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
-            df.setRoundingMode(RoundingMode.CEILING);
             String name = identifier.substring(6);
-            return df.format(((Data.getMaxStorage(p, name) - Data.getStorage(p, name)) / Data.getMaxStorage(p, name)) * 100L) + "%";
+            return Math.ceil(((Data.getMaxStorage(p, name) - Data.getStorage(p, name)) / Data.getMaxStorage(p, name)) * 100) + "%";
         }
         return null;
     }
