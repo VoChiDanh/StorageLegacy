@@ -79,7 +79,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             DecimalFormat df = new DecimalFormat(Files.getconfigfile().getString("Number_Format"));
             df.setRoundingMode(RoundingMode.CEILING);
             String name = identifier.substring(5);
-            return df.format((Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100L) + "%";
+            return df.format( (Data.getStorage(p, name) / Data.getMaxStorage(p, name)) * 100L) + "%";
         }
         if (identifier.startsWith("empty_")) {
             DecimalFormat df = new DecimalFormat(Files.getconfigfile().getString("Number_Format"));
