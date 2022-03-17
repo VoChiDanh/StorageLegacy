@@ -8,6 +8,10 @@ import net.danh.storage.Storage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Objects;
+
 public class PlaceholderAPI extends PlaceholderExpansion {
     @Override
     public @NotNull String getIdentifier() {
@@ -77,14 +81,18 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             float min = Data.getStorage(p, name);
             float max = Data.getMaxStorage(p, name);
             double n = (min / max) * 100;
-            return n + "%";
+            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
+            df.setRoundingMode(RoundingMode.CEILING);
+            return df.format(n) + "%";
         }
         if (identifier.startsWith("empty_")) {
             String name = identifier.substring(6);
             float min = Data.getMaxStorage(p, name) - Data.getStorage(p, name);
             float max = Data.getMaxStorage(p, name);
             double n = (min / max) * 100;
-            return n + "%";
+            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
+            df.setRoundingMode(RoundingMode.CEILING);
+            return df.format(n) + "%";
         }
         return null;
     }
