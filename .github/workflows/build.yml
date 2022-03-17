@@ -1,7 +1,7 @@
-name: Build
+name: Dev Build
 on:
   push:
-    branches: [ legacy ]
+    branches: [ master ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +17,10 @@ jobs:
         run: mvn -B package
       - uses: "actions/upload-artifact@v3"
         with:
-          name: "[DevBuild] Storage-Legacy"
-          path: ./target/Storage-Legacy.jar
+          name: "[DevBuild] Storage"
+          path: |
+            ./Storage-Legacy/target/Storage-Legacy.jar
+            ./Storage-1_13/target/Storage-1_13.jar
       - uses: jungwinter/split@v2
         id: split
         with:
@@ -29,11 +31,13 @@ jobs:
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           username: "${{ steps.split.outputs._1 }}"
-          embed-title: "${{ steps.split.outputs._1 }}-Legacy Dev Build"
+          embed-title: "${{ steps.split.outputs._1 }} Dev Build"
           avatar-url: "https://github.com/${{ steps.split.outputs._0 }}.png"
           embed-color: "65280"
           embed-description: |
             ${{ github.event.head_commit.message }}
-          filename: ./target/Storage-Legacy.jar
+          filename: |
+            ./Storage-Legacy/target/Storage-Legacy.jar
+            ./Storage-1_13/target/Storage-1_13.jar
 
 

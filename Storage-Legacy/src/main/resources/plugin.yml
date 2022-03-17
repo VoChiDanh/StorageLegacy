@@ -1,0 +1,21 @@
+name: Storage
+version: '${project.version}'
+main: net.danh.storage.Storage
+authors: [ VoChiDanh ]
+softdepend:
+  - Vault
+  - PlaceholderAPI
+depend:
+  - WorldGuard
+commands:
+  Storage:
+    aliases:
+      - store
+      - kho
+    description: Storage Commands
+  APick:
+    aliases: [ autopickup ]
+    description: Toggle Pickup
+  ASmelt:
+    aliases: [ autosmelt ]
+    description: Toggle Smelt

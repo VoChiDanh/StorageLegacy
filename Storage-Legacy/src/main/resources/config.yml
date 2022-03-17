@@ -1,0 +1,41 @@
+Blacklist-World:
+  - example1
+  - world2
+Message:
+  TAKE: CHAT #ACTION_BAR / CHAT
+  RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
+Boolean:
+  True: "On"
+  False: "Off"
+Blocks:
+  COAL_ORE:
+    Name: "Small_Coal"
+    Price: 100
+    Convert: COAL
+  IRON_ORE:
+    Name: "Small_Iron"
+    Price: 200
+    Convert: IRON_INGOT
+  DIAMOND_ORE:
+    Name: "Small_Diamond"
+    Price: 300
+    Convert: DIAMOND
+  COAL_BLOCK:
+    Name: "Big_Coal"
+    Price: 150
+  IRON_BLOCK:
+    Name: "Big_Iron"
+    Price: 250
+  DIAMOND_BLOCK:
+    Name: "Big_Diamond"
+    Price: 350
+Default_Max_Storage: 10000
+Fortune:
+  Chance:
+    Player: 10 # level fortune * 10, lv 2 => 20%
+    System:
+      Min: 1
+      Max: 100
+  Drop:
+    Min: 1
+    Max: 5
