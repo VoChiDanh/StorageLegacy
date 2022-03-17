@@ -32,7 +32,7 @@ jobs:
         with:
           format: YYYYMMDD-HH
           utcOffset: "+07:00"
-      - name: Discord Webhook Action
+      - name: Discord Webhook Action 1
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
@@ -43,6 +43,10 @@ jobs:
           embed-color: "65280"
           embed-description: |
             ${{ github.event.head_commit.message }}
-          filename: ./Storage-Legacy/target/Storage-Legacy.jar  ./Storage-1_13/target/Storage-1_13.jar
+          filename: ./Storage-1_13/target/Storage-1_13.jar
+      - name: Discord Webhook Action 2
+        uses: tsickert/discord-webhook@v4.0.0
+        with:
+          filename: ./Storage-Legacy/target/Storage-Legacy.jar
 
 
