@@ -17,7 +17,7 @@ jobs:
         run: mvn -B package
       - uses: "actions/upload-artifact@v3"
         with:
-          name: "[DevBuild] Storage"
+          name: "[DevBuild]-Storage"
           path: |
             ./Storage-Legacy/target/Storage-Legacy.jar
             ./Storage-1_13/target/Storage-1_13.jar
@@ -42,8 +42,8 @@ jobs:
           embed-footer-text: "${{ steps.split.outputs._1 }} Build #${{ steps.current-time.outputs.month }}${{ steps.current-time.outputs.day }}${{ steps.current-time.outputs.hour }}${{ steps.current-time.outputs.minute }}"
           embed-color: "65280"
           embed-description: |
+            ${{ github.event.head_commit.message }}
+                        
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
-            GH Actions Run: [`${{ github.run_id }}`](https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}) _(Download under "artifacts")_
-            Commit SHA: [`${{ github.sha }}`](https://github.com/${{github.repository}}/commit/${{github.sha}}
-
+            Build: [`${{ github.run_id }}`](https://github.com/${{github.repository}}/actions/artifacts/${{artifact_id}}/${{archive_format}}/) _Click to download_
 
