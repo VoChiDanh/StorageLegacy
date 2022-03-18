@@ -6,7 +6,7 @@
 
     <groupId>net.danh</groupId>
     <artifactId>Storage-1_13</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>Storage-1_13</name>

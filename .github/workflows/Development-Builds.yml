@@ -1,4 +1,4 @@
-name: Development Builds
+name: Development-Builds
 on:
   push:
     branches: [ master ]
@@ -35,15 +35,15 @@ jobs:
       - name: Discord Webhook Action 1
         uses: tsickert/discord-webhook@v4.0.0
         with:
-          webhook-url: ${{ secrets.WEBHOOK_URL_TEST }}
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
           username: "${{ steps.split.outputs._1 }}"
           embed-title: "Development Builds"
           avatar-url: "https://github.com/${{ steps.split.outputs._0 }}.png"
-          embed-footer-text: "${{ steps.split.outputs._1 }} Build #${{ steps.current-time.outputs.month }}${{ steps.current-time.outputs.day }}${{ steps.current-time.outputs.hour }}${{ steps.current-time.outputs.minute }}"
           embed-color: "65280"
           embed-description: |
+            Change Log:
             ${{ github.event.head_commit.message }}
                         
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
-            Download: [`${{ github.run_id }}`](https://api.github.com/${{github.repository}}/actions/artifacts/${{ github.event.workflow_run.id }}/zip)
+            Download: [`${{ github.run_id }}`](https://api.github.com/${{github.repository}}/actions/runs/${{ github.run_id }}/[DevBuild]-Storage.zip)
 
