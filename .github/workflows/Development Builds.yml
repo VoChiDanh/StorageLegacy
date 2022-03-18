@@ -45,5 +45,5 @@ jobs:
             ${{ github.event.head_commit.message }}
                         
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
-            Build: [`${{ github.run_id }}`](https://github.com/${{github.repository}}/actions/artifacts/${{artifact_id}}/${{archive_format}}/) _Click to download_
+            Build: [`${{ github.run_id }}`](https://github.com/${{github.repository}}/actions/artifacts/${{github.artifact_id}}/${{github.archive_format}}/) _Click to download_
 
