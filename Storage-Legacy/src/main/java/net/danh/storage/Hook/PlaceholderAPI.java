@@ -58,21 +58,21 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             String name = identifier.substring(5);
             if (name.equalsIgnoreCase("smelt")) {
                 if (Data.autoSmelt(p)) {
-                    return Files.getconfigfile().getString("Boolean.True");
+                    return Files.getconfigfile().getString("Boolean.true");
                 }
                 if (!Data.autoSmelt(p)) {
-                    return Files.getconfigfile().getString("Boolean.False");
+                    return Files.getconfigfile().getString("Boolean.false");
                 }
-                return "";
+                return Files.getconfigfile().getString("Boolean.false");
             }
             if (name.equalsIgnoreCase("pickup")) {
                 if (Data.autoPick(p)) {
-                    return Files.getconfigfile().getString("Boolean.True");
+                    return Files.getconfigfile().getString("Boolean.true");
                 }
                 if (!Data.autoPick(p)) {
-                    return Files.getconfigfile().getString("Boolean.False");
+                    return Files.getconfigfile().getString("Boolean.false");
                 }
-                return "";
+                return Files.getconfigfile().getString("Boolean.true");
             }
             return "";
         }

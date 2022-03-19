@@ -5,8 +5,8 @@ Message:
   TAKE: CHAT #ACTION_BAR / CHAT
   RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
 Boolean:
-  True: "On"
-  False: "Off"
+  true: "On"
+  false: "Off"
 Number_Format: "#.###"
 Blocks:
   COAL_ORE:

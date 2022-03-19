@@ -63,7 +63,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
                 if (!Data.autoSmelt(p)) {
                     return Files.getconfigfile().getString("Boolean.False");
                 }
-                return "";
+                return Files.getconfigfile().getString("Boolean.False");
             }
             if (name.equalsIgnoreCase("pickup")) {
                 if (Data.autoPick(p)) {
@@ -72,7 +72,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
                 if (!Data.autoPick(p)) {
                     return Files.getconfigfile().getString("Boolean.False");
                 }
-                return "";
+                return Files.getconfigfile().getString("Boolean.True");
             }
             return "";
         }
