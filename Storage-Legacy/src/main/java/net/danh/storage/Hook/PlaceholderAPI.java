@@ -56,7 +56,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         }
         if (identifier.startsWith("auto_")) {
             String name = identifier.substring(5);
-            if (name.contains("smelt")) {
+            if (name.equalsIgnoreCase("smelt")) {
                 if (Data.autoSmelt(p)) {
                     return Files.getconfigfile().getString("Boolean.True");
                 }
@@ -65,7 +65,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
                 }
                 return "";
             }
-            if (name.contains("pickup")) {
+            if (name.equalsIgnoreCase("pickup")) {
                 if (Data.autoPick(p)) {
                     return Files.getconfigfile().getString("Boolean.True");
                 }
