@@ -106,28 +106,28 @@ public class Commands implements CommandExecutor {
                         if (Bukkit.getPlayer(args[2]) != null) {
                             if (sender.hasPermission("Storage.admin")) {
                                 if (args[1].equalsIgnoreCase("set")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2]))) == 0) {
+                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Files.getconfigfile().getInt("Default_Max_Storage"));
                                     }
-                                    if (Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                    if (Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])))) {
                                         setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
                                         sender.sendMessage(colorize("&aDone"));
                                     }
                                 }
                                 if (args[1].equalsIgnoreCase("add")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2]))) == 0) {
+                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Files.getconfigfile().getInt("Default_Max_Storage"));
                                     }
-                                    if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) + Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                    if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) + Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])))) {
                                         addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
                                         sender.sendMessage(colorize("&aDone"));
                                     }
                                 }
                                 if (args[1].equalsIgnoreCase("remove")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2]))) == 0) {
+                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Files.getconfigfile().getInt("Default_Max_Storage"));
                                     }
-                                    if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                    if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])))) {
                                         removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
                                         sender.sendMessage(colorize("&aDone"));
                                     }
@@ -137,28 +137,22 @@ public class Commands implements CommandExecutor {
                     }
                     return true;
                 }
+            }
+            if (args.length == 4) {
                 if (args[0].equalsIgnoreCase("maxstorage")) {
-                    if (Material.getMaterial(args[3]) != null) {
-                        if (Bukkit.getPlayer(args[2]) != null) {
-                            if (sender.hasPermission("Storage.admin")) {
-                                if (args[1].equalsIgnoreCase("set")) {
-                                    if (Integer.parseInt(args[4]) >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        sender.sendMessage(colorize("&aDone"));
-                                    }
-                                }
-                                if (args[1].equalsIgnoreCase("add")) {
-                                    if (Integer.parseInt(args[4]) + getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
-                                        addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        sender.sendMessage(colorize("&aDone"));
-                                    }
-                                }
-                                if (args[1].equalsIgnoreCase("remove")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
-                                        removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        sender.sendMessage(colorize("&aDone"));
-                                    }
-                                }
+                    if (Bukkit.getPlayer(args[2]) != null) {
+                        if (sender.hasPermission("Storage.admin")) {
+                            if (args[1].equalsIgnoreCase("set")) {
+                                setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
+                                sender.sendMessage(colorize("&aDone"));
+                            }
+                            if (args[1].equalsIgnoreCase("add")) {
+                                addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
+                                sender.sendMessage(colorize("&aDone"));
+                            }
+                            if (args[1].equalsIgnoreCase("remove")) {
+                                removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
+                                sender.sendMessage(colorize("&aDone"));
                             }
                         }
                     }

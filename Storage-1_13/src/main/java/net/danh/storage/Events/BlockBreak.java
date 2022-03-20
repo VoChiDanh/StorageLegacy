@@ -49,8 +49,8 @@ public class BlockBreak implements Listener {
                 if (items == null) {
                     return;
                 }
-                if (getMaxStorage(p, blocks) == 0) {
-                    setMaxStorage(p, blocks, getconfigfile().getInt("Default_Max_Storage"));
+                if (getMaxStorage(p) == 0) {
+                    setMaxStorage(p, getconfigfile().getInt("Default_Max_Storage"));
                 }
                 p.getItemInHand();
                 if (Objects.requireNonNull(p.getItemInHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {

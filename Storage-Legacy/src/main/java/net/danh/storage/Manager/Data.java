@@ -20,7 +20,7 @@ public class Data {
     }
 
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
-        if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
+        if (getMaxStorage(p) >= (getStorage(p, item) + amount)) {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item) + amount);
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
                     new TranslatableComponent(Files.colorize(Files.getlanguagefile().getString("Receive_Item")
@@ -28,7 +28,7 @@ public class Data {
                                     .replaceAll("-", " "))
                             .replaceAll("%amount%", String.valueOf(amount)))));
         } else {
-            Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getMaxStorage(p, item));
+            Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getMaxStorage(p));
             p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
                     .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                             .replaceAll("-", " "))));
@@ -50,25 +50,25 @@ public class Data {
         Files.savedata();
     }
 
-    public static int getMaxStorage(@NotNull Player p, String item) {
-        return Files.getdatafile().getInt("players." + p.getName() + ".items." + item + ".max");
+    public static int getMaxStorage(@NotNull Player p) {
+        return Files.getdatafile().getInt("players." + p.getName() + ".max");
     }
 
-    public static void setMaxStorage(@NotNull Player p, String item, Integer amount) {
-        Files.getdatafile().set("players." + p.getName() + ".items." + item + ".max", amount);
+    public static void setMaxStorage(@NotNull Player p, Integer amount) {
+        Files.getdatafile().set("players." + p.getName() + ".max", amount);
         Files.savedata();
     }
 
-    public static void addMaxStorage(@NotNull Player p, String item, Integer amount) {
-        Files.getdatafile().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item) + amount);
+    public static void addMaxStorage(@NotNull Player p, Integer amount) {
+        Files.getdatafile().set("players." + p.getName() + ".max", getMaxStorage(p) + amount);
         Files.savedata();
     }
 
-    public static void removeMaxStorage(@NotNull Player p, String item, Integer amount) {
-        if (getMaxStorage(p, item) > amount) {
-            Files.getdatafile().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item) - amount);
+    public static void removeMaxStorage(@NotNull Player p, Integer amount) {
+        if (getMaxStorage(p) > amount) {
+            Files.getdatafile().set("players." + p.getName() + ".max", getMaxStorage(p) - amount);
         } else {
-            Files.getdatafile().set("players." + p.getName() + ".items." + item + ".max", 0);
+            Files.getdatafile().set("players." + p.getName() + ".max", 0);
         }
         Files.savedata();
     }

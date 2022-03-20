@@ -26,13 +26,7 @@ jobs:
         with:
           msg: ${{github.repository}}
           separator: "/"
-      - name: Get current time
-        uses: josStorer/get-current-time@v2
-        id: current-time
-        with:
-          format: YYYYMMDD-HH
-          utcOffset: "+07:00"
-      - name: Discord Webhook Action 1
+      - name: Discord Webhook
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
@@ -46,4 +40,5 @@ jobs:
                         
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
             Download: [`${{ github.run_id }}`](https://nightly.link/${{github.repository}}/actions/runs/${{ github.run_id }}/[DevBuild]-Storage.zip)
+            SpigotMC: [`10051`](https://www.spigotmc.org/resources/100516/)
 

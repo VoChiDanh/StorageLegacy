@@ -1,5 +1,7 @@
 package net.danh.storage.Events;
 
+import net.danh.storage.Manager.Data;
+import net.danh.storage.Manager.Files;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +24,9 @@ public class Join implements Listener {
         }
         if (!autoPick(p)) {
             setautoPick(p, true);
+        }
+        if (Data.getMaxStorage(p) == 0) {
+            Data.setMaxStorage(p, Files.getconfigfile().getInt("Default_Max_Storage"));
         }
     }
 }
