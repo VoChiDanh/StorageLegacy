@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
@@ -90,6 +91,9 @@ public class Commands implements CommandExecutor {
                             if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().contains(items)) {
                                 ((Player) sender).getPlayer().getInventory().remove(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                sender.sendMessage(Files.colorize(getlanguagefile().getString("Add_Block")
+                                        .replaceAll("%block%", args[1])
+                                        .replaceAll("%amount%", args[2])));
                             } else {
                                 sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
                             }
