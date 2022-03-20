@@ -7,10 +7,10 @@
     <parent>
         <artifactId>Storage</artifactId>
         <groupId>net.danh</groupId>
-        <version>1.8</version>
+        <version>1.9</version>
     </parent>
     <artifactId>Storage-Legacy</artifactId>
-    <version>1.8</version>
+    <version>1.9</version>
     <packaging>jar</packaging>
 
     <name>Storage-Legacy</name>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>net.danh</groupId>
             <artifactId>Storage-plugins</artifactId>
-            <version>1.8</version>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 </project>
