@@ -51,11 +51,11 @@ public class Data {
     }
 
     public static int getMaxStorage(@NotNull Player p) {
-        return Files.getdatafile().getInt("players." + p.getName()  + ".max");
+        return Files.getdatafile().getInt("players." + p.getName() + ".max");
     }
 
     public static void setMaxStorage(@NotNull Player p, Integer amount) {
-        Files.getdatafile().set("players." + p.getName()  + ".max", amount);
+        Files.getdatafile().set("players." + p.getName() + ".max", amount);
         Files.savedata();
     }
 
@@ -66,9 +66,9 @@ public class Data {
 
     public static void removeMaxStorage(@NotNull Player p, Integer amount) {
         if (getMaxStorage(p) > amount) {
-            Files.getdatafile().set("players." + p.getName()  + ".max", getMaxStorage(p) - amount);
+            Files.getdatafile().set("players." + p.getName() + ".max", getMaxStorage(p) - amount);
         } else {
-            Files.getdatafile().set("players." + p.getName()+ ".max", 0);
+            Files.getdatafile().set("players." + p.getName() + ".max", 0);
         }
         Files.savedata();
     }

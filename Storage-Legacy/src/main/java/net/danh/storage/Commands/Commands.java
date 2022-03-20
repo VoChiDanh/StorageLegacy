@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;

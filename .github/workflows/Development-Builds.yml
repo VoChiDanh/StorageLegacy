@@ -37,7 +37,7 @@ jobs:
           embed-description: |
             Change Log:
             ${{ github.event.head_commit.message }}
-                        
+            
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
             Download: [`${{ github.run_id }}`](https://nightly.link/${{github.repository}}/actions/runs/${{ github.run_id }}/[DevBuild]-Storage.zip)
             SpigotMC: [`10051`](https://www.spigotmc.org/resources/100516/)
