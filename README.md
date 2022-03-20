@@ -6,7 +6,7 @@
 
 > /Storage storage [add/set/remove] [Player] [Item] [Amount] - Add/Set/Remove Item in Player's Storage
 
-> /Storage maxstorage [add/set/remove] [Player] [Item] [Amount] - Add/Set/Remove Max Item in Player's Storage
+> /Storage maxstorage [add/set/remove] [Player] [Amount] - Add/Set/Remove Max Item in Player's Storage
 
 > /Storage sell [Item] [Amount] - Sell Item
 
@@ -15,6 +15,8 @@
 > /ASmelt - Toggle Auto Smelt
 
 > /Storage take [Item] [Amount] - Take physical item from storage
+> 
+> /Storage add [Item] [Amount] - Add physical item from storage
 
 > /Storage reload - Reload config
 

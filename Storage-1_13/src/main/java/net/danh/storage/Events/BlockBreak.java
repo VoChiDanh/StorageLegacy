@@ -37,6 +37,7 @@ public class BlockBreak implements Listener {
             return;
         }
         e.getBlock().getDrops().clear();
+        e.setDropItems(false);
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {
             if (autoPick(p)) {

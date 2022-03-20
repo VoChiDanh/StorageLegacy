@@ -22,14 +22,14 @@ public class Commands implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (label.equalsIgnoreCase("APick")) {
+        if (label.equalsIgnoreCase("APick") || label.equalsIgnoreCase("autopickup")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
                     setautoPick(Objects.requireNonNull(((Player) sender).getPlayer()), !autoPick(((Player) sender).getPlayer()));
                 }
             }
         }
-        if (label.equalsIgnoreCase("ASmelt")) {
+        if (label.equalsIgnoreCase("ASmelt") || label.equalsIgnoreCase("autosmelt")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
                     if (sender.hasPermission("storage.asmelt")) {
@@ -38,7 +38,7 @@ public class Commands implements CommandExecutor {
                 }
             }
         }
-        if (label.equalsIgnoreCase("Storage")) {
+        if (label.equalsIgnoreCase("Storage") || label.equalsIgnoreCase("kho") || label.equalsIgnoreCase("store")) {
             if (args.length == 0) {
                 for (String user : getlanguagefile().getStringList("Help_User")) {
                     sender.sendMessage(colorize(user));
@@ -90,7 +90,7 @@ public class Commands implements CommandExecutor {
                             if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().contains(items)) {
                                 ((Player) sender).getPlayer().getInventory().remove(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                                sender.sendMessage(Files.colorize(getlanguagefile().getString("Add_Block")
+                                sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Block"))
                                         .replaceAll("%block%", args[1])
                                         .replaceAll("%amount%", args[2])));
                             } else {

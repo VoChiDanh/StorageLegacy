@@ -4,16 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.danh</groupId>
-    <artifactId>Storage</artifactId>
-    <name>Storage</name>
+    <parent>
+        <artifactId>Storage</artifactId>
+        <groupId>net.danh</groupId>
+        <version>1.8</version>
+    </parent>
+
+    <artifactId>Storage-plugins</artifactId>
     <version>1.8</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>Storage-1_13</module>
-        <module>Storage-Legacy</module>
-        <module>Storage-plugins</module>
-    </modules>
+    <packaging>jar</packaging>
+
+    <name>Storage-plugins</name>
 
     <properties>
         <java.version>8</java.version>
@@ -33,37 +34,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>net.danh</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
     <repositories>

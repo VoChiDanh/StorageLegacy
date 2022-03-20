@@ -36,6 +36,7 @@ jobs:
           embed-color: "65280"
           embed-description: |
             Change Log:
+            
             ${{ github.event.head_commit.message }}
             
             Developer: [`${{ github.actor }}`](https://github.com/${{ github.actor }})
