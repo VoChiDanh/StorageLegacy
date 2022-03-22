@@ -43,7 +43,6 @@ public class Items {
         }
     }
 
-    @Deprecated
     public static String getName(String name) {
         return getconfigfile().getString("Blocks." + name + ".Name");
     }

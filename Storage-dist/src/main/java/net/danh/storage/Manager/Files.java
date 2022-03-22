@@ -24,6 +24,7 @@ public class Files {
         configFile = new File(get().getDataFolder(), "config.yml");
         languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
+
         if (!configFile.exists()) get().saveResource("config.yml", false);
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
