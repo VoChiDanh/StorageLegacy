@@ -10,10 +10,7 @@
         <version>1.9</version>
     </parent>
     <artifactId>Storage-Legacy</artifactId>
-    <version>1.9</version>
     <packaging>jar</packaging>
-
-    <name>Storage-Legacy</name>
 
     <properties>
         <java.version>8</java.version>
@@ -29,8 +26,8 @@
         </dependency>
         <dependency>
             <groupId>net.danh</groupId>
-            <artifactId>Storage-plugins</artifactId>
-            <version>1.9</version>
+            <artifactId>Storage-dist</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>

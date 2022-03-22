@@ -1,5 +1,5 @@
 name: Storage
-version: '${project.version}'
+version: '${project.parent.version}'
 main: net.danh.storage.Storage
 authors: [ VoChiDanh ]
 api-version: 1.13

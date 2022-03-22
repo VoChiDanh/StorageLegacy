@@ -11,7 +11,6 @@
     </parent>
 
     <artifactId>Storage-1_13</artifactId>
-    <version>1.9</version>
     <packaging>jar</packaging>
 
     <name>Storage-1_13</name>
@@ -29,8 +28,8 @@
         </dependency>
         <dependency>
             <groupId>net.danh</groupId>
-            <artifactId>Storage-plugins</artifactId>
-            <version>1.9</version>
+            <artifactId>Storage-dist</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>

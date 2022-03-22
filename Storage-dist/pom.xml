@@ -10,11 +10,8 @@
         <version>1.9</version>
     </parent>
 
-    <artifactId>Storage-plugins</artifactId>
-    <version>1.9</version>
+    <artifactId>Storage-dist</artifactId>
     <packaging>jar</packaging>
-
-    <name>Storage-plugins</name>
 
     <properties>
         <java.version>8</java.version>

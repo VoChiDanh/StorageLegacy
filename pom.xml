@@ -12,7 +12,7 @@
     <modules>
         <module>Storage-1_13</module>
         <module>Storage-Legacy</module>
-        <module>Storage-plugins</module>
+        <module>Storage-dist</module>
     </modules>
 
     <properties>

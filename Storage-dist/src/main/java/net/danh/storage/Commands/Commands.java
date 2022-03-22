@@ -2,6 +2,7 @@ package net.danh.storage.Commands;
 
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -86,12 +87,12 @@ public class Commands implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("add")) {
                         if (Material.getMaterial(args[1]) != null) {
-                            ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])), Integer.parseInt(args[2]));
-                            if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().contains(items)) {
+                            ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])));
+                            if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().containsAtLeast(items, Integer.parseInt(args[2]))) {
                                 ((Player) sender).getPlayer().getInventory().remove(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                 sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Block"))
-                                        .replaceAll("%block%", args[1])
+                                        .replaceAll("%block%", Items.getName(args[1]))
                                         .replaceAll("%amount%", args[2])));
                             } else {
                                 sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
