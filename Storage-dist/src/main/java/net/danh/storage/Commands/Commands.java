@@ -87,9 +87,10 @@ public class Commands implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("add")) {
                         if (Material.getMaterial(args[1]) != null) {
-                            ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])));
-                            if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().containsAtLeast(items, Integer.parseInt(args[2]))) {
-                                ((Player) sender).getPlayer().getInventory().remove(items);
+                            ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])));
+                            if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().containsAtLeast(checkitems, Integer.parseInt(args[2]))) {
+                                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])), Integer.parseInt(args[2]));
+                                ((Player) sender).getPlayer().getInventory().removeItem(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                 sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Block"))
                                         .replaceAll("%block%", Items.getName(args[1]))
