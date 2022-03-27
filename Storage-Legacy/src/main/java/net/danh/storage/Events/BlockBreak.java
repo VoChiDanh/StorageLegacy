@@ -37,13 +37,13 @@ public class BlockBreak implements Listener {
             e.setCancelled(true);
             return;
         }
-        e.getBlock().getDrops().clear();
-        if (nms.isVersion(12)) {
-            e.setDropItems(false);
-        }
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {
             if (autoPick(p)) {
+                e.getBlock().getDrops().clear();
+                if (nms.isVersion(12)) {
+                    e.setDropItems(false);
+                }
                 for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                     if (blocks.equalsIgnoreCase(getBlockType)) {
                         items = getconfigfile().getString("Blocks." + blocks + ".Name");
