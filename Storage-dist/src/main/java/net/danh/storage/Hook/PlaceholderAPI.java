@@ -53,27 +53,19 @@ public class PlaceholderAPI extends PlaceholderExpansion {
             String name = identifier.substring(6);
             return String.valueOf(Data.getMaxStorage(p) - Data.getStorage(p, name));
         }
-        if (identifier.startsWith("auto_")) {
-            String name = identifier.substring(5);
-            if (name.equalsIgnoreCase("smelt")) {
-                if (Data.autoSmelt(p)) {
-                    return Files.getconfigfile().getString("Boolean.True");
-                }
-                if (!Data.autoSmelt(p)) {
-                    return Files.getconfigfile().getString("Boolean.False");
-                }
-                return Files.getconfigfile().getString("Boolean.False");
+        if (identifier.startsWith("auto_smelt")) {
+            if (Data.autoSmelt(p)) {
+                return Files.getconfigfile().getString("Boolean.true");
+            } else {
+                return Files.getconfigfile().getString("Boolean.false");
             }
-            if (name.equalsIgnoreCase("pickup")) {
-                if (Data.autoPick(p)) {
-                    return Files.getconfigfile().getString("Boolean.True");
-                }
-                if (!Data.autoPick(p)) {
-                    return Files.getconfigfile().getString("Boolean.False");
-                }
-                return Files.getconfigfile().getString("Boolean.True");
+        }
+        if (identifier.startsWith("auto_pickup")) {
+            if (Data.autoPick(p)) {
+                return Files.getconfigfile().getString("Boolean.true");
+            } else {
+                return Files.getconfigfile().getString("Boolean.false");
             }
-            return "";
         }
         if (identifier.startsWith("used_")) {
             String name = identifier.substring(5);
