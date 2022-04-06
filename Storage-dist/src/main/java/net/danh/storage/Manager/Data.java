@@ -22,11 +22,14 @@ public class Data {
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
         if (getMaxStorage(p) >= (getStorage(p, item) + amount)) {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item) + amount);
-            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
-                    new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
-                            .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
-                                    .replaceAll("-", " "))
-                            .replaceAll("%amount%", String.valueOf(amount)))));
+
+            if (!Files.getconfigfile().getBoolean("Message.STATUS")) {
+                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
+                        new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
+                                .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount)))));
+            }
         } else {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getMaxStorage(p));
             p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
@@ -42,11 +45,13 @@ public class Data {
         } else {
             Files.getdatafile().set("players." + p.getName() + ".items." + item + ".amount", 0);
         }
-        p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
-                new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Remove_Item"))
-                        .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
-                                .replaceAll("-", " "))
-                        .replaceAll("%amount%", String.valueOf(amount)))));
+        if (!Files.getconfigfile().getBoolean("Message.STATUS")) {
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
+                    new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Remove_Item"))
+                            .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
+                                    .replaceAll("-", " "))
+                            .replaceAll("%amount%", String.valueOf(amount)))));
+        }
         Files.savedata();
     }
 

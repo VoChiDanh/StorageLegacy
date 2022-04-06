@@ -4,6 +4,7 @@ Blacklist-World:
 Message:
   TAKE: CHAT #ACTION_BAR / CHAT
   RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
+  STATUS: true
 Boolean:
   true: "On"
   false: "Off"

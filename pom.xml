@@ -44,6 +44,26 @@
                             <shadedPattern>net.danh</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>com/cryptomorin/xseries/ReflectionUtils*</exclude>
+                                <exclude>com/cryptomorin/xseries/NMSExtras*</exclude>
+                                <exclude>com/cryptomorin/xseries/NoteBlockMusic*</exclude>
+                                <exclude>com/cryptomorin/xseries/SkullCacheListener*</exclude>
+                                <exclude>com/cryptomorin/xseries/SkullUtils*</exclude>
+                                <exclude>com/cryptomorin/xseries/XBiome*</exclude>
+                                <exclude>com/cryptomorin/xseries/XBlock*</exclude>
+                                <exclude>com/cryptomorin/xseries/XEnchantment*</exclude>
+                                <exclude>com/cryptomorin/xseries/XEntity*</exclude>
+                                <exclude>com/cryptomorin/xseries/XItemStack*</exclude>
+                                <exclude>com/cryptomorin/xseries/XPotion*</exclude>
+                                <exclude>com/cryptomorin/xseries/XSound*</exclude>
+                                <exclude>com/cryptomorin/xseries/XTag*</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -93,7 +113,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13.2-R0.1-SNAPSHOT</version>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -118,6 +138,11 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.cryptomorin</groupId>
+            <artifactId>XSeries</artifactId>
+            <version>8.7.1</version>
         </dependency>
     </dependencies>
 </project>
