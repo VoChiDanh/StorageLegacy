@@ -55,7 +55,7 @@ public class Commands implements CommandExecutor {
                 if (sender.hasPermission("Storage.admin")) {
                     if (args[0].equalsIgnoreCase("reload")) {
                         reloadfiles();
-                        
+                        sender.sendMessage(Files.colorize("&aReloaded"));
                     }
                 }
             }
