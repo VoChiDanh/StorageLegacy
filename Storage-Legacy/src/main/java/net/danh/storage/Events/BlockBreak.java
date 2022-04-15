@@ -5,6 +5,7 @@ import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.RegionQuery;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import net.danh.storage.Storage;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -29,13 +30,15 @@ public class BlockBreak implements Listener {
         String blocks = e.getBlock().getType().toString();
         String items = null;
         NMSAssistant nms = new NMSAssistant();
-        LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
-        Location loc = new Location(p.getWorld(), e.getBlock().getLocation().getBlockX(), e.getBlock().getLocation().getBlockY(), e.getBlock().getLocation().getBlockZ());
-        RegionContainer container = WorldGuardPlugin.inst().getRegionContainer();
-        RegionQuery query = container.createQuery();
-        if (!query.testState(loc, localPlayer, DefaultFlag.BLOCK_BREAK) && !p.hasPermission("Storage.admin")) {
-            e.setCancelled(true);
-            return;
+        if (Storage.get().getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            LocalPlayer localPlayer = WorldGuardPlugin.inst().wrapPlayer(p);
+            Location loc = new Location(p.getWorld(), e.getBlock().getLocation().getBlockX(), e.getBlock().getLocation().getBlockY(), e.getBlock().getLocation().getBlockZ());
+            RegionContainer container = WorldGuardPlugin.inst().getRegionContainer();
+            RegionQuery query = container.createQuery();
+            if (!query.testState(loc, localPlayer, DefaultFlag.BLOCK_BREAK) && !p.hasPermission("Storage.admin")) {
+                e.setCancelled(true);
+                return;
+            }
         }
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {

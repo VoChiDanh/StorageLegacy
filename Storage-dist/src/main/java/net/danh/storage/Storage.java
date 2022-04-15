@@ -47,10 +47,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with WorldGuard!");
-        } else {
-            getLogger().log(Level.INFO, "Unsuccessfully hooked with WorldGuard!");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
         }
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with Vault!");
