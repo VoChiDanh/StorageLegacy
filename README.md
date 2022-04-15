@@ -15,7 +15,7 @@
 > /ASmelt - Toggle Auto Smelt
 
 > /Storage take [Item] [Amount] - Take physical item from storage
-> 
+>
 > /Storage add [Item] [Amount] - Add physical item from storage
 
 > /Storage reload - Reload config

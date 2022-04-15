@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class Data {
     protected static final HashMap<String, Integer> data = new HashMap<>();
+    protected static final HashMap<String, Boolean> status = new HashMap<>();
 
     public static int getStorageData(@NotNull Player p, String item) {
         return Files.getdatafile().getInt("players." + p.getName() + ".items." + item + ".amount");
@@ -39,14 +40,19 @@ public class Data {
                         new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
                                 .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                         .replaceAll("-", " "))
-                                .replaceAll("%amount%", String.valueOf(amount)))));
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, item)))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, item))))));
             }
         } else {
             data.put(p.getName() + "_storage_" + item, getMaxStorage(p, item));
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.FULL")),
                     new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
-                    .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
-                            .replaceAll("-", " ")))));
+                            .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
+                                    .replaceAll("-", " "))
+                            .replaceAll("%amount%", String.valueOf(amount))
+                            .replaceAll("%storage%", String.format("%,d", getStorage(p, item)))
+                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, item))))));
         }
     }
 
@@ -61,7 +67,9 @@ public class Data {
                     new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Remove_Item"))
                             .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                     .replaceAll("-", " "))
-                            .replaceAll("%amount%", String.valueOf(amount)))));
+                            .replaceAll("%amount%", String.valueOf(amount))
+                            .replaceAll("%storage%", String.format("%,d", getStorage(p, item)))
+                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, item))))));
         }
     }
 
@@ -96,8 +104,6 @@ public class Data {
         Random r = new Random();
         return r.nextInt(max - min) + min;
     }
-
-    protected static final HashMap<String, Boolean> status = new HashMap<>();
 
     public static boolean autoSmeltData(@NotNull Player p) {
         return Files.getdatafile().getBoolean("players." + p.getName() + ".auto.Smelt");
