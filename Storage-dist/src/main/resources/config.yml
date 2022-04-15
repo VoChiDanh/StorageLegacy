@@ -4,6 +4,9 @@ Blacklist-World:
 Message:
   TAKE: CHAT #ACTION_BAR / CHAT
   RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
+  REMOVE: ACTION_BAR #ACTION_BAR / CHAT
+  ADD: CHAT #ACTION_BAR / CHAT
+  FULL: CHAT #ACTION_BAR / CHAT
   STATUS: true
 Boolean:
   true: "On"
@@ -31,6 +34,10 @@ Blocks:
   DIAMOND_BLOCK:
     Name: "Big_Diamond"
     Price: 350
+  LAPIS_ORE:
+    Name: "Lapis_Ore"
+    Price: 200
+    Convert: LAPIS_LAZULI #If you use 1.9 - 1.12.2, set it to INK_SACK
 Default_Max_Storage: 10000
 Fortune:
   Chance:

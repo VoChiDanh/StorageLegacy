@@ -6,6 +6,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.Objects;
 
@@ -32,8 +33,19 @@ public class Items {
                     name = getconfigfile().getString("Blocks." + name + ".Convert");
                 }
             }
-            ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
-            p.getInventory().addItem(items);
+            NMSAssistant nmsAssistant = new NMSAssistant();
+            if (nmsAssistant.isVersionLessThan(13)) {
+                if (Objects.requireNonNull(name).equalsIgnoreCase("INK_SACK")) {
+                    ItemStack items = new ItemStack(Material.LEGACY_INK_SACK, amount, (short) 4);
+                    p.getInventory().addItem(items);
+                } else {
+                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
+                    p.getInventory().addItem(items);
+                }
+            } else {
+                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
+                p.getInventory().addItem(items);
+            }
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                     new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
                             .replaceAll("%blocks%", block.replaceAll("_", " "))

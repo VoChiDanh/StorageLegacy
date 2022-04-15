@@ -35,7 +35,7 @@ public class Data {
         if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
             data.replace(p.getName() + "_storage_" + item, getStorage(p, item) + amount);
             if (Files.getconfigfile().getBoolean("Message.STATUS")) {
-                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
+                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
                         new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
                                 .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                         .replaceAll("-", " "))
@@ -43,9 +43,10 @@ public class Data {
             }
         } else {
             data.put(p.getName() + "_storage_" + item, getMaxStorage(p, item));
-            p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.FULL")),
+                    new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Full_Storage"))
                     .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
-                            .replaceAll("-", " "))));
+                            .replaceAll("-", " ")))));
         }
     }
 
@@ -56,7 +57,7 @@ public class Data {
             data.replace(p.getName() + "_storage_" + item, 0);
         }
         if (Files.getconfigfile().getBoolean("Message.STATUS")) {
-            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.RECEIVE")),
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.REMOVE")),
                     new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Remove_Item"))
                             .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                     .replaceAll("-", " "))
