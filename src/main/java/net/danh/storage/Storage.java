@@ -45,9 +45,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-            getLogger().log(Level.INFO, "Successfully hooked with WorldGuard!");
-        }
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with Vault!");
         }
@@ -91,7 +88,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {
-        return new ArrayList<>(Arrays.asList(
+        return new ArrayList<Listener>(Arrays.asList(
                 new BlockBreak(),
                 new Quit(),
                 new Join()

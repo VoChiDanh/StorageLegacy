@@ -8,12 +8,7 @@
     <artifactId>Storage</artifactId>
     <name>Storage</name>
     <version>1.0-B2</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>Storage-1_13</module>
-        <module>Storage-Legacy</module>
-        <module>Storage-dist</module>
-    </modules>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>8</java.version>
@@ -95,10 +90,6 @@
         <repository>
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
-        </repository>
-        <repository>
-            <id>sk89q-repo</id>
-            <url>https://maven.enginehub.org/repo/</url>
         </repository>
     </repositories>
 
