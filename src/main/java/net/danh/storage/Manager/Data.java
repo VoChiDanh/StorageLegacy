@@ -30,6 +30,15 @@ public class Data {
         } else {
             data.put(p.getName() + "_storage_" + item, amount);
         }
+        if (Files.getconfigfile().getBoolean("Message.STATUS")) {
+            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
+                    new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
+                            .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
+                                    .replaceAll("-", " "))
+                            .replaceAll("%amount%", String.valueOf(amount))
+                            .replaceAll("%storage%", String.format("%,d", getStorage(p, item)))
+                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, item))))));
+        }
     }
 
     public static void addStorage(@NotNull Player p, String item, Integer amount) {

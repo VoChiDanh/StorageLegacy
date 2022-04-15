@@ -55,7 +55,7 @@ public class Commands implements CommandExecutor {
                 if (sender.hasPermission("Storage.admin")) {
                     if (args[0].equalsIgnoreCase("reload")) {
                         reloadfiles();
-                        sender.sendMessage(colorize("&aDone"));
+                        
                     }
                 }
             }
@@ -109,7 +109,7 @@ public class Commands implements CommandExecutor {
                                     }
                                     if (Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
                                         setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        sender.sendMessage(colorize("&aDone"));
+                                        
                                     }
                                 }
                                 if (args[1].equalsIgnoreCase("add")) {
@@ -118,7 +118,7 @@ public class Commands implements CommandExecutor {
                                     }
                                     if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) + Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
                                         addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        sender.sendMessage(colorize("&aDone"));
+                                        
                                     }
                                 }
                                 if (args[1].equalsIgnoreCase("remove")) {
@@ -127,7 +127,7 @@ public class Commands implements CommandExecutor {
                                     }
                                     if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
                                         removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        sender.sendMessage(colorize("&aDone"));
+                                        
                                     }
                                 }
                             }
@@ -141,15 +141,15 @@ public class Commands implements CommandExecutor {
                             if (sender.hasPermission("Storage.admin")) {
                                 if (args[1].equalsIgnoreCase("set")) {
                                     setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    sender.sendMessage(colorize("&aDone"));
+                                    
                                 }
                                 if (args[1].equalsIgnoreCase("add")) {
                                     addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    sender.sendMessage(colorize("&aDone"));
+                                    
                                 }
                                 if (args[1].equalsIgnoreCase("remove")) {
                                     removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    sender.sendMessage(colorize("&aDone"));
+                                    
                                 }
                             }
                         }
