@@ -8,25 +8,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class Join implements Listener {
 
     @EventHandler
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (!autoSmelt(p)) {
-            if (p.hasPermission("storage.asmelt")) {
-                setautoSmelt(p, true);
+        setautoSmelt(p, autoSmeltData(p));
+        setautoPick(p, autoPickData(p));
+        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+            if (Data.getMaxStorage(p, item) == 0) {
+                Data.setMaxStorage(p, item, Files.getconfigfile().getInt("Default_Max_Storage"));
             } else {
-                setautoPick(p, false);
+                Data.setMaxStorage(p, item, getMaxStorageData(p, item));
             }
-        }
-        if (!autoPick(p)) {
-            setautoPick(p, true);
-        }
-        if (Data.getMaxStorage(p) == 0) {
-            Data.setMaxStorage(p, Files.getconfigfile().getInt("Default_Max_Storage"));
+            if (Data.getStorage(p, item) == 0) {
+                Data.setStorage(p, item, 0);
+            } else {
+                Data.setStorage(p, item, getStorageData(p, item));
+            }
         }
     }
 }

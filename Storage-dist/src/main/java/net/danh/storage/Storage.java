@@ -3,11 +3,14 @@ package net.danh.storage;
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.Join;
+import net.danh.storage.Events.Quit;
 import net.danh.storage.Hook.PlaceholderAPI;
+import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
+
+import static net.danh.storage.Manager.Files.getconfigfile;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
 
@@ -80,7 +85,11 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     public void onDisable() {
         Files.saveconfig();
         Files.savelanguage();
-        Files.savedata();
+        for (Player p : getServer().getOnlinePlayers()) {
+            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                Data.savePlayerData(p, item);
+            }
+        }
     }
 
 
@@ -88,6 +97,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     private @NotNull ArrayList<Listener> initializeListeners() {
         return new ArrayList<>(Arrays.asList(
                 new BlockBreak(),
+                new Quit(),
                 new Join()
         ));
     }

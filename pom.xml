@@ -7,7 +7,7 @@
     <groupId>net.danh</groupId>
     <artifactId>Storage</artifactId>
     <name>Storage</name>
-    <version>1.9</version>
+    <version>1.0-B1</version>
     <packaging>pom</packaging>
     <modules>
         <module>Storage-1_13</module>
@@ -44,26 +44,6 @@
                             <shadedPattern>net.danh</shadedPattern>
                         </relocation>
                     </relocations>
-                    <filters>
-                        <filter>
-                            <artifact>*:*</artifact>
-                            <excludes>
-                                <exclude>com/cryptomorin/xseries/ReflectionUtils*</exclude>
-                                <exclude>com/cryptomorin/xseries/NMSExtras*</exclude>
-                                <exclude>com/cryptomorin/xseries/NoteBlockMusic*</exclude>
-                                <exclude>com/cryptomorin/xseries/SkullCacheListener*</exclude>
-                                <exclude>com/cryptomorin/xseries/SkullUtils*</exclude>
-                                <exclude>com/cryptomorin/xseries/XBiome*</exclude>
-                                <exclude>com/cryptomorin/xseries/XBlock*</exclude>
-                                <exclude>com/cryptomorin/xseries/XEnchantment*</exclude>
-                                <exclude>com/cryptomorin/xseries/XEntity*</exclude>
-                                <exclude>com/cryptomorin/xseries/XItemStack*</exclude>
-                                <exclude>com/cryptomorin/xseries/XPotion*</exclude>
-                                <exclude>com/cryptomorin/xseries/XSound*</exclude>
-                                <exclude>com/cryptomorin/xseries/XTag*</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -74,6 +54,19 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -138,11 +131,6 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.0</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.cryptomorin</groupId>
-            <artifactId>XSeries</artifactId>
-            <version>8.7.1</version>
         </dependency>
     </dependencies>
 </project>

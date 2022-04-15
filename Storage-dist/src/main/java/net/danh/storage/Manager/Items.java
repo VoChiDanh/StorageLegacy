@@ -1,6 +1,5 @@
 package net.danh.storage.Manager;
 
-import com.cryptomorin.xseries.XMaterial;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.milkbowl.vault.economy.EconomyResponse;
@@ -30,9 +29,6 @@ public class Items {
             removeStorage(p, name, amount);
             if (autoSmelt(p)) {
                 if (name.contains("_ORE")) {
-                    if (name.startsWith("LAPIS")) {
-                        name = Objects.requireNonNull(XMaterial.LAPIS_LAZULI.parseMaterial()).toString();
-                    }
                     name = getconfigfile().getString("Blocks." + name + ".Convert");
                 }
             }
