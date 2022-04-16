@@ -2,18 +2,17 @@ package net.danh.storage;
 
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Events.BlockBreak;
+import net.danh.storage.Events.IA_BlockBreak;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
-import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
@@ -21,6 +20,7 @@ import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -51,6 +51,10 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             getLogger().log(Level.INFO, "&aSuccessfully hooked with PlaceholderAPI!");
             new PlaceholderAPI().register();
+        }
+        if (getServer().getPluginManager().getPlugin("ItemAdder") != null) {
+            getLogger().log(Level.INFO, "&aSuccessfully hooked with ItemAdder!");
+            registerIAEventHandlers();
         }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
@@ -100,6 +104,22 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
      */
     private void registerEventHandlers() {
         ArrayList<Listener> listeners = initializeListeners();
+        EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
+        eventHandlerRegistry.registerEventHandlers(listeners, this);
+    }
+
+    @Contract(" -> new")
+    private @NotNull ArrayList<Listener> initializeIAListeners() {
+        return new ArrayList<Listener>(Collections.singletonList(
+                new IA_BlockBreak()
+        ));
+    }
+
+    /**
+     * Registers the event handlers of the plugin using Ponder.
+     */
+    private void registerIAEventHandlers() {
+        ArrayList<Listener> listeners = initializeIAListeners();
         EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
         eventHandlerRegistry.registerEventHandlers(listeners, this);
     }
