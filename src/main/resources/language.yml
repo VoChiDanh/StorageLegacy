@@ -1,7 +1,7 @@
 Full_Storage: "&c%item%&6 storage has reached its limit"
 Help_Admin:
   - "&9/Storage storage [set/add/remove] [Player] [Items] [Amount]"
-  - "&9/Storage maxstorage [set/add/remove] [Player] [Amount]"
+  - "&9/Storage maxstorage [set/add/remove] [Player] [Items] [Amount]"
 Help_User:
   - "&9/Storage sell [Items] [amount] - Sell Block"
   - "&9/Storage take [Items] [Amount] - Take Block"
