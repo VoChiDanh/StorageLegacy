@@ -10,35 +10,19 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Data {
-    protected static final HashMap<String, Integer> data = new HashMap<>();
-    protected static final HashMap<String, Boolean> status = new HashMap<>();
+    private static final HashMap<String, Integer> data = new HashMap<>();
+    private static final HashMap<String, Boolean> status = new HashMap<>();
 
     public static int getStorageData(@NotNull Player p, String item) {
         return Files.getdatafile().getInt("players." + p.getName() + ".items." + item + ".amount");
     }
 
     public static int getStorage(@NotNull Player p, String item) {
-        if (!data.containsKey(p.getName() + "_storage_" + item)) {
-            data.put(p.getName() + "_storage_" + item, 0);
-        }
         return data.get(p.getName() + "_storage_" + item);
     }
 
     public static void setStorage(@NotNull Player p, String item, Integer amount) {
-        if (!data.containsKey(p.getName() + "_storage_" + item)) {
-            data.put(p.getName() + "_storage_" + item, 0);
-        } else {
-            data.put(p.getName() + "_storage_" + item, amount);
-        }
-        if (Files.getconfigfile().getBoolean("Message.STATUS")) {
-            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
-                    new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
-                            .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
-                                    .replaceAll("-", " "))
-                            .replaceAll("%amount%", String.valueOf(amount))
-                            .replaceAll("%storage%", String.format("%,d", getStorage(p, item)))
-                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, item))))));
-        }
+        data.put(p.getName() + "_storage_" + item, Math.max(amount, 0));
     }
 
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
@@ -87,14 +71,11 @@ public class Data {
     }
 
     public static int getMaxStorage(@NotNull Player p, String item) {
-        if (!data.containsKey(p.getName() + "_max_" + item)) {
-            data.put(p.getName() + "_max_" + item, 0);
-        }
         return data.get(p.getName() + "_max_" + item);
     }
 
     public static void setMaxStorage(@NotNull Player p, String item, Integer amount) {
-        data.put(p.getName() + "_max_" + item, amount);
+        data.put(p.getName() + "_max_" + item, Math.max(amount, 0));
     }
 
     public static void addMaxStorage(@NotNull Player p, String item, Integer amount) {

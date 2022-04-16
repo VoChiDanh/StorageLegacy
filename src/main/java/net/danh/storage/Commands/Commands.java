@@ -1,5 +1,7 @@
 package net.danh.storage.Commands;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.Items;
@@ -85,9 +87,13 @@ public class Commands implements CommandExecutor {
                                 ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])), Integer.parseInt(args[2]));
                                 ((Player) sender).getPlayer().getInventory().removeItem(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                                sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Block"))
-                                        .replaceAll("%block%", Items.getName(args[1]))
-                                        .replaceAll("%amount%", args[2])));
+                                Player p = ((Player) sender).getPlayer();
+                                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
+                                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Block"))
+                                                .replaceAll("%item%", args[1].replaceAll("_", " "))
+                                                .replaceAll("%amount%", args[2])
+                                                .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
+                                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
                             } else {
                                 sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
                             }

@@ -10,12 +10,14 @@ import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
+import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
 import java.util.ArrayList;
@@ -37,8 +39,13 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
         instance = this;
+        performNMSChecks();
+    }
+
+    @Override
+    public void onEnable() {
         Metrics metrics = new Metrics(this, 14622);
         if (!setupEconomy()) {
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -89,6 +96,16 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         }
     }
 
+    private void performNMSChecks() {
+        final NMSAssistant nmsAssistant = new NMSAssistant();
+        if (nmsAssistant.isVersionGreaterThan(8)) {
+            getLogger().log(Level.INFO, "Loading data matching server version " + nmsAssistant.getNMSVersion().toString());
+        } else {
+            getLogger().warning("The server version is not suitable to load the plugin");
+            getLogger().warning("Support version 1.9.x - 1.18.x");
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+        }
+    }
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {

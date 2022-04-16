@@ -18,7 +18,6 @@ public class Items {
 
     private static int price;
     private static String block;
-    private static String material;
 
     public static void RemoveItems(Player p, String name, Integer amount) {
         if (getStorage(p, name) >= amount) {
@@ -29,32 +28,25 @@ public class Items {
                 }
             }
             removeStorage(p, name, amount);
-            if (autoSmelt(p)) {
-                if (name.contains("_ORE")) {
-                    material = getconfigfile().getString("Blocks." + name + ".Convert");
-                }
-            }
-            NMSAssistant nmsAssistant = new NMSAssistant();
-            if (nmsAssistant.isVersionLessThan(13)) {
-                if (name.equalsIgnoreCase("LAPIS_ORE")) {
-                    if (Objects.requireNonNull(material).equalsIgnoreCase("INK_SACK")) {
-                        ItemStack items = new ItemStack(Material.LEGACY_INK_SACK, amount, (short) 4);
-                        p.getInventory().addItem(items);
-                    }
-                } else {
-                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount);
-                    p.getInventory().addItem(items);
-                }
-            } else {
-                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount);
-                p.getInventory().addItem(items);
-            }
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                     new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
-                            .replaceAll("%blocks%", block.replaceAll("_", " "))
+                            .replaceAll("%item%", block.replaceAll("_", " "))
                             .replaceAll("%amount%", String.valueOf(amount))
                             .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
                             .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+            if (autoSmelt(p)) {
+                if (name.contains("_ORE")) {
+                    name = getconfigfile().getString("Blocks." + name + ".Convert");
+                }
+            }
+            NMSAssistant nmsAssistant = new NMSAssistant();
+            if (nmsAssistant.isVersionLessThan(13) && Objects.requireNonNull(name).equalsIgnoreCase("LAPIS_LAZULI")) {
+                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial("INK_SACK")), amount, (short) 4);
+                p.getInventory().addItem(items);
+            } else {
+                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
+                p.getInventory().addItem(items);
+            }
         } else {
             p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
         }
