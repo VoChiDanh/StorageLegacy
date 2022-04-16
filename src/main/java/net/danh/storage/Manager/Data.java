@@ -29,7 +29,7 @@ public class Data {
         if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
             data.replace(p.getName() + "_storage_" + item, getStorage(p, item) + amount);
             if (Files.getconfigfile().getBoolean("Message.STATUS")) {
-                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
+                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.")),
                         new TranslatableComponent(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("Receive_Item"))
                                 .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                         .replaceAll("-", " "))

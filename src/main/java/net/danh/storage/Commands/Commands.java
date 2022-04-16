@@ -89,7 +89,7 @@ public class Commands implements CommandExecutor {
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                 Player p = ((Player) sender).getPlayer();
                                 p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
-                                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Block"))
+                                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Item"))
                                                 .replaceAll("%item%", args[1].replaceAll("_", " "))
                                                 .replaceAll("%amount%", args[2])
                                                 .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
