@@ -8,12 +8,14 @@ import net.danh.storage.Events.Quit;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
@@ -68,7 +70,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
         Files.createfiles();
-/*        (new BukkitRunnable() {
+        (new BukkitRunnable() {
             public void run() {
                 try {
                     SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
@@ -82,7 +84,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
                     e.printStackTrace();
                 }
             }
-        }).runTaskTimer(this, 3600 * 20L, 3600 * 20L);*/
+        }).runTaskTimer(this, 3600 * 20L, 3600 * 20L);
     }
 
     @Override
