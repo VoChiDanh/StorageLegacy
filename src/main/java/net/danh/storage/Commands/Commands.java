@@ -1,10 +1,9 @@
 package net.danh.storage.Commands;
 
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
-import net.danh.storage.Manager.Items;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -29,6 +28,16 @@ public class Commands implements CommandExecutor {
             if (args.length == 0) {
                 if (sender instanceof Player) {
                     setautoPick(Objects.requireNonNull(((Player) sender).getPlayer()), !autoPick(((Player) sender).getPlayer()));
+                    if (autoPick(((Player) sender).getPlayer())) {
+                        sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
+                                .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.true")))));
+                    }
+                    if (!autoPick(((Player) sender).getPlayer())) {
+                        sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
+                                .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.false")))));
+                    }
                 }
             }
         }
@@ -37,6 +46,16 @@ public class Commands implements CommandExecutor {
                 if (sender instanceof Player) {
                     if (sender.hasPermission("storage.asmelt")) {
                         setautoSmelt(Objects.requireNonNull(((Player) sender).getPlayer()), !autoSmelt(((Player) sender).getPlayer()));
+                        if (autoSmelt(((Player) sender).getPlayer())) {
+                            sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                    .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
+                                    .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.true")))));
+                        }
+                        if (!autoSmelt(((Player) sender).getPlayer())) {
+                            sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                    .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
+                                    .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.false")))));
+                        }
                     }
                 }
             }
@@ -115,7 +134,7 @@ public class Commands implements CommandExecutor {
                                     }
                                     if (Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
                                         setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        
+
                                     }
                                 }
                                 if (args[1].equalsIgnoreCase("add")) {
@@ -124,7 +143,7 @@ public class Commands implements CommandExecutor {
                                     }
                                     if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) + Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
                                         addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        
+
                                     }
                                 }
                                 if (args[1].equalsIgnoreCase("remove")) {
@@ -133,7 +152,7 @@ public class Commands implements CommandExecutor {
                                     }
                                     if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
                                         removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        
+
                                     }
                                 }
                             }
@@ -147,15 +166,15 @@ public class Commands implements CommandExecutor {
                             if (sender.hasPermission("Storage.admin")) {
                                 if (args[1].equalsIgnoreCase("set")) {
                                     setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    
+
                                 }
                                 if (args[1].equalsIgnoreCase("add")) {
                                     addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    
+
                                 }
                                 if (args[1].equalsIgnoreCase("remove")) {
                                     removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    
+
                                 }
                             }
                         }

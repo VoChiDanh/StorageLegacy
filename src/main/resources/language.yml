@@ -15,3 +15,7 @@ Receive_Item: "&a+%amount% %item% (%storage%/%max%)"
 Remove_Item: "&c-%amount% %item% (%storage%/%max%)"
 Not_Correct_Item: "&aYou need type correct item!"
 Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)"
+Toggle_Status: "&a%type%: %status%"
+Type:
+  autosmelt: "&6Auto Smelt"
+  autopickup: "&6Auto Pickup"
