@@ -20,44 +20,49 @@ public class Items {
     private static String block;
 
     public static void RemoveItems(Player p, String name, Integer amount) {
-        if (getStorage(p, name) >= amount) {
-            for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                if (name.equalsIgnoreCase(getBlockType)) {
-                    block = getconfigfile().getString("Blocks." + name + ".Name");
-                    break;
+        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
+            if (getStorage(p, name) >= amount) {
+                for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                    if (name.equalsIgnoreCase(getBlockType)) {
+                        block = getconfigfile().getString("Blocks." + name + ".Name");
+                        break;
+                    }
                 }
-            }
-            removeStorage(p, name, amount);
-            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
-                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
-                            .replaceAll("%item%", block.replaceAll("_", " "))
-                            .replaceAll("%amount%", String.valueOf(amount))
-                            .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
-            if (autoSmelt(p)) {
-                if (name.contains("_ORE")) {
-                    name = getconfigfile().getString("Blocks." + name + ".Convert");
+                removeStorage(p, name, amount);
+                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
+                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
+                                .replaceAll("%item%", block.replaceAll("_", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                if (autoSmelt(p)) {
+                    if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks." + name)).getKeys(false).contains("Convert")) {
+                        name = getconfigfile().getString("Blocks." + name + ".Convert");
+                    }
                 }
-            }
-            NMSAssistant nmsAssistant = new NMSAssistant();
-            if (nmsAssistant.isVersionLessThan(13)) {
-                String[] data = Objects.requireNonNull(name).split(";");
-                if (data.length == 1) {
-                    String material = data[0];
-                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount);
-                    p.getInventory().addItem(items);
+                NMSAssistant nmsAssistant = new NMSAssistant();
+                if (nmsAssistant.isVersionLessThan(13)) {
+                    String[] data = Objects.requireNonNull(name).split(";");
+                    if (data.length == 1) {
+                        String material = data[0];
+                        ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount);
+                        p.getInventory().addItem(items);
+                    } else {
+                        String material = data[0];
+                        short damaged = Short.parseShort(data[1]);
+                        ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount, damaged);
+                        p.getInventory().addItem(items);
+                    }
                 } else {
-                    String material = data[0];
-                    short damaged = Short.parseShort(data[1]);
-                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount, damaged);
+                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
                     p.getInventory().addItem(items);
                 }
             } else {
-                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
-                p.getInventory().addItem(items);
+                p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
             }
-        } else {
-            p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
+        }
+        else {
+            p.sendMessage(colorize(getlanguagefile().getString("Not_Correct_Item")));
         }
     }
 
