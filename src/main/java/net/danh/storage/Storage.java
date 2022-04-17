@@ -29,6 +29,7 @@ import java.util.Objects;
 import java.util.logging.Level;
 
 import static net.danh.storage.Manager.Files.getconfigfile;
+import static net.danh.storage.Manager.Files.getlanguagefile;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
 
@@ -58,11 +59,11 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             getLogger().log(Level.INFO, "Successfully hooked with Vault!");
         }
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            getLogger().log(Level.INFO, "&aSuccessfully hooked with PlaceholderAPI!");
+            getLogger().log(Level.INFO, "Successfully hooked with PlaceholderAPI!");
             new PlaceholderAPI().register();
         }
         if (getServer().getPluginManager().getPlugin("ItemAdder") != null) {
-            getLogger().log(Level.INFO, "&aSuccessfully hooked with ItemAdder!");
+            getLogger().log(Level.INFO, "Successfully hooked with ItemAdder!");
             registerIAEventHandlers();
         }
         registerEventHandlers();
@@ -70,12 +71,12 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
         Files.createfiles();
+        checkFilesVersion();
         (new BukkitRunnable() {
             public void run() {
                 try {
                     SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
-                    if (updater.checkForUpdates())
-                        getLogger().info(Files.colorize("&#f5602fAn update was found!"));
+                    if (updater.checkForUpdates()) getLogger().info(Files.colorize("&#f5602fAn update was found!"));
                     getLogger().info(Files.colorize("&#77ff73New version: " + updater.getLatestVersion()));
                     getLogger().info(Files.colorize("&#77ff73Your version: " + Storage.get().getDescription().getVersion()));
                     getLogger().info(Files.colorize("&#fffd73Download: " + updater.getResourceURL()));
@@ -85,6 +86,15 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
                 }
             }
         }).runTaskTimer(this, 3600 * 20L, 3600 * 20L);
+        (new BukkitRunnable() {
+            public void run() {
+                for (Player p : getServer().getOnlinePlayers()) {
+                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                        Data.savePlayerData(p, item);
+                    }
+                }
+            }
+        }).runTaskTimer(this, 1800 * 20L, 1800 * 20L);
     }
 
     @Override
@@ -95,6 +105,15 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                 Data.savePlayerData(p, item);
             }
+        }
+    }
+
+    private void checkFilesVersion() {
+        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase(getDescription().getVersion()) || getconfigfile().getString("VERSION") == null) {
+            getLogger().log(Level.SEVERE, "You need update config.yml!");
+        }
+        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase(getDescription().getVersion()) || getconfigfile().getString("VERSION") == null) {
+            getLogger().log(Level.SEVERE, "You need update language.yml!");
         }
     }
 
@@ -111,11 +130,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {
-        return new ArrayList<Listener>(Arrays.asList(
-                new BlockBreak(),
-                new Quit(),
-                new Join()
-        ));
+        return new ArrayList<Listener>(Arrays.asList(new BlockBreak(), new Quit(), new Join()));
     }
 
     /**
@@ -129,9 +144,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeIAListeners() {
-        return new ArrayList<Listener>(Collections.singletonList(
-                new IA_BlockBreak()
-        ));
+        return new ArrayList<Listener>(Collections.singletonList(new IA_BlockBreak()));
     }
 
     /**
@@ -145,8 +158,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
-        if (economyProvider != null)
-            economy = economyProvider.getProvider();
+        if (economyProvider != null) economy = economyProvider.getProvider();
         return (economy != null);
     }
 }

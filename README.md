@@ -20,6 +20,22 @@
 
 > /Storage reload - Reload config
 
+## Placeholder
+
+> %Storage_storage_(MATERIAL)% -> %Storage_storage_COAL_ORE% | Show amount item in storage
+
+> %Storage_max_storage_(MATERIAL)% | Show max amount item in storage
+
+> %Storage_price_(MATERIAL)% | Show item's price
+
+> %Storage_count_(MATERIAL)% | Show the number of items that can be contained
+
+> %Storage_auto_smelt% / %Storage_auto_pickup% | Show status
+
+> %Storage_used_(MATERIAL)% | Show item's empty percentage component
+>
+> %Storage_empty_(MATERIAL)% | Show item's used percent composition
+
 ## Soft Depends
 
 [![vault](https://img.shields.io/badge/Vault-1.7-blue?style="badge)](https://www.spigotmc.org/resources/34315/)
