@@ -75,7 +75,7 @@ public class Data {
     }
 
     public static void setMaxStorage(@NotNull Player p, String item, Integer amount) {
-        data.put(p.getName() + "_max_" + item, Math.max(amount, 0));
+        data.put(p.getName() + "_max_" + item, Math.max(amount, Files.getconfigfile().getInt("Default_Max_Storage")));
     }
 
     public static void addMaxStorage(@NotNull Player p, String item, Integer amount) {

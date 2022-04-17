@@ -74,9 +74,9 @@ public class Commands implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("take")) {
                         if (Integer.parseInt(args[2]) > 0) {
-                            RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), Integer.parseInt(args[2]));
                         } else if (Integer.parseInt(args[2]) == 0) {
-                            RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
                         }
                         return true;
                     }
