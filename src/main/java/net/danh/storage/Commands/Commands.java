@@ -2,6 +2,7 @@ package net.danh.storage.Commands;
 
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.Items;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
@@ -32,8 +33,8 @@ public class Commands implements CommandExecutor {
                         if (autoPick(((Player) sender).getPlayer())) {
                             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TOGGLE.TYPE")),
                                     new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
-                                    .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
-                                    .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.true"))))));
+                                            .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
+                                            .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.true"))))));
                         }
                         if (!autoPick(((Player) sender).getPlayer())) {
                             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TOGGLE.TYPE")),
@@ -43,7 +44,7 @@ public class Commands implements CommandExecutor {
                         } else {
                             return true;
                         }
-                    } else  {
+                    } else {
                         return true;
                     }
                 }
@@ -124,16 +125,30 @@ public class Commands implements CommandExecutor {
                                 ((Player) sender).getPlayer().getInventory().removeItem(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                 Player p = ((Player) sender).getPlayer();
-                                if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
-                                    p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
-                                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Item"))
-                                                    .replaceAll("%item%", getName(args[1]).replaceAll("_", " "))
-                                                    .replaceAll("%amount%", args[2])
-                                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
-                                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
-                                }
-                                else {
-                                    return true;
+                                if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                                        || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
+                                    if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
+                                        p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
+                                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Item"))
+                                                        .replaceAll("%item%", getName(args[1]).replaceAll("_", " "))
+                                                        .replaceAll("%amount%", args[2])
+                                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
+                                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
+                                    }
+                                } else {
+                                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
+                                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                                .replaceAll("%item%", Items.getName(getName(args[1])).replaceAll("_", " ")
+                                                        .replaceAll("-", " "))
+                                                .replaceAll("%amount%", args[2])
+                                                .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1]))))
+                                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                                .replaceAll("%item%", Items.getName(getName(args[1])).replaceAll("_", " ")
+                                                        .replaceAll("-", " "))
+                                                .replaceAll("%amount%", args[2])
+                                                .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
+                                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1])))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
+                                    }
                                 }
                             } else {
                                 sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));

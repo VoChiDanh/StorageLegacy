@@ -6,6 +6,7 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.Objects;
@@ -29,13 +30,30 @@ public class Items {
                     }
                 }
                 removeStorage(p, name, amount);
-                if (Files.getconfigfile().getBoolean("Message.TAKE.STATUS")) {
-                    p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE.TYPE")),
-                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
-                                    .replaceAll("%item%", block.replaceAll("_", " "))
-                                    .replaceAll("%amount%", String.valueOf(amount))
-                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                        || Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("CHAT")) {
+                    if (getconfigfile().getBoolean("Message.TAKE.STATUS")) {
+                        p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.TAKE.TYPE")),
+                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
+                                        .replaceAll("%item%", block.replaceAll("_", " "))
+                                        .replaceAll("%amount%", String.valueOf(amount))
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                    }
+                } else {
+                    if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("TITLE")) {
+                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.TITLE"))
+                                .replaceAll("%item%", block.replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.SUBTITLE"))
+                                .replaceAll("%item%", block.replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.TAKE.TITLE.FADEIN"), getconfigfile().getInt("Message.TAKE.TITLE.STAY"), getconfigfile().getInt("Message.TAKE.TITLE.FADEOUT"));
+                    }
                 }
                 if (autoSmelt(p)) {
                     if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks." + name)).getKeys(false).contains("Convert")) {
@@ -45,12 +63,11 @@ public class Items {
                 NMSAssistant nmsAssistant = new NMSAssistant();
                 if (nmsAssistant.isVersionLessThan(13)) {
                     String[] data = Objects.requireNonNull(name).split(";");
+                    String material = data[0];
                     if (data.length == 1) {
-                        String material = data[0];
                         ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount);
                         p.getInventory().addItem(items);
                     } else {
-                        String material = data[0];
                         short damaged = Short.parseShort(data[1]);
                         ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount, damaged);
                         p.getInventory().addItem(items);
@@ -67,8 +84,8 @@ public class Items {
         }
     }
 
-    public static String getName(String name) {
-        return getconfigfile().getString("Blocks." + name + ".Name");
+    public static String getName(@NotNull String name) {
+        return getconfigfile().getString("Blocks." + name.toUpperCase() + ".Name");
     }
 
     public static void SellItems(Player p, String name, Integer amount) {
@@ -84,12 +101,29 @@ public class Items {
             int money = price * amount;
             EconomyResponse r = economy.depositPlayer(p, money);
             if (r.transactionSuccess()) {
-                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
-                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Sell"))
-                                .replaceAll("%money%", String.valueOf(money))
-                                .replaceAll("%item%", block.replaceAll("_", " "))
+                if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                        || Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("CHAT")) {
+                    p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.TAKE")),
+                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Sell"))
+                                    .replaceAll("%money%", String.valueOf(money))
+                                    .replaceAll("%item%", block.replaceAll("_", " "))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                } else {
+                    if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("TITLE")) {
+                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.TITLE"))
+                                .replaceAll("%item%", block.replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.SUBTITLE"))
+                                .replaceAll("%item%", block.replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
                                 .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.TAKE.TITLE.FADEIN"), getconfigfile().getInt("Message.TAKE.TITLE.STAY"), getconfigfile().getInt("Message.TAKE.TITLE.FADEOUT"));
+                    }
+                }
             } else {
                 p.sendMessage(colorize("&cError!"));
             }
@@ -99,6 +133,6 @@ public class Items {
     }
 
     public static int getPrice(String m) {
-        return Files.getconfigfile().getInt("Blocks." + m + ".Price");
+        return getconfigfile().getInt("Blocks." + m + ".Price");
     }
 }

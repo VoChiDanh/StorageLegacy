@@ -28,8 +28,7 @@ public class BlockBreak implements Listener {
             if (damaged != 0) {
                 String data = String.valueOf(damaged);
                 blocks = material + ";" + data;
-            }
-            else {
+            } else {
                 blocks = e.getBlock().getType().toString();
             }
         }
