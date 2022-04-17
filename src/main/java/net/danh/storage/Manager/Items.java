@@ -40,9 +40,18 @@ public class Items {
                 }
             }
             NMSAssistant nmsAssistant = new NMSAssistant();
-            if (nmsAssistant.isVersionLessThan(13) && Objects.requireNonNull(name).equalsIgnoreCase("LAPIS_LAZULI")) {
-                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial("INK_SACK")), amount, (short) 4);
-                p.getInventory().addItem(items);
+            if (nmsAssistant.isVersionLessThan(13)) {
+                String[] data = Objects.requireNonNull(name).split(";");
+                if (data.length == 1) {
+                    String material = data[0];
+                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount);
+                    p.getInventory().addItem(items);
+                } else {
+                    String material = data[0];
+                    short damaged = Short.parseShort(data[1]);
+                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(material))), amount, damaged);
+                    p.getInventory().addItem(items);
+                }
             } else {
                 ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
                 p.getInventory().addItem(items);
