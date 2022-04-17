@@ -17,8 +17,7 @@ import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Items.RemoveItems;
-import static net.danh.storage.Manager.Items.SellItems;
+import static net.danh.storage.Manager.Items.*;
 
 public class Commands implements CommandExecutor {
 
@@ -28,15 +27,24 @@ public class Commands implements CommandExecutor {
             if (args.length == 0) {
                 if (sender instanceof Player) {
                     setautoPick(Objects.requireNonNull(((Player) sender).getPlayer()), !autoPick(((Player) sender).getPlayer()));
-                    if (autoPick(((Player) sender).getPlayer())) {
-                        sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
-                                .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
-                                .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.true")))));
-                    }
-                    if (!autoPick(((Player) sender).getPlayer())) {
-                        sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
-                                .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
-                                .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.false")))));
+                    Player p = ((Player) sender).getPlayer();
+                    if (Files.getconfigfile().getBoolean("Message.TOGGLE.STATUS")) {
+                        if (autoPick(((Player) sender).getPlayer())) {
+                            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TOGGLE.TYPE")),
+                                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                    .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
+                                    .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.true"))))));
+                        }
+                        if (!autoPick(((Player) sender).getPlayer())) {
+                            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TOGGLE.TYPE")),
+                                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                            .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
+                                            .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.false"))))));
+                        } else {
+                            return true;
+                        }
+                    } else  {
+                        return true;
                     }
                 }
             }
@@ -46,15 +54,24 @@ public class Commands implements CommandExecutor {
                 if (sender instanceof Player) {
                     if (sender.hasPermission("storage.asmelt")) {
                         setautoSmelt(Objects.requireNonNull(((Player) sender).getPlayer()), !autoSmelt(((Player) sender).getPlayer()));
-                        if (autoSmelt(((Player) sender).getPlayer())) {
-                            sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
-                                    .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
-                                    .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.true")))));
-                        }
-                        if (!autoSmelt(((Player) sender).getPlayer())) {
-                            sender.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
-                                    .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
-                                    .replaceAll("%status", Objects.requireNonNull(getconfigfile().getString("Boolean.false")))));
+                        Player p = ((Player) sender).getPlayer();
+                        if (Files.getconfigfile().getBoolean("Message.TOGGLE.STATUS")) {
+                            if (autoSmelt(((Player) sender).getPlayer())) {
+                                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TOGGLE.TYPE")),
+                                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                                .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
+                                                .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.true"))))));
+                            }
+                            if (!autoSmelt(((Player) sender).getPlayer())) {
+                                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TOGGLE.TYPE")),
+                                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
+                                                .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
+                                                .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.false"))))));
+                            } else {
+                                return true;
+                            }
+                        } else {
+                            return true;
                         }
                     }
                 }
@@ -107,12 +124,17 @@ public class Commands implements CommandExecutor {
                                 ((Player) sender).getPlayer().getInventory().removeItem(items);
                                 Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                 Player p = ((Player) sender).getPlayer();
-                                p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD")),
-                                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Item"))
-                                                .replaceAll("%item%", args[1].replaceAll("_", " "))
-                                                .replaceAll("%amount%", args[2])
-                                                .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
-                                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
+                                if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
+                                    p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
+                                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Add_Item"))
+                                                    .replaceAll("%item%", getName(args[1]).replaceAll("_", " "))
+                                                    .replaceAll("%amount%", args[2])
+                                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
+                                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
+                                }
+                                else {
+                                    return true;
+                                }
                             } else {
                                 sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("Not_Enough")));
                             }

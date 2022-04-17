@@ -2,12 +2,22 @@ Blacklist-World:
   - example1
   - world2
 Message:
-  TAKE: CHAT #ACTION_BAR / CHAT
-  RECEIVE: ACTION_BAR #ACTION_BAR / CHAT
-  REMOVE: ACTION_BAR #ACTION_BAR / CHAT
-  ADD: CHAT #ACTION_BAR / CHAT
+  TAKE:
+    TYPE: CHAT #ACTION_BAR / CHAT
+    STATUS: true #true or false
+  REMOVE:
+    TYPE: ACTION_BAR #ACTION_BAR / CHAT
+    STATUS: true #true or false
+  ADD:
+    TYPE: CHAT #ACTION_BAR / CHAT
+    STATUS: true #true or false
+  RECEIVE:
+    TYPE: ACTION_BAR #ACTION_BAR / CHAT
+    STATUS: true #true or false
+  TOGGLE:
+    TYPE: CHAT #ACTION_BAR / CHAT
+    STATUS: true #true or false
   FULL: CHAT #ACTION_BAR / CHAT
-  STATUS: true
 Boolean:
   true: "On"
   false: "Off"
