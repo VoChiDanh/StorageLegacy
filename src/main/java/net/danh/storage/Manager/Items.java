@@ -30,7 +30,7 @@ public class Items {
             removeStorage(p, name, amount);
             p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.TAKE")),
                     new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
-                            .replaceAll("%blocks%", block.replaceAll("_", " "))
+                            .replaceAll("%item%", block.replaceAll("_", " "))
                             .replaceAll("%amount%", String.valueOf(amount))
                             .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
                             .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
