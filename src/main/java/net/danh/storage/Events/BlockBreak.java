@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
+import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +21,18 @@ public class BlockBreak implements Listener {
         Player p = e.getPlayer();
         String blocks = e.getBlock().getType().toString();
         String items = null;
+        NMSAssistant nmsAssistant = new NMSAssistant();
+        if (nmsAssistant.isVersionLessThan(13)) {
+            String material = e.getBlock().getType().toString();
+            short damaged = e.getBlock().getData();
+            if (damaged != 0) {
+                String data = String.valueOf(damaged);
+                blocks = material + ";" + data;
+            }
+            else {
+                blocks = e.getBlock().getType().toString();
+            }
+        }
         if (e.isCancelled()) return;
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {

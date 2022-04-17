@@ -1,4 +1,3 @@
-Full_Storage: "&c%item%&6 storage has reached its limit"
 Help_Admin:
   - "&9/Storage storage [set/add/remove] [Player] [Items] [Amount]"
   - "&9/Storage maxstorage [set/add/remove] [Player] [Items] [Amount]"
@@ -8,13 +7,14 @@ Help_User:
   - "&9/Storage add [Items] [Amount] - Add Block"
   - "&9/APick - Toggle Auto Pickup "
   - "&9/ASmelt - Toggle Auto Smelt"
-Sell: "&a+ %money%$ &7| &3%item% (%storage%/%max%)"
+Sell: "&a+ %money%$ &7| %item% &3(%storage%/%max%)"
+Full_Storage: "&c%item%&6 storage has reached its limit"
 Not_Enough: "&cYou do not have enough item!"
-Take_Item: "&aTake %item% x%amount% (%storage%/%max%)"
-Receive_Item: "&a+%amount% %item% (%storage%/%max%)"
-Remove_Item: "&c-%amount% %item% (%storage%/%max%)"
 Not_Correct_Item: "&aYou need type correct item!"
+Take_Item: "&cTake %item% x%amount% to Storage &c(%storage%/%max%)"
+Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)"
 Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)"
+Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)"
 Toggle_Status: "&a%type%: %status%"
 Type:
   autosmelt: "&6Auto Smelt"
