@@ -7,7 +7,7 @@
     <groupId>net.danh</groupId>
     <artifactId>Storage</artifactId>
     <name>Storage</name>
-    <version>1.0-B4</version>
+    <version>1.0-B5</version>
     <packaging>jar</packaging>
 
     <properties>
