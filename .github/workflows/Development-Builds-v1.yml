@@ -19,7 +19,7 @@ jobs:
         with:
           name: "[DevBuild]-Storage"
           path: |
-              ./target/Storage.jar
+            ./target/Storage.jar
       - uses: jungwinter/split@v2
         id: split
         with:

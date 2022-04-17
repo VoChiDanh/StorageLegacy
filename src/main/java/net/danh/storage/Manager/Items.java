@@ -60,8 +60,7 @@ public class Items {
             } else {
                 p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
             }
-        }
-        else {
+        } else {
             p.sendMessage(colorize(getlanguagefile().getString("Not_Correct_Item")));
         }
     }
