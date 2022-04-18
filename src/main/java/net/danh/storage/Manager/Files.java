@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.inventory.BrewingStandFuelEvent;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
@@ -90,28 +89,6 @@ public class Files {
         }
 
         return input;
-    }
-
-    public static  String consolecolor(String input){
-        String RESET = "\u001B[0m";
-        String BLACK = "\u001B[30m";
-        String RED = "\u001B[31m";
-        String GREEN = "\u001B[32m";
-        String YELLOW = "\u001B[33m";
-        String BLUE = "\u001B[34m";
-        String PURPLE = "\u001B[35m";
-        String AQUA = "\u001B[36m";
-        String WHITE = "\u001B[37m";
-        String output = input.replaceAll("&0", BLACK)
-                .replaceAll("&c", RED)
-                .replaceAll("&a", GREEN)
-                .replaceAll("&e", YELLOW)
-                .replaceAll("&9", BLUE)
-                .replaceAll("&d", PURPLE)
-                .replaceAll("&b", AQUA)
-                .replaceAll("&f", WHITE)
-                .replaceAll("%reset%", RESET);
-        return output;
     }
 
     public static @NotNull String translateHexColorCodes(String startTag, String endTag, String message) {

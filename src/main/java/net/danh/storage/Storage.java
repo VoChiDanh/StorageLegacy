@@ -15,9 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
@@ -29,9 +27,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Manager.Files.getconfigfile;
+import static net.danh.storage.Manager.Files.getlanguagefile;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
 
@@ -74,36 +72,29 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
         Files.createfiles();
         checkFilesVersion();
-        plugin = this;
-        logger = getLogger();
-        autosave = (new BukkitRunnable() {
-            public void run() {
-                if (getconfigfile().getBoolean("Auto-Save.STATUS")) {
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                            Data.savePlayerData(p, item);
-                        }
-                    }
-                    if (getconfigfile().getBoolean("Auto-Save.SEND_DEBUG_MESSAGE")) {
-                        logger.info(consolecolor(getlanguagefile().getString("Auto_Save_Debug") + "%reset%"));
-                    }
-                }
-            }
-        }).runTaskTimer(plugin, 1200L * getconfigfile().getLong("Auto-Save.TIME_REPEAT"), 1200L * getconfigfile().getLong("Auto-Save.TIME_REPEAT"));
         (new BukkitRunnable() {
             public void run() {
                 try {
                     SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
-                    if (updater.checkForUpdates()) getLogger().info(Files.consolecolor("&cAn update was found!"  + "%reset%"));
-                    getLogger().info(Files.consolecolor("&eNew version: " + updater.getLatestVersion() + "%reset%"));
-                    getLogger().info(Files.consolecolor("&aYour version: " + Storage.get().getDescription().getVersion() + "%reset%"));
-                    getLogger().info(Files.consolecolor("&9Download: " + "&9" + updater.getResourceURL() + "%reset%"));
+                    if (updater.checkForUpdates()) getLogger().info(Files.colorize("&#f5602fAn update was found!"));
+                    getLogger().info(Files.colorize("&#77ff73New version: " + updater.getLatestVersion()));
+                    getLogger().info(Files.colorize("&#77ff73Your version: " + Storage.get().getDescription().getVersion()));
+                    getLogger().info(Files.colorize("&#fffd73Download: " + updater.getResourceURL()));
                 } catch (Exception e) {
-                    getLogger().warning(consolecolor("&cCould not check for updates! Stacktrace:"));
+                    getLogger().warning("Could not check for updates! Stacktrace:");
                     e.printStackTrace();
                 }
             }
-        }).runTaskTimer(plugin, 3600 * 20L, 3600 * 20L);
+        }).runTaskTimer(this, 3600 * 20L, 3600 * 20L);
+        (new BukkitRunnable() {
+            public void run() {
+                for (Player p : getServer().getOnlinePlayers()) {
+                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                        Data.savePlayerData(p, item);
+                    }
+                }
+            }
+        }).runTaskTimer(this, 1800 * 20L, 1800 * 20L);
     }
 
     @Override
@@ -145,9 +136,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     /**
      * Registers the event handlers of the plugin using Ponder.
      */
-    public static BukkitTask autosave;
-    public static Logger logger;
-
     private void registerEventHandlers() {
         ArrayList<Listener> listeners = initializeListeners();
         EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
@@ -173,5 +161,4 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         if (economyProvider != null) economy = economyProvider.getProvider();
         return (economy != null);
     }
-    public static JavaPlugin plugin;
 }

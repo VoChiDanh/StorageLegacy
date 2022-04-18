@@ -12,7 +12,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -20,7 +19,6 @@ import java.util.Objects;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Items.*;
-import static net.danh.storage.Storage.*;
 
 public class Commands implements CommandExecutor {
 
@@ -96,21 +94,6 @@ public class Commands implements CommandExecutor {
                 if (sender.hasPermission("Storage.admin")) {
                     if (args[0].equalsIgnoreCase("reload")) {
                         reloadfiles();
-                        autosave.cancel();
-                        autosave = (new BukkitRunnable() {
-                            public void run() {
-                                if (getconfigfile().getBoolean("Auto-Save.STATUS")) {
-                                    for (Player p : Bukkit.getOnlinePlayers()) {
-                                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                                            Data.savePlayerData(p, item);
-                                        }
-                                    }
-                                    if (getconfigfile().getBoolean("Auto-Save.SEND_DEBUG_MESSAGE")) {
-                                        logger.info(consolecolor(getlanguagefile().getString("Auto_Save_Debug") + "%reset%"));
-                                    }
-                                }
-                            }
-                        }).runTaskTimer(plugin, 0L, 1200L * getconfigfile().getLong("Auto-Save.TIME_REPEAT"));
                         sender.sendMessage(Files.colorize("&aReloaded"));
                     }
                 }

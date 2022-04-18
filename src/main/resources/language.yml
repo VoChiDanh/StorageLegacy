@@ -20,5 +20,3 @@ Toggle_Status: "&a%type%: %status%"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"
-#Only support there color codes ==> &0; &c; &a; &e; &9; &d; &f and %reset% reset color to default
-Auto_Save_Debug: '&aSaved all players data'

@@ -3,10 +3,6 @@ Blacklist-World:
   - world2
 VERSION: "1.0-B4"
 Number_Format: "#.###"
-Auto-Save:
-  STATUS: true
-  SEND_DEBUG_MESSAGE: false #Send message to console
-  TIME_REPEAT: 30 #Time in minute
 Message:
   TAKE:
     TYPE: CHAT #ACTION_BAR / CHAT / TITLE
