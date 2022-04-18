@@ -76,10 +76,10 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             public void run() {
                 try {
                     SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
-                    if (updater.checkForUpdates()) getLogger().info(Files.colorize("&#f5602fAn update was found!"));
-                    getLogger().info(Files.colorize("&#77ff73New version: " + updater.getLatestVersion()));
-                    getLogger().info(Files.colorize("&#77ff73Your version: " + Storage.get().getDescription().getVersion()));
-                    getLogger().info(Files.colorize("&#fffd73Download: " + updater.getResourceURL()));
+                    if (updater.checkForUpdates()) getLogger().info(Files.colorize("&6An update was found!"));
+                    getLogger().info(Files.colorize("&aNew version: " + updater.getLatestVersion()));
+                    getLogger().info(Files.colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
+                    getLogger().info(Files.colorize("&cDownload: " + updater.getResourceURL()));
                 } catch (Exception e) {
                     getLogger().warning("Could not check for updates! Stacktrace:");
                     e.printStackTrace();
