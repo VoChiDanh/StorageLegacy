@@ -3,6 +3,8 @@ package net.danh.storage.Commands;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.Items;
+import net.danh.storage.Manager.SpigotUpdater;
+import net.danh.storage.Storage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
@@ -95,6 +97,17 @@ public class Commands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("reload")) {
                         reloadfiles();
                         sender.sendMessage(Files.colorize("&aReloaded"));
+                        try {
+                            SpigotUpdater updater = new SpigotUpdater(Storage.get(), 100516);
+                            if (updater.checkForUpdates())
+                                sender.sendMessage(Files.colorize("&6An update was found!"));
+                            sender.sendMessage(Files.colorize("&aNew version: " + updater.getLatestVersion()));
+                            sender.sendMessage(Files.colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
+                            sender.sendMessage(Files.colorize("&cDownload: " + updater.getResourceURL()));
+                        } catch (Exception e) {
+                            Storage.get().getLogger().warning("Could not check for updates! Stacktrace:");
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

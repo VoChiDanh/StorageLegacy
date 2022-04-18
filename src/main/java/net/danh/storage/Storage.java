@@ -2,7 +2,6 @@ package net.danh.storage;
 
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Events.BlockBreak;
-import net.danh.storage.Events.IA_BlockBreak;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
 import net.danh.storage.Hook.PlaceholderAPI;
@@ -24,7 +23,6 @@ import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -64,7 +62,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("ItemAdder") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with ItemAdder!");
-            registerIAEventHandlers();
         }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
@@ -109,10 +106,10 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
     private void checkFilesVersion() {
-        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase(getDescription().getVersion()) || getconfigfile().getString("VERSION") == null) {
+        if (!getconfigfile().getString("VERSION").equalsIgnoreCase("1.0-B4") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update config.yml!");
         }
-        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase(getDescription().getVersion()) || getconfigfile().getString("VERSION") == null) {
+        if (!getlanguagefile().getString("VERSION").equalsIgnoreCase("1.0-B4") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update language.yml!");
         }
     }
@@ -138,20 +135,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
      */
     private void registerEventHandlers() {
         ArrayList<Listener> listeners = initializeListeners();
-        EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
-        eventHandlerRegistry.registerEventHandlers(listeners, this);
-    }
-
-    @Contract(" -> new")
-    private @NotNull ArrayList<Listener> initializeIAListeners() {
-        return new ArrayList<Listener>(Collections.singletonList(new IA_BlockBreak()));
-    }
-
-    /**
-     * Registers the event handlers of the plugin using Ponder.
-     */
-    private void registerIAEventHandlers() {
-        ArrayList<Listener> listeners = initializeIAListeners();
         EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
         eventHandlerRegistry.registerEventHandlers(listeners, this);
     }
