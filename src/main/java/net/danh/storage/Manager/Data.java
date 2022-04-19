@@ -132,12 +132,12 @@ public class Data {
     }
 
     public static void addMaxStorage(@NotNull Player p, String item, Integer amount) {
-        data.replace(p.getName() + "_max_" + item, getStorage(p, item) + amount);
+        data.replace(p.getName() + "_max_" + item, getMaxStorage(p, item) + amount);
     }
 
     public static void removeMaxStorage(@NotNull Player p, String item, Integer amount) {
         if (getMaxStorage(p, item) > amount) {
-            data.replace(p.getName() + "_max_" + item, getStorage(p, item) - amount);
+            data.replace(p.getName() + "_max_" + item, getMaxStorage(p, item) - amount);
         } else {
             data.replace(p.getName() + "_max_" + item, 0);
         }
