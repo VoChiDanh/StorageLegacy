@@ -60,9 +60,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             getLogger().log(Level.INFO, "Successfully hooked with PlaceholderAPI!");
             new PlaceholderAPI().register();
         }
-        if (getServer().getPluginManager().getPlugin("ItemAdder") != null) {
-            getLogger().log(Level.INFO, "Successfully hooked with ItemAdder!");
-        }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());

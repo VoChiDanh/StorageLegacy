@@ -1,6 +1,5 @@
 package net.danh.storage.Events;
 
-import dev.lone.itemsadder.api.CustomBlock;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,28 +34,25 @@ public class BlockBreak implements Listener {
         }
         if (e.isCancelled()) return;
         List<String> w = getconfigfile().getStringList("Blacklist-World");
-        CustomBlock customBlock = CustomBlock.getInstance(blocks);
         if (!w.contains(p.getWorld().getName())) {
-            if (blocks != null | customBlock != null) {
-                if (autoPick(p)) {
-                    for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                        if (blocks.equalsIgnoreCase(getBlockType)) {
-                            items = getconfigfile().getString("Blocks." + blocks + ".Name");
-                            break;
-                        }
+            if (autoPick(p)) {
+                for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                    if (blocks.equalsIgnoreCase(getBlockType)) {
+                        items = getconfigfile().getString("Blocks." + blocks + ".Name");
+                        break;
                     }
-                    if (items == null) {
-                        return;
-                    }
-                    if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS) && getRandomInt(getconfigfile().getInt("Fortune.Chance.System.Min"), getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * getconfigfile().getInt("Fortune.Chance.Player"))) {
-                        int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
-                        addStorage(p, blocks, fortune);
-                    } else {
-                        addStorage(p, blocks, 1);
-                    }
-                    e.getBlock().getDrops().clear();
-                    e.setDropItems(false);
                 }
+                if (items == null) {
+                    return;
+                }
+                if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS) && getRandomInt(getconfigfile().getInt("Fortune.Chance.System.Min"), getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * getconfigfile().getInt("Fortune.Chance.Player"))) {
+                    int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
+                    addStorage(p, blocks, fortune);
+                } else {
+                    addStorage(p, blocks, 1);
+                }
+                e.getBlock().getDrops().clear();
+                e.setDropItems(false);
             }
         }
     }
