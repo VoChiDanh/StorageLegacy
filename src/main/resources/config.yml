@@ -3,54 +3,6 @@ Blacklist-World:
   - world2
 VERSION: "1.0-B4"
 Number_Format: "#.###"
-Message:
-  TAKE:
-    TYPE: CHAT #ACTION_BAR / CHAT / TITLE
-    STATUS: true #true or false
-    TITLE:
-      TITLE: "&cTake %item% x%amount%&c from Storage"
-      SUBTITLE: "&a(%storage%/%max%)"
-      FADEIN: 30
-      FADEOUT: 10
-      STAY: 20
-  REMOVE:
-    TYPE: ACTION_BAR #ACTION_BAR / CHAT / TITLE
-    STATUS: true #true or false
-    TITLE:
-      TITLE: "&c-%amount% %item%"
-      SUBTITLE: "&a(%storage%/%max%)"
-      FADEIN: 30
-      FADEOUT: 10
-      STAY: 20
-  ADD:
-    TYPE: CHAT #ACTION_BAR / CHAT / TITLE
-    STATUS: true #true or false
-    TITLE:
-      TITLE: "&aAdd %item% &7(x%amount%)&a to Storage"
-      SUBTITLE: "&a(%storage%/%max%)"
-      FADEIN: 30
-      FADEOUT: 10
-      STAY: 20
-  RECEIVE:
-    TYPE: ACTION_BAR #ACTION_BAR / CHAT / TITLE
-    STATUS: true #true or false
-    TITLE:
-      TITLE: "&a+%amount% %item%"
-      SUBTITLE: "&a(%storage%/%max%)"
-      FADEIN: 30
-      FADEOUT: 10
-      STAY: 20
-  TOGGLE:
-    TYPE: CHAT #ACTION_BAR / CHAT
-    STATUS: true #true or false
-  FULL:
-    TYPE: CHAT #ACTION_BAR / CHAT / TITLE
-    TITLE:
-      TITLE: "&c%item%&6 storage has reached its limit"
-      SUBTITLE: "&a(%storage%/%max%)"
-      FADEIN: 30
-      FADEOUT: 10
-      STAY: 20
 Boolean:
   true: "On"
   false: "Off"
@@ -96,3 +48,60 @@ Fortune:
   Drop:
     Min: 1
     Max: 5
+Message:
+  TAKE:
+    TYPE: CHAT #ACTION_BAR / CHAT / TITLE
+    STATUS: true #true or false
+    TITLE:
+      TITLE: "&cTake %item% x%amount%&c from Storage"
+      SUBTITLE: "&a(%storage%/%max%)"
+      FADEIN: 30
+      FADEOUT: 10
+      STAY: 20
+  REMOVE:
+    TYPE: ACTION_BAR #ACTION_BAR / CHAT / TITLE
+    STATUS: true #true or false
+    TITLE:
+      TITLE: "&c-%amount% %item%"
+      SUBTITLE: "&a(%storage%/%max%)"
+      FADEIN: 30
+      FADEOUT: 10
+      STAY: 20
+  ADD:
+    TYPE: CHAT #ACTION_BAR / CHAT / TITLE
+    STATUS: true #true or false
+    TITLE:
+      TITLE: "&aAdd %item% &7(x%amount%)&a to Storage"
+      SUBTITLE: "&a(%storage%/%max%)"
+      FADEIN: 30
+      FADEOUT: 10
+      STAY: 20
+  RECEIVE:
+    TYPE: ACTION_BAR #ACTION_BAR / CHAT / TITLE
+    STATUS: true #true or false
+    TITLE:
+      TITLE: "&a+%amount% %item%"
+      SUBTITLE: "&a(%storage%/%max%)"
+      FADEIN: 30
+      FADEOUT: 10
+      STAY: 20
+  SELL:
+    TYPE: ACTION_BAR #ACTION_BAR / CHAT / TITLE
+    STATUS: true #true or false
+    TITLE:
+      TITLE: "&eSold %amount% x%item%"
+      SUBTITLE: "&a+ %money% &d| &b(%storage%/%max%)"
+      FADEIN: 30
+      FADEOUT: 10
+      STAY: 20
+  FULL:
+    TYPE: TITLE #ACTION_BAR / CHAT / TITLE
+    TITLE:
+      TITLE: "&cWarning"
+      SUBTITLE: "&c%item%&6 storage has reached its limit"
+      FADEIN: 30
+      FADEOUT: 10
+      STAY: 20
+  TOGGLE:
+    TYPE: CHAT #ACTION_BAR / CHAT
+    STATUS: true #true or false

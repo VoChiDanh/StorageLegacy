@@ -34,7 +34,7 @@ public class Data {
                     || Objects.requireNonNull(getconfigfile().getString("Message.RECEIVE.TYPE")).equalsIgnoreCase("CHAT")) {
                 if (getconfigfile().getBoolean("Message.RECEIVE.STATUS")) {
                     p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.RECEIVE.TYPE")),
-                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Receive_Item"))
+                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Receive_Item"))
                                     .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                             .replaceAll("-", " "))
                                     .replaceAll("%amount%", String.valueOf(amount))
@@ -60,8 +60,8 @@ public class Data {
             data.put(p.getName() + "_storage_" + item, getMaxStorage(p, item));
             if (Objects.requireNonNull(getconfigfile().getString("Message.FULL.TYPE")).equalsIgnoreCase("ACTION_BAR")
                     || Objects.requireNonNull(getconfigfile().getString("Message.FULL.TYPE")).equalsIgnoreCase("CHAT")) {
-                p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.FULL")),
-                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Full_Storage"))
+                p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.FULL.TYPE")),
+                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Full_Storage"))
                                 .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                         .replaceAll("-", " "))
                                 .replaceAll("%amount%", String.valueOf(amount))
@@ -95,7 +95,7 @@ public class Data {
                 || Objects.requireNonNull(getconfigfile().getString("Message.REMOVE.TYPE")).equalsIgnoreCase("CHAT")) {
             if (getconfigfile().getBoolean("Message.REMOVE.STATUS")) {
                 p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.REMOVE.TYPE")),
-                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Remove_Item"))
+                        new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Remove_Item"))
                                 .replaceAll("%item%", Items.getName(item).replaceAll("_", " ")
                                         .replaceAll("-", " "))
                                 .replaceAll("%amount%", String.valueOf(amount))

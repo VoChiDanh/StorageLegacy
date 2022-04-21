@@ -1,22 +1,39 @@
 VERSION: "1.0-B4"
-Help_Admin:
-  - "&9/Storage storage [set/add/remove] [Player] [Items] [Amount]"
-  - "&9/Storage max_storage [set/add/remove] [Player] [Items] [Amount]"
-Help_User:
-  - "&9/Storage sell [Items] [amount] - Sell Block"
-  - "&9/Storage take [Items] [Amount] - Take Block"
-  - "&9/Storage add [Items] [Amount] - Add Block"
-  - "&9/APick - Toggle Auto Pickup "
-  - "&9/ASmelt - Toggle Auto Smelt"
-Sell: "&a+ %money%$ &7| %item% &3(%storage%/%max%)"
-Full_Storage: "&c%item%&6 storage has reached its limit"
-Not_Enough: "&cYou do not have enough item!"
-Not_Correct_Item: "&aYou need type correct item!"
-Take_Item: "&cTake %item% x%amount%&c from Storage &c(%storage%/%max%)"
-Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)"
-Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)"
-Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)"
+Admin:
+  Help_Admin:
+    - "&9/Storage storage [set/add/remove] [Player] [Items] [Amount]"
+    - "&9/Storage max_storage [set/add/remove] [Player] [Items] [Amount]"
+    - "&9/Storage reload - Reload the config and language"
+  Storage_Set: "&eYou have setted &b%player%'s %item% &eamount in storage to &d%amount%"
+  Storage_Add: "&aYou have added &d%amount% &7x %item% &ato &b%player%'s &astorage"
+  Storage_Remove: "&cYou have removed &d%amount% &7x %item% &cout of &b%player%'s &cstorage"
+  Storage_Set_Errol: "&cThe &6Amount &cmust smaller than %player%'s max storage &d(%max%)"
+  Storage_Add_Errol: "&cYou can only add up to &d%amount% &citems to %player%'s storage"
+  Storage_Remove_Errol: "&cYou can only remove up to &d%amount% &citems out of %player%'s storage"
+  MaxStorage_Set: "&eYou have setted &b%player%'s %item% &6MaxStorage to &d%number%"
+  MaxStorage_Add: "&aYou have added &d%number% &6MaxStorage &ato &b%player%'s %item% &astorage"
+  MaxStorage_Remove: "&cYou have remove &d%number% &6MaxStorage &cfrom &b%player%'s %item% &cstorage"
+  MaxStorage_Set_Errol_1: "&cThe &6Number &cmust greater than %player% 's amount item (%storage%)"
+  MaxStorage_Set_Errol_2: "&cThe &6Number &cmust greater than default max storage (%max_default%)"
+  MaxStorage_Remove_Errol_1: "&cYou can only remove up to &d%number% &6Maxstorage&c cout of %player%"
+  MaxStorage_Remove_Errol_2: "&cYou can not remove &6Maxstorage&c cout of %player%"
+User:
+  Help_User:
+    - "&9/Storage sell [Items] [amount] - Sell Block"
+    - "&9/Storage take [Items] [Amount] - Take Block"
+    - "&9/Storage add [Items] [Amount] - Add Block"
+    - "&9/APick - Toggle Auto Pickup "
+    - "&9/ASmelt - Toggle Auto Smelt"
+  Sell: "&a+ %money%$ &7| %item% x%amount% &3(%storage%/%max%)"
+  Full_Storage: "&c%item%&6 storage has reached its limit" #
+  Not_Enough: "&cYou do not have enough item!"
+  Not_Correct_Item: "&aYou need type correct item!"
+  Take_Item: "&cTake %item% x%amount%&c from Storage &c(%storage%/%max%)" #
+  Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)" #
+  Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)" #
+  Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)" #
 Toggle_Status: "&a%type%: %status%"
+Errol: "&cErrol!"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

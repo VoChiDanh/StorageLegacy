@@ -34,8 +34,9 @@ public class Items {
                         || Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("CHAT")) {
                     if (getconfigfile().getBoolean("Message.TAKE.STATUS")) {
                         p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.TAKE.TYPE")),
-                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Take_Item"))
-                                        .replaceAll("%item%", block.replaceAll("_", " "))
+                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Take_Item"))
+                                        .replaceAll("%item%", block.replaceAll("_", " ")
+                                                .replaceAll("-", " "))
                                         .replaceAll("%amount%", String.valueOf(amount))
                                         .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
                                         .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
@@ -77,10 +78,10 @@ public class Items {
                     p.getInventory().addItem(items);
                 }
             } else {
-                p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
+                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")));
             }
         } else {
-            p.sendMessage(colorize(getlanguagefile().getString("Not_Correct_Item")));
+            p.sendMessage(colorize(getlanguagefile().getString("User.Not_Correct_Item")));
         }
     }
 
@@ -89,46 +90,54 @@ public class Items {
     }
 
     public static void SellItems(Player p, String name, Integer amount) {
-        if (getStorage(p, name) >= amount) {
-            for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                if (name.equalsIgnoreCase(getBlockType)) {
-                    price = getconfigfile().getInt("Blocks." + name + ".Price");
-                    block = getconfigfile().getString("Blocks." + name + ".Name");
-                    break;
-                }
-            }
-            removeStorage(p, name, amount);
-            int money = price * amount;
-            EconomyResponse r = economy.depositPlayer(p, money);
-            if (r.transactionSuccess()) {
-                if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("ACTION_BAR")
-                        || Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("CHAT")) {
-                    p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.TAKE")),
-                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Sell"))
-                                    .replaceAll("%money%", String.valueOf(money))
-                                    .replaceAll("%item%", block.replaceAll("_", " "))
-                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
-                } else {
-                    if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("TITLE")) {
-                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.TITLE"))
-                                .replaceAll("%item%", block.replaceAll("_", " ")
-                                        .replaceAll("-", " "))
-                                .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.SUBTITLE"))
-                                .replaceAll("%item%", block.replaceAll("_", " ")
-                                        .replaceAll("-", " "))
-                                .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.TAKE.TITLE.FADEIN"), getconfigfile().getInt("Message.TAKE.TITLE.STAY"), getconfigfile().getInt("Message.TAKE.TITLE.FADEOUT"));
+        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
+            if (getStorage(p, name) >= amount) {
+                for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                    if (name.equalsIgnoreCase(getBlockType)) {
+                        price = getconfigfile().getInt("Blocks." + name + ".Price");
+                        block = getconfigfile().getString("Blocks." + name + ".Name");
+                        break;
                     }
                 }
+                removeStorage(p, name, amount);
+                int money = price * amount;
+                EconomyResponse r = economy.depositPlayer(p, money);
+                if (r.transactionSuccess()) {
+                    if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                            || Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("CHAT")) {
+                        p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.SELL.TYPE")),
+                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Sell"))
+                                        .replaceAll("%money%", String.valueOf(money))
+                                        .replaceAll("%item%", block.replaceAll("_", " ")
+                                                .replaceAll("-", " "))
+                                        .replaceAll("%amount%", String.valueOf(amount))
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                    } else {
+                        if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("TITLE")) {
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.TITLE"))
+                                    .replaceAll("%money%", String.valueOf(money))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.SUBTITLE"))
+                                    .replaceAll("%money%", String.valueOf(money))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.SELL.TITLE.FADEIN"), getconfigfile().getInt("Message.SELL.TITLE.STAY"), getconfigfile().getInt("Message.SELL.TITLE.FADEOUT"));
+                        }
+                    }
+                } else {
+                    p.sendMessage(colorize(getlanguagefile().getString("Errol")));
+                }
             } else {
-                p.sendMessage(colorize("&cError!"));
+                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")));
             }
         } else {
-            p.sendMessage(colorize(getlanguagefile().getString("Not_Enough")));
+            p.sendMessage(colorize(getlanguagefile().getString("User.Not_Correct_Item")));
         }
     }
 
