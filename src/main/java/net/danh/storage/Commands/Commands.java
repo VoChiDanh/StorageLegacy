@@ -115,59 +115,73 @@ public class Commands implements CommandExecutor {
                 if (sender instanceof Player) {
                     if (args[0].equalsIgnoreCase("sell")) {
                         if (Integer.parseInt(args[2]) > 0) {
-                            SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                        } else if (Integer.parseInt(args[2]) == 0) {
-                            SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            if (Integer.parseInt(args[2]) > 0) {
+                                SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            } else if (Integer.parseInt(args[2]) == 0) {
+                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            }
+                            return true;
+                        } else {
+                            Player s = ((Player) sender).getPlayer();
+                            s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                         }
-
-                        return true;
                     }
                     if (args[0].equalsIgnoreCase("take")) {
                         if (Integer.parseInt(args[2]) > 0) {
-                            RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), Integer.parseInt(args[2]));
-                        } else if (Integer.parseInt(args[2]) == 0) {
-                            RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            if (Integer.parseInt(args[2]) > 0) {
+                                RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), Integer.parseInt(args[2]));
+                            } else if (Integer.parseInt(args[2]) == 0) {
+                                RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            }
+                            return true;
+                        } else {
+                            Player s = ((Player) sender).getPlayer();
+                            s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                         }
-                        return true;
                     }
                     if (args[0].equalsIgnoreCase("add")) {
-                        if (Material.getMaterial(args[1]) != null) {
-                            ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])));
-                            if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().containsAtLeast(checkitems, Integer.parseInt(args[2]))) {
-                                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])), Integer.parseInt(args[2]));
-                                ((Player) sender).getPlayer().getInventory().removeItem(items);
-                                Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                                Player p = ((Player) sender).getPlayer();
-                                if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
-                                        || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
-                                    if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
-                                        p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
-                                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
-                                                        .replaceAll("%item%", getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
-                                                        .replaceAll("%amount%", args[2])
-                                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
-                                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
+                        if (Integer.parseInt(args[2]) > 0) {
+                            if (Material.getMaterial(args[1]) != null) {
+                                ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])));
+                                if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().containsAtLeast(checkitems, Integer.parseInt(args[2]))) {
+                                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])), Integer.parseInt(args[2]));
+                                    ((Player) sender).getPlayer().getInventory().removeItem(items);
+                                    Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                    Player p = ((Player) sender).getPlayer();
+                                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                                            || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
+                                        if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
+                                            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
+                                                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
+                                                            .replaceAll("%item%", getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
+                                                            .replaceAll("%amount%", args[2])
+                                                            .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
+                                                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
+                                        }
+                                    } else {
+                                        if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
+                                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                                    .replaceAll("%item%", getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
+                                                    .replaceAll("%amount%", args[2])
+                                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1]))))
+                                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                                    .replaceAll("%item%", Items.getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
+                                                    .replaceAll("%amount%", args[2])
+                                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
+                                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1])))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
+                                        }
                                     }
                                 } else {
-                                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
-                                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                                .replaceAll("%item%", getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
-                                                .replaceAll("%amount%", args[2])
-                                                .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1]))))
-                                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                                .replaceAll("%item%", Items.getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
-                                                .replaceAll("%amount%", args[2])
-                                                .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
-                                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1])))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
-                                    }
+                                    sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")));
                                 }
                             } else {
-                                sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")));
+                                sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
                             }
+                            return true;
                         } else {
-                            sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
+                            Player s = ((Player) sender).getPlayer();
+                            s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                         }
-                        return true;
                     }
                 }
             }
@@ -175,56 +189,60 @@ public class Commands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("storage")) {
                     if (Material.getMaterial(args[3]) != null) {
                         if (Bukkit.getPlayer(args[2]) != null) {
-                            if (sender.hasPermission("Storage.admin")) {
-                                Player s = ((Player) sender).getPlayer();
-                                if (args[1].equalsIgnoreCase("set")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                            if (Integer.parseInt(args[4]) > 0) {
+                                if (sender.hasPermission("Storage.admin")) {
+                                    Player s = ((Player) sender).getPlayer();
+                                    if (args[1].equalsIgnoreCase("set")) {
+                                        if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
+                                            setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                                        }
+                                        if (Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                            setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Set")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%item%", getName(args[3]))
+                                                    .replaceAll("%amount%", args[4])));
+                                        } else {
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Set_Errol")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%max%", String.valueOf(getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])))));
+                                        }
                                     }
-                                    if (Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
-                                        setStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Set")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%item%", getName(args[3]))
-                                                .replaceAll("%amount%", args[4])));
-                                    } else {
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Set_Errol")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%max%", String.valueOf(getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])))));
+                                    if (args[1].equalsIgnoreCase("add")) {
+                                        if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
+                                            setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                                        }
+                                        if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) + Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                            addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Add")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%item%", getName(args[3]))
+                                                    .replaceAll("%amount%", args[4])));
+                                        } else {
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Add_Errol")
+                                                    .replaceAll("%amount%", String.valueOf(getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])))
+                                                    .replaceAll("%player%", args[2])));
+                                        }
+                                    }
+                                    if (args[1].equalsIgnoreCase("remove")) {
+                                        if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
+                                            setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
+                                        }
+                                        if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) >= 0) {
+                                            removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Remove")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%item%", getName(args[3]))
+                                                    .replaceAll("%amount%", args[4])));
+                                        } else  {
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Remove_Errol")
+                                                    .replaceAll("%amount%", String.valueOf(getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]))))
+                                                    .replaceAll("%player%", args[2]));
+                                        }
                                     }
                                 }
-                                if (args[1].equalsIgnoreCase("add")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
-                                    }
-                                    if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) + Integer.parseInt(args[4]) <= getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
-                                        addStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Add")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%item%", getName(args[3]))
-                                                .replaceAll("%amount%", args[4])));
-                                    } else {
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Add_Errol")
-                                                .replaceAll("%amount%", String.valueOf(getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])))
-                                                .replaceAll("%player%", args[2])));
-                                    }
-                                }
-                                if (args[1].equalsIgnoreCase("remove")) {
-                                    if (getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) == 0) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Files.getconfigfile().getInt("Default_Max_Storage"));
-                                    }
-                                    if (getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]) >= 0) {
-                                        removeStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Remove")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%item%", getName(args[3]))
-                                                .replaceAll("%amount%", args[4])));
-                                    } else  {
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.Storage_Remove_Errol")
-                                                .replaceAll("%amount%", String.valueOf(getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]))))
-                                                .replaceAll("%player%", args[2]));
-                                    }
-                                }
+                            } else {
+
                             }
                         }
                     }
@@ -233,49 +251,54 @@ public class Commands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("max_storage")) {
                     if (Material.getMaterial(args[3]) != null) {
                         if (Bukkit.getPlayer(args[2]) != null) {
-                            if (sender.hasPermission("Storage.admin")) {
+                            if (Integer.parseInt(args[4]) > 0) {
+                                if (sender.hasPermission("Storage.admin")) {
+                                    Player s = ((Player) sender).getPlayer();
+                                    if (args[1].equalsIgnoreCase("set")) {
+                                        if (Integer.parseInt(args[4]) >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) && Integer.parseInt(args[4]) >= getconfigfile().getInt("Default_Max_Storage")) {
+                                            setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Set")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%item%", getName(args[3]))
+                                                    .replaceAll("%number%", args[4])));
+                                        } else if (Integer.parseInt(args[4]) >= getconfigfile().getInt("Default_Max_Storage")){
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Set_Errol_1")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%storage%", String.valueOf(getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])))));
+                                        } if (Integer.parseInt(args[4]) < getconfigfile().getInt("Default_Max_Storage")) {
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Set_Errol_2")
+                                                    .replaceAll("%max_default%", String.valueOf(getconfigfile().getInt("Default_Max_Storage")))));
+                                        }
+                                    }
+                                    if (args[1].equalsIgnoreCase("add")) {
+                                        addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Add")
+                                                .replaceAll("%player%", args[2])
+                                                .replaceAll("%item%", getName(args[3]))
+                                                .replaceAll("%number%", args[4])));
+                                    }
+                                    if (args[1].equalsIgnoreCase("remove")) {
+                                        int remove = getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]);
+                                        int number = getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]);
+                                        if (remove >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
+                                            removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Remove")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%item%", getName(args[3]))
+                                                    .replaceAll("%number%", args[4])));
+                                        } else if (number > 0){
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Remove_Errol_1")
+                                                    .replaceAll("%player%", args[2])
+                                                    .replaceAll("%number%", String.valueOf(number))));
+                                        } else {
+                                            s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Remove_Errol_2")
+                                                    .replaceAll("%player%", args[2])));
+                                        }
+                                    }
+                                }
+                            } else {
                                 Player s = ((Player) sender).getPlayer();
-                                if (args[1].equalsIgnoreCase("set")) {
-                                    if (Integer.parseInt(args[4]) >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) && Integer.parseInt(args[4]) >= getconfigfile().getInt("Default_Max_Storage")) {
-                                        setMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Set")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%item%", getName(args[3]))
-                                                .replaceAll("%number%", args[4])));
-                                    } else if (Integer.parseInt(args[4]) >= getconfigfile().getInt("Default_Max_Storage")){
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Set_Errol_1")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%storage%", String.valueOf(getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])))));
-                                    } if (Integer.parseInt(args[4]) < getconfigfile().getInt("Default_Max_Storage")) {
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Set_Errol_2")
-                                                .replaceAll("%max_default%", String.valueOf(getconfigfile().getInt("Default_Max_Storage")))));
-                                    }
-                                }
-                                if (args[1].equalsIgnoreCase("add")) {
-                                    addMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                    s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Add")
-                                            .replaceAll("%player%", args[2])
-                                            .replaceAll("%item%", getName(args[3]))
-                                            .replaceAll("%number%", args[4])));
-                                }
-                                if (args[1].equalsIgnoreCase("remove")) {
-                                    int remove = getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - Integer.parseInt(args[4]);
-                                    int number = getMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]) - getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3]);
-                                    if (remove >= getStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3])) {
-                                        removeMaxStorage(Objects.requireNonNull(Bukkit.getPlayer(args[2])), args[3], Integer.parseInt(args[4]));
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Remove")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%item%", getName(args[3]))
-                                                .replaceAll("%number%", args[4])));
-                                    } else if (number > 0){
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Remove_Errol_1")
-                                                .replaceAll("%player%", args[2])
-                                                .replaceAll("%number%", String.valueOf(number))));
-                                    } else {
-                                        s.sendMessage(colorize(getlanguagefile().getString("Admin.MaxStorage_Remove_Errol_2")
-                                                .replaceAll("%player%", args[2])));
-                                    }
-                                }
+                                s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                             }
                         }
                     }

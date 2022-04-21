@@ -34,6 +34,7 @@ User:
   Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)" #
 Toggle_Status: "&a%type%: %status%"
 Errol: "&cErrol!"
+Invaild_Number: "&c You must type a number greater than 0"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"
