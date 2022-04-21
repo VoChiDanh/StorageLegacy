@@ -117,7 +117,7 @@ public class Commands implements CommandExecutor {
                         if (Integer.parseInt(args[2]) > 0) {
                             if (Integer.parseInt(args[2]) > 0) {
                                 SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                            } else if (Integer.parseInt(args[2]) == 0) {
+                            } else if (args[2] == "all") {
                                 SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
                             }
                             return true;
@@ -130,7 +130,7 @@ public class Commands implements CommandExecutor {
                         if (Integer.parseInt(args[2]) > 0) {
                             if (Integer.parseInt(args[2]) > 0) {
                                 RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), Integer.parseInt(args[2]));
-                            } else if (Integer.parseInt(args[2]) == 0) {
+                            } else if (args[2] == "all") {
                                 RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
                             }
                             return true;
