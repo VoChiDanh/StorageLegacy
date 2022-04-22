@@ -20,10 +20,10 @@ public class Items {
     private static int price;
     private static String block;
 
-    public  static void AddItems(Player p, String name, Integer amount) {
+    public static void AddItems(Player p, String name, Integer amount) {
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
             ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name.toUpperCase())));
-            if (Objects.requireNonNull(p.getInventory().containsAtLeast(checkitems, amount))) {
+            if (p.getInventory().containsAtLeast(checkitems, amount)) {
                 ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name.toUpperCase())), amount);
                 p.getInventory().removeItem(items);
                 Data.addStorage(p, name.toUpperCase(), amount);
@@ -183,7 +183,7 @@ public class Items {
         return getconfigfile().getInt("Blocks." + m + ".Price");
     }
 
-    public static int getAmountItem (Player p, String name) {
+    public static int getAmountItem(Player p, String name) {
         int amount = 0;
         for (ItemStack is : p.getInventory().getContents()) {
             if (is != null && is.getType().equals(Material.getMaterial(name))) {

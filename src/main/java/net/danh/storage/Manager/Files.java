@@ -79,7 +79,7 @@ public class Files {
         }
     }
 
-    // Colorizes messages with preset colorcodes (&) and if using 1.16+, applies hex values via "&#hexvalue"
+    // Colorize messages with preset color codes (&) and if using 1.16+, applies hex values via "&#hexvalue"
     public static String colorize(String input) {
 
         input = ChatColor.translateAlternateColorCodes('&', input);
@@ -112,9 +112,7 @@ public class Files {
         String regex = "-?\\d+";
         if (input == null) {
             return false;
-        } if (input.matches(regex)) {
-            return true;
         }
-        return false;
+        return input.matches(regex);
     }
 }

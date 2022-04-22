@@ -1,7 +1,7 @@
 Blacklist-World:
   - example1
   - world2
-VERSION: "1.0-B4"
+VERSION: "1.0-B5"
 Number_Format: "#.###"
 Boolean:
   true: "On"
