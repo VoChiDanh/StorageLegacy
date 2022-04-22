@@ -20,6 +20,44 @@ public class Items {
     private static int price;
     private static String block;
 
+    public  static void AddItems(Player p, String name, Integer amount) {
+        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
+            ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name.toUpperCase())));
+            if (Objects.requireNonNull(p.getInventory().containsAtLeast(checkitems, amount))) {
+                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name.toUpperCase())), amount);
+                p.getInventory().removeItem(items);
+                Data.addStorage(p, name.toUpperCase(), amount);
+                if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                        || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
+                    if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
+                        p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
+                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
+                                        .replaceAll("%item%", getName(name.toUpperCase()).replaceAll("_", " ").replaceAll("-", " "))
+                                        .replaceAll("%amount%", String.valueOf(amount))
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name.toUpperCase())))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name.toUpperCase()))))));
+                    }
+                } else {
+                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
+                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                .replaceAll("%item%", getName(name.toUpperCase()).replaceAll("_", " ").replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name.toUpperCase()))))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name.toUpperCase()))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                .replaceAll("%item%", Items.getName(name.toUpperCase()).replaceAll("_", " ").replaceAll("-", " "))
+                                .replaceAll("%amount%", name.toUpperCase())
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name.toUpperCase())))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name.toUpperCase())))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
+                    }
+                }
+            } else {
+                p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")));
+            }
+        } else {
+            p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
+        }
+    }
+
     public static void RemoveItems(Player p, String name, Integer amount) {
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
             if (getStorage(p, name) >= amount) {
@@ -143,5 +181,15 @@ public class Items {
 
     public static int getPrice(String m) {
         return getconfigfile().getInt("Blocks." + m + ".Price");
+    }
+
+    public static int getAmountItem (Player p, String name) {
+        int amount = 0;
+        for (ItemStack is : p.getInventory().getContents()) {
+            if (is != null && is.getType().equals(Material.getMaterial(name))) {
+                amount = amount + is.getAmount();
+            }
+        }
+        return amount;
     }
 }

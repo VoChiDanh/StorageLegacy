@@ -19,9 +19,9 @@ Admin:
   MaxStorage_Remove_Errol_2: "&cYou can not remove &6Maxstorage&c cout of %player%"
 User:
   Help_User:
-    - "&9/Storage sell [Items] [amount] - Sell Block"
-    - "&9/Storage take [Items] [Amount] - Take Block"
-    - "&9/Storage add [Items] [Amount] - Add Block"
+    - "&9/Storage sell [Items] [amount/all] - Sell Block"
+    - "&9/Storage take [Items] [Amount/all] - Take Block"
+    - "&9/Storage add [Items] [Amount/all] - Add Block"
     - "&9/APick - Toggle Auto Pickup "
     - "&9/ASmelt - Toggle Auto Smelt"
   Sell: "&a+ %money%$ &7| %item% x%amount% &3(%storage%/%max%)"
@@ -34,7 +34,8 @@ User:
   Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)" #
 Toggle_Status: "&a%type%: %status%"
 Errol: "&cErrol!"
-Invaild_Number: "&c You must type a number greater than 0"
+Invaild_Number: "&cYou must type a number greater than 0"
+Invaild_Character: "&cThe &6Amount must be 'all', not another letter"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

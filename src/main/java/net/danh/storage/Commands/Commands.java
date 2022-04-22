@@ -114,73 +114,48 @@ public class Commands implements CommandExecutor {
             if (args.length == 3) {
                 if (sender instanceof Player) {
                     if (args[0].equalsIgnoreCase("sell")) {
-                        if (Integer.parseInt(args[2]) > 0) {
-                            if (Integer.parseInt(args[2]) > 0) {
+                        if (isInt(args[2])) {
+                            if(Integer.parseInt(args[2]) > 0) {
                                 SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                            } else if (args[2] == "all") {
-                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            } else {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                             }
-                            return true;
                         } else {
-                            Player s = ((Player) sender).getPlayer();
-                            s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                            if (args[2].equalsIgnoreCase("all")) {
+                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            } else {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                            }
                         }
                     }
                     if (args[0].equalsIgnoreCase("take")) {
-                        if (Integer.parseInt(args[2]) > 0) {
-                            if (Integer.parseInt(args[2]) > 0) {
-                                RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), Integer.parseInt(args[2]));
-                            } else if (args[2] == "all") {
-                                RemoveItems(((Player) sender).getPlayer(), args[1].toUpperCase(), getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
-                            }
-                            return true;
-                        } else {
-                            Player s = ((Player) sender).getPlayer();
-                            s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
-                        }
-                    }
-                    if (args[0].equalsIgnoreCase("add")) {
-                        if (Integer.parseInt(args[2]) > 0) {
-                            if (Material.getMaterial(args[1]) != null) {
-                                ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])));
-                                if (Objects.requireNonNull(((Player) sender).getPlayer()).getInventory().containsAtLeast(checkitems, Integer.parseInt(args[2]))) {
-                                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(args[1])), Integer.parseInt(args[2]));
-                                    ((Player) sender).getPlayer().getInventory().removeItem(items);
-                                    Data.addStorage(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                                    Player p = ((Player) sender).getPlayer();
-                                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
-                                            || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
-                                        if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
-                                            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
-                                                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
-                                                            .replaceAll("%item%", getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
-                                                            .replaceAll("%amount%", args[2])
-                                                            .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
-                                                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))))));
-                                        }
-                                    } else {
-                                        if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
-                                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                                    .replaceAll("%item%", getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
-                                                    .replaceAll("%amount%", args[2])
-                                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1]))))
-                                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1]))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                                    .replaceAll("%item%", Items.getName(args[1]).replaceAll("_", " ").replaceAll("-", " "))
-                                                    .replaceAll("%amount%", args[2])
-                                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, args[1])))
-                                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, args[1])))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
-                                        }
-                                    }
+                            if (isInt(args[2])) {
+                                if(Integer.parseInt(args[2]) > 0) {
+                                    RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                 } else {
-                                    sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")));
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                                 }
                             } else {
-                                sender.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
+                                if (args[2].equalsIgnoreCase("all")) {
+                                    RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                }
                             }
-                            return true;
+                    }
+                    if (args[0].equalsIgnoreCase("add")) {
+                        if (isInt(args[2])) {
+                            if (Integer.parseInt(args[2]) > 0) {
+                                AddItems((((Player) sender).getPlayer()), args[1], Integer.parseInt(args[2]));
+                            } else {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                            }
                         } else {
-                            Player s = ((Player) sender).getPlayer();
-                            s.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                            if (args[2].equalsIgnoreCase("all")) {
+                                AddItems((((Player) sender).getPlayer()), args[1], getAmountItem((((Player) sender).getPlayer()), args[1]));
+                            } else {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                            }
                         }
                     }
                 }

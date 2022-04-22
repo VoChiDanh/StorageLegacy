@@ -107,4 +107,14 @@ public class Files {
 
         return matcher.appendTail(buffer).toString();
     }
+
+    public static boolean isInt(String input) {
+        String regex = "-?\\d+";
+        if (input == null) {
+            return false;
+        } if (input.matches(regex)) {
+            return true;
+        }
+        return false;
+    }
 }
