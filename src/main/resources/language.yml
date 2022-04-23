@@ -25,17 +25,18 @@ User:
     - "&9/APick - Toggle Auto Pickup "
     - "&9/ASmelt - Toggle Auto Smelt"
   Sell: "&a+ %money%$ &7| %item% x%amount% &3(%storage%/%max%)"
-  Full_Storage: "&c%item%&6 storage has reached its limit" #
-  Not_Enough: "&cYou do not have enough item!"
+  Full_Storage: "&c%item%&6 storage has reached its limit"
+  Not_Enough: "&cYou do not have enough item! Currently have: &d%item%"
+  Not_Enough_Iventory: "&cYou do not have enough space! Current free space: &d%space%"
   Not_Correct_Item: "&aYou need type correct item!"
-  Take_Item: "&cTake %item% x%amount%&c from Storage &c(%storage%/%max%)" #
-  Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)" #
-  Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)" #
-  Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)" #
+  Take_Item: "&cTake %item% x%amount%&c from Storage &c(%storage%/%max%)"
+  Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)"
+  Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)"
+  Receive_Item: "&a+%amount% %item% &a(%storage%/%max%)"
 Toggle_Status: "&a%type%: %status%"
 Errol: "&cErrol!"
 Invaild_Number: "&cYou must type a number greater than 0"
-Invaild_Character: "&cThe &6Amount must be 'all', not another letter"
+Invaild_Character: "&cYou must type 'all', not another letter"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

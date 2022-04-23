@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
@@ -21,37 +22,39 @@ public class Items {
     private static String block;
 
     public static void AddItems(Player p, String name, Integer amount) {
+        name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
-            ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name.toUpperCase())));
+            ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)));
             if (p.getInventory().containsAtLeast(checkitems, amount)) {
-                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name.toUpperCase())), amount);
+                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
                 p.getInventory().removeItem(items);
-                Data.addStorage(p, name.toUpperCase(), amount);
+                Data.addStorage(p, name, amount);
                 if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
                         || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
                     if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
                         p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
                                 new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
-                                        .replaceAll("%item%", getName(name.toUpperCase()).replaceAll("_", " ").replaceAll("-", " "))
+                                        .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
                                         .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name.toUpperCase())))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name.toUpperCase()))))));
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
                     }
                 } else {
                     if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
                         p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                .replaceAll("%item%", getName(name.toUpperCase()).replaceAll("_", " ").replaceAll("-", " "))
+                                .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
                                 .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name.toUpperCase()))))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name.toUpperCase()))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                .replaceAll("%item%", Items.getName(name.toUpperCase()).replaceAll("_", " ").replaceAll("-", " "))
-                                .replaceAll("%amount%", name.toUpperCase())
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name.toUpperCase())))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name.toUpperCase())))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                .replaceAll("%amount%", name)
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
                     }
                 }
             } else {
-                p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")));
+                p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")
+                        .replaceAll("%item%", String.valueOf(getAmountItem(p, name)))));
             }
         } else {
             p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
@@ -59,6 +62,7 @@ public class Items {
     }
 
     public static void RemoveItems(Player p, String name, Integer amount) {
+        name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
             if (getStorage(p, name) >= amount) {
                 for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
@@ -116,7 +120,8 @@ public class Items {
                     p.getInventory().addItem(items);
                 }
             } else {
-                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")));
+                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")
+                        .replaceAll("%item%", String.valueOf(getStorage(p, name)))));
             }
         } else {
             p.sendMessage(colorize(getlanguagefile().getString("User.Not_Correct_Item")));
@@ -124,10 +129,12 @@ public class Items {
     }
 
     public static String getName(@NotNull String name) {
-        return getconfigfile().getString("Blocks." + name.toUpperCase() + ".Name");
+        name = name.toUpperCase();
+        return getconfigfile().getString("Blocks." + name + ".Name");
     }
 
     public static void SellItems(Player p, String name, Integer amount) {
+        name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
             if (getStorage(p, name) >= amount) {
                 for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
@@ -172,7 +179,8 @@ public class Items {
                     p.sendMessage(colorize(getlanguagefile().getString("Errol")));
                 }
             } else {
-                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")));
+                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")
+                        .replaceAll("%item%", String.valueOf(getStorage(p, name)))));
             }
         } else {
             p.sendMessage(colorize(getlanguagefile().getString("User.Not_Correct_Item")));
@@ -180,10 +188,12 @@ public class Items {
     }
 
     public static int getPrice(String m) {
+        m = m.toUpperCase();
         return getconfigfile().getInt("Blocks." + m + ".Price");
     }
 
     public static int getAmountItem(Player p, String name) {
+        name = name.toUpperCase();
         int amount = 0;
         for (ItemStack is : p.getInventory().getContents()) {
             if (is != null && is.getType().equals(Material.getMaterial(name))) {
@@ -191,5 +201,19 @@ public class Items {
             }
         }
         return amount;
+    }
+    public static int getAmountEmpty (Player p, String name) {
+        name = name.toUpperCase();
+        int EmptyAmount = 0;
+        for (ItemStack i : p.getInventory().getStorageContents()) {
+            if (i != null) {
+                if (i.getType() == Material.getMaterial(name) && i.getAmount() != i.getMaxStackSize()) {
+                    EmptyAmount += i.getMaxStackSize() - i.getAmount();
+                }
+            } else if (i == null) {
+                EmptyAmount += Material.getMaterial(name).getMaxStackSize();
+            }
+        }
+        return EmptyAmount;
     }
 }

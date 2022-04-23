@@ -16,18 +16,22 @@ public class Data {
     private static final HashMap<String, Boolean> status = new HashMap<>();
 
     public static int getStorageData(@NotNull Player p, String item) {
+        item = item.toUpperCase();
         return getdatafile().getInt("players." + p.getName() + ".items." + item + ".amount");
     }
 
     public static int getStorage(@NotNull Player p, String item) {
+        item.toUpperCase();
         return data.get(p.getName() + "_storage_" + item);
     }
 
     public static void setStorage(@NotNull Player p, String item, Integer amount) {
+        item = item.toUpperCase();
         data.put(p.getName() + "_storage_" + item, Math.max(amount, 0));
     }
 
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
+        item = item.toUpperCase();
         if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
             data.replace(p.getName() + "_storage_" + item, getStorage(p, item) + amount);
             if (Objects.requireNonNull(getconfigfile().getString("Message.RECEIVE.TYPE")).equalsIgnoreCase("ACTION_BAR")
@@ -86,6 +90,7 @@ public class Data {
     }
 
     public static void removeStorage(@NotNull Player p, String item, Integer amount) {
+        item = item.toUpperCase();
         if (getStorage(p, item) > amount) {
             data.replace(p.getName() + "_storage_" + item, getStorage(p, item) - amount);
         } else {
@@ -120,22 +125,27 @@ public class Data {
     }
 
     public static int getMaxStorageData(@NotNull Player p, String item) {
+        item = item.toUpperCase();
         return getdatafile().getInt("players." + p.getName() + ".items." + item + ".max");
     }
 
     public static int getMaxStorage(@NotNull Player p, String item) {
+        item = item.toUpperCase();
         return data.get(p.getName() + "_max_" + item);
     }
 
     public static void setMaxStorage(@NotNull Player p, String item, Integer amount) {
+        item = item.toUpperCase();
         data.put(p.getName() + "_max_" + item, Math.max(amount, getconfigfile().getInt("Default_Max_Storage")));
     }
 
     public static void addMaxStorage(@NotNull Player p, String item, Integer amount) {
+        item = item.toUpperCase();
         data.replace(p.getName() + "_max_" + item, getMaxStorage(p, item) + amount);
     }
 
     public static void removeMaxStorage(@NotNull Player p, String item, Integer amount) {
+        item = item.toUpperCase();
         if (getMaxStorage(p, item) > amount) {
             data.replace(p.getName() + "_max_" + item, getMaxStorage(p, item) - amount);
         } else {

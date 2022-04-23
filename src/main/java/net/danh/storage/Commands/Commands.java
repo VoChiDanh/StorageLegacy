@@ -128,13 +128,22 @@ public class Commands implements CommandExecutor {
                     if (args[0].equalsIgnoreCase("take")) {
                         if (isInt(args[2])) {
                             if (Integer.parseInt(args[2]) > 0) {
-                                RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                if (Integer.parseInt(args[2]) <= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
+                                    RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough_Iventory")
+                                            .replaceAll("%space%", String.valueOf(getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])))));
+                                }
                             } else {
                                 sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                             }
                         } else {
                             if (args[2].equalsIgnoreCase("all")) {
-                                RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                                if (getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) >= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
+                                    RemoveItems(((Player) sender).getPlayer(), args[1], getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                                } else {
+                                    RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                                }
                             } else {
                                 sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
                             }
