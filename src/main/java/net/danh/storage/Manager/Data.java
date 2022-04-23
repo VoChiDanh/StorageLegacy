@@ -21,7 +21,7 @@ public class Data {
     }
 
     public static int getStorage(@NotNull Player p, String item) {
-        item.toUpperCase();
+        item = item.toUpperCase();
         return data.get(p.getName() + "_storage_" + item);
     }
 
