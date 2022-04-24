@@ -37,6 +37,7 @@ Toggle_Status: "&a%type%: %status%"
 Errol: "&cErrol!"
 Invaild_Number: "&cYou must type a number greater than 0"
 Invaild_Character: "&cYou must type 'all', not another letter"
+Number_To_Big: "&cThe number is too big"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

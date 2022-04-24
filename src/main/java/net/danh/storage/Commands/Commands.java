@@ -112,10 +112,14 @@ public class Commands implements CommandExecutor {
                 if (sender instanceof Player) {
                     if (args[0].equalsIgnoreCase("sell")) {
                         if (isInt(args[2])) {
-                            if (Integer.parseInt(args[2]) > 0) {
-                                SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
-                            } else {
-                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                            try {
+                                if (Integer.parseInt(args[2]) > 0) {
+                                    SellItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                                }
+                            } catch (Exception e) {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                             }
                         } else {
                             if (args[2].equalsIgnoreCase("all")) {
@@ -127,16 +131,21 @@ public class Commands implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("take")) {
                         if (isInt(args[2])) {
-                            if (Integer.parseInt(args[2]) > 0) {
-                                if (Integer.parseInt(args[2]) <= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
-                                    RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                            try {
+                                if (Integer.parseInt(args[2]) > 0) {
+                                    if (Integer.parseInt(args[2]) <= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
+                                        RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
+                                    } else {
+                                        sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough_Iventory")
+                                                .replaceAll("%space%", String.valueOf(getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])))));
+                                    }
                                 } else {
-                                    sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough_Iventory")
-                                            .replaceAll("%space%", String.valueOf(getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])))));
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
                                 }
-                            } else {
-                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                            } catch (Exception e) {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                             }
+
                         } else {
                             if (args[2].equalsIgnoreCase("all")) {
                                 if (getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) >= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
@@ -151,10 +160,14 @@ public class Commands implements CommandExecutor {
                     }
                     if (args[0].equalsIgnoreCase("add")) {
                         if (isInt(args[2])) {
-                            if (Integer.parseInt(args[2]) > 0) {
-                                AddItems((((Player) sender).getPlayer()), args[1], Integer.parseInt(args[2]));
-                            } else {
-                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                            try {
+                                if (Integer.parseInt(args[2]) > 0) {
+                                    AddItems((((Player) sender).getPlayer()), args[1], Integer.parseInt(args[2]));
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Number")));
+                                }
+                            } catch (Exception e) {
+                                sender.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                             }
                         } else {
                             if (args[2].equalsIgnoreCase("all")) {
