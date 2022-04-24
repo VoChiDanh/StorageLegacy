@@ -1,6 +1,7 @@
 package net.danh.storage;
 
 import net.danh.storage.Commands.Commands;
+import net.danh.storage.Commands.TabCompleter;
 import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
@@ -62,8 +63,11 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
         }
         registerEventHandlers();
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("Storage")).setTabCompleter(new TabCompleter());
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("APick")).setTabCompleter(new TabCompleter());
         Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
+        Objects.requireNonNull(getCommand("ASmelt")).setTabCompleter(new TabCompleter());
         Files.createfiles();
         checkFilesVersion();
         (new BukkitRunnable() {

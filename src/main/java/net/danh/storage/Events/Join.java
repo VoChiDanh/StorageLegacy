@@ -9,11 +9,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static net.danh.storage.Commands.TabCompleter.players;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class Join implements Listener {
-
     @EventHandler
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
@@ -22,6 +22,9 @@ public class Join implements Listener {
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
             Data.setMaxStorage(p, item, getMaxStorageData(p, item));
             Data.setStorage(p, item, getStorageData(p, item));
+        }
+        if (!players.contains(p.getName())) {
+            players.add(p.getName());
         }
     }
 }

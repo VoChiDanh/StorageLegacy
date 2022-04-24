@@ -19,7 +19,7 @@ Admin:
   MaxStorage_Remove_Errol_2: "&cYou can not remove &6Maxstorage&c cout of %player%"
 User:
   Help_User:
-    - "&9/Storage sell [Items] [amount/all] - Sell Block"
+    - "&9/Storage sell [Items] [Amount/all] - Sell Block"
     - "&9/Storage take [Items] [Amount/all] - Take Block"
     - "&9/Storage add [Items] [Amount/all] - Add Block"
     - "&9/APick - Toggle Auto Pickup "
