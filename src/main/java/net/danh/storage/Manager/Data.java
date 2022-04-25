@@ -5,9 +5,7 @@ import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static net.danh.storage.Manager.Files.*;
 
@@ -156,6 +154,18 @@ public class Data {
     public static int getRandomInt(int min, int max) {
         Random r = new Random();
         return r.nextInt(max - min) + min;
+    }
+
+    public static List<String> getPlayers() {
+        return getdatafile().getStringList("All_players");
+    }
+
+    public static void addPlayers(@NotNull Player p) {
+        List<String> players = getdatafile().getStringList("All_players");
+        players.add(p.getName());
+        Collections.sort(players);
+        getdatafile().set("All_players", players);
+        savedata();
     }
 
     public static boolean autoSmeltData(@NotNull Player p) {
