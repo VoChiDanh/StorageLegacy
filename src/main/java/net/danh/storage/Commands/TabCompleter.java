@@ -10,11 +10,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static net.danh.storage.Manager.Data.getPlayers;
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class TabCompleter implements org.bukkit.command.TabCompleter {
     @Nullable
+    public static List<String> players = new ArrayList<>();
+
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> none = new ArrayList<>();
@@ -75,7 +76,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                         return result;
                     }
                     if (args.length == 3) {
-                        for (String r : getPlayers()) {
+                        for (String r : Objects.requireNonNull(players)) {
                             if (r.toUpperCase().startsWith(args[2].toUpperCase())) {
                                 result.add(r);
                             }
