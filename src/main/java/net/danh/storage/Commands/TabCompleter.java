@@ -23,11 +23,8 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
         List<String> aarg1 = Arrays.asList("set", "add", "remove");
         List<String> arg0 = Arrays.asList("add", "take", "sell");
         List<String> amount = Arrays.asList("all", "<positive number>");
-        List<String> items = new ArrayList<>();
         List<String> result = new ArrayList<>();
-        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-            items.add(item);
-        }
+        List<String> items = new ArrayList<>(Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false));
         if (label.equalsIgnoreCase("Storage") || label.equalsIgnoreCase("kho") || label.equalsIgnoreCase("store")) {
             if (args.length == 1) {
                 if (sender.hasPermission("Storage.admin")) {
@@ -36,15 +33,14 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                             result.add(r);
                         }
                     }
-                    return result;
                 } else {
                     for (String r : arg0) {
                         if (r.toUpperCase().startsWith(args[0].toUpperCase())) {
                             result.add(r);
                         }
                     }
-                    return result;
                 }
+                return result;
             }
             if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("take") || args[0].equalsIgnoreCase("sell")) {
                 if (args.length == 2) {
@@ -80,7 +76,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                         return result;
                     }
                     if (args.length == 3) {
-                        for (String r : players) {
+                        for (String r : Objects.requireNonNull(players)) {
                             if (r.toUpperCase().startsWith(args[2].toUpperCase())) {
                                 result.add(r);
                             }

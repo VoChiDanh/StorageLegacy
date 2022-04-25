@@ -17,7 +17,7 @@ public class BlockExplode implements Listener {
         List<Block> blocks = e.blockList();
         for (Block block : blocks) {
             for (Player entity : e.getBlock().getWorld().getPlayers()) {
-                if (entity.breakBlock(e.getBlock())) {
+                if (entity.getLocation().distance(e.getBlock().getLocation()) <= 5) {
                     Data.addStorage(entity, block.toString(), 1);
                 }
             }

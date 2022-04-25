@@ -27,7 +27,7 @@ User:
   Sell: "&a+ %money%$ &7| %item% x%amount% &3(%storage%/%max%)"
   Full_Storage: "&c%item%&6 storage has reached its limit"
   Not_Enough: "&cYou do not have enough item! Currently have: &d%item%"
-  Not_Enough_Iventory: "&cYou do not have enough space! Current free space: &d%space%"
+  Not_Enough_Inventory: "&cYou do not have enough space! Current free space: &d%space%"
   Not_Correct_Item: "&aYou need type correct item!"
   Take_Item: "&cTake %item% x%amount%&c from Storage &c(%storage%/%max%)"
   Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)"

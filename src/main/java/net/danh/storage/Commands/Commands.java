@@ -132,7 +132,7 @@ public class Commands implements CommandExecutor {
                                     if (Integer.parseInt(args[2]) <= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
                                         RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                     } else {
-                                        sender.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough_Iventory"))
+                                        sender.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough_Inventory"))
                                                 .replaceAll("%space%", String.valueOf(getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])))));
                                     }
                                 } else {
