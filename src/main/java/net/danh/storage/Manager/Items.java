@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
@@ -53,7 +52,7 @@ public class Items {
                     }
                 }
             } else {
-                p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Enough")
+                p.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
                         .replaceAll("%item%", String.valueOf(getAmountItem(p, name)))));
             }
         } else {
@@ -120,7 +119,7 @@ public class Items {
                     p.getInventory().addItem(items);
                 }
             } else {
-                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")
+                p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
                         .replaceAll("%item%", String.valueOf(getStorage(p, name)))));
             }
         } else {
@@ -179,7 +178,7 @@ public class Items {
                     p.sendMessage(colorize(getlanguagefile().getString("Errol")));
                 }
             } else {
-                p.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough")
+                p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
                         .replaceAll("%item%", String.valueOf(getStorage(p, name)))));
             }
         } else {
@@ -202,7 +201,8 @@ public class Items {
         }
         return amount;
     }
-    public static int getAmountEmpty (Player p, String name) {
+
+    public static int getAmountEmpty(Player p, String name) {
         name = name.toUpperCase();
         int EmptyAmount = 0;
         for (ItemStack i : p.getInventory().getStorageContents()) {
@@ -210,8 +210,8 @@ public class Items {
                 if (i.getType() == Material.getMaterial(name) && i.getAmount() != i.getMaxStackSize()) {
                     EmptyAmount += i.getMaxStackSize() - i.getAmount();
                 }
-            } else if (i == null) {
-                EmptyAmount += Material.getMaterial(name).getMaxStackSize();
+            } else {
+                EmptyAmount += Objects.requireNonNull(Material.getMaterial(name)).getMaxStackSize();
             }
         }
         return EmptyAmount;

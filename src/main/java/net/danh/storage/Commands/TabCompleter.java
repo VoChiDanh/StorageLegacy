@@ -2,26 +2,29 @@ package net.danh.storage.Commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class TabCompleter implements org.bukkit.command.TabCompleter {
     @Nullable
     public static List<String> players = new ArrayList<>();
+
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        List <String> none = new ArrayList<>();
-        List <String> aarg0 = Arrays.asList("storage", "max_storage", "reload", "add", "take", "sell");
-        List <String> aarg1 = Arrays.asList("set", "add", "remove");
-        List <String> arg0 = Arrays.asList("add", "take", "sell");
-        List <String> amount = Arrays.asList("all", "<positive number>");
+        List<String> none = new ArrayList<>();
+        List<String> aarg0 = Arrays.asList("storage", "max_storage", "reload", "add", "take", "sell");
+        List<String> aarg1 = Arrays.asList("set", "add", "remove");
+        List<String> arg0 = Arrays.asList("add", "take", "sell");
+        List<String> amount = Arrays.asList("all", "<positive number>");
         List<String> items = new ArrayList<>();
-        List <String> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
             items.add(item);
         }

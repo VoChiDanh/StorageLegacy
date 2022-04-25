@@ -40,11 +40,7 @@ public class Commands implements CommandExecutor {
                                     new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
                                             .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
                                             .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.false"))))));
-                        } else {
-                            return true;
                         }
-                    } else {
-                        return true;
                     }
                 }
             }
@@ -136,7 +132,7 @@ public class Commands implements CommandExecutor {
                                     if (Integer.parseInt(args[2]) <= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
                                         RemoveItems(((Player) sender).getPlayer(), args[1], Integer.parseInt(args[2]));
                                     } else {
-                                        sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Enough_Iventory")
+                                        sender.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough_Iventory"))
                                                 .replaceAll("%space%", String.valueOf(getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])))));
                                     }
                                 } else {
@@ -148,11 +144,7 @@ public class Commands implements CommandExecutor {
 
                         } else {
                             if (args[2].equalsIgnoreCase("all")) {
-                                if (getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) >= getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])) {
-                                    RemoveItems(((Player) sender).getPlayer(), args[1], getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
-                                } else {
-                                    RemoveItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
-                                }
+                                RemoveItems(((Player) sender).getPlayer(), args[1], Math.min(getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]), getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])));
                             } else {
                                 sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
                             }

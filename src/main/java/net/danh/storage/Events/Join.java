@@ -23,7 +23,7 @@ public class Join implements Listener {
             Data.setMaxStorage(p, item, getMaxStorageData(p, item));
             Data.setStorage(p, item, getStorageData(p, item));
         }
-        if (!players.contains(p.getName())) {
+        if (!Objects.requireNonNull(players).contains(p.getName())) {
             players.add(p.getName());
         }
     }

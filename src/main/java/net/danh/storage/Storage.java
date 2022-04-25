@@ -3,6 +3,7 @@ package net.danh.storage;
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Commands.TabCompleter;
 import net.danh.storage.Events.BlockBreak;
+import net.danh.storage.Events.BlockExplode;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
 import net.danh.storage.Hook.PlaceholderAPI;
@@ -107,10 +108,10 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
     private void checkFilesVersion() {
-        if (!getconfigfile().getString("VERSION").equalsIgnoreCase("1.0-B5") || getconfigfile().getString("VERSION") == null) {
+        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase("1.0-B5") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update config.yml!");
         }
-        if (!getlanguagefile().getString("VERSION").equalsIgnoreCase("1.0-B5") || getconfigfile().getString("VERSION") == null) {
+        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase("1.0-B5") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update language.yml!");
         }
     }
@@ -128,7 +129,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {
-        return new ArrayList<>(Arrays.asList(new BlockBreak(), new Quit(), new Join()));
+        return new ArrayList<>(Arrays.asList(new BlockBreak(), new Quit(), new Join(), new BlockExplode()));
     }
 
     /**
