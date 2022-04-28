@@ -8,36 +8,63 @@ Boolean:
   false: "Off"
 Blocks:
   COAL_ORE:
-    Name: "&8Small_Coal" #You also can you color code in the name
-    Price: 100
+    Name: '&8Coal'
+    Price: 25
     Convert: COAL
   IRON_ORE:
-    Name: "Small_Iron"
-    Price: 200
+    Name: '&fIron Ingot'
+    Price: 50
     Convert: IRON_INGOT
-  DIAMOND_ORE:
-    Name: "Small_Diamond"
-    Price: 300
-    Convert: DIAMOND
-  COAL_BLOCK:
-    Name: "Big_Coal"
+  GOLD_ORE:
+    Name: '&eGold Ingot'
+    Price: 100
+    Convert: GOLD_INGOT
+  LAPIS_ORE:
+    Name: '&9Lapis Lazuli'
     Price: 150
-  IRON_BLOCK:
-    Name: "Big_Iron"
+    Convert: LAPIS_LAZULI #If you use 1.9 - 1.12.2, set it to INK_SACK;4
+  REDSTONE_ORE:
+    Name: '&cRedstone'
+    Price: 200
+    Type: Ore
+    Convert: REDSTONE
+  DIAMOND_ORE:
+    Name: '&bDiamond'
     Price: 250
+    Convert: DIAMOND
+  EMERALD_ORE:
+    Name: '&aEmerald'
+    Price: 300
+    Convert: EMERALD
+  COAL_BLOCK:
+    Name: '&8Coal Block'
+    Price: 250
+  IRON_BLOCK:
+    Name: '&fIron Block'
+    Price: 500
+  GOLD_BLOCK:
+    Name: '&eGold BLock'
+    Price: 1000
+  LAPIS_BLOCK:
+    Name: '&9Lapis Block'
+    Price: 1500
+  REDSTONE_BLOCK:
+    Name: '&cRedstone Block'
+    Price: 2000
   DIAMOND_BLOCK:
-    Name: "Big_Diamond"
-    Price: 350
-  WHITE_STAINED_GLASS: #If you use 1.9 - 1.12.2, set it to STAINED_GLASS
+    Name: '&bDiamond BLock'
+    Price: 2500
+  EMERALD_BLOCK:
+    Name: '&aEmerald'
+    Price: 3000
+  STONE:
+    Name: '&7Đá'
+  WHITE_STAINED_GLASS: If you use 1.9 - 1.12.2, set it to STAINED_GLASS
     Name: "White_Glass"
     Price: 50
-  YELLOW_STAINED_GLASS: #If you use 1.9 - 1.12.2, set it to STAINED_GLASS;4
+  YELLOW_STAINED_GLASS: If you use 1.9 - 1.12.2, set it to STAINED_GLASS;4
     Name: "Yellow_Glass"
     Price: 50
-  LAPIS_ORE:
-    Name: "Lapis_Ore"
-    Price: 200
-    Convert: LAPIS_LAZULI #If you use 1.9 - 1.12.2, set it to INK_SACK;4
 Default_Max_Storage: 10000
 Fortune:
   Chance:
