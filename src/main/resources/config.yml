@@ -59,10 +59,10 @@ Blocks:
     Price: 3000
   STONE:
     Name: '&7Đá'
-  WHITE_STAINED_GLASS: If you use 1.9 - 1.12.2, set it to STAINED_GLASS
+  WHITE_STAINED_GLASS: #If you use 1.9 - 1.12.2, set it to STAINED_GLASS
     Name: "White_Glass"
     Price: 50
-  YELLOW_STAINED_GLASS: If you use 1.9 - 1.12.2, set it to STAINED_GLASS;4
+  YELLOW_STAINED_GLASS: #If you use 1.9 - 1.12.2, set it to STAINED_GLASS;4
     Name: "Yellow_Glass"
     Price: 50
 Default_Max_Storage: 10000
