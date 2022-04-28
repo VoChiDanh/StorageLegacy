@@ -81,6 +81,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
                         getLogger().info(Files.colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
                         getLogger().info(Files.colorize("&cDownload: " + updater.getResourceURL()));
                     }
+
                 } catch (Exception e) {
                     getLogger().warning("Could not check for updates! Stacktrace:");
                     e.printStackTrace();

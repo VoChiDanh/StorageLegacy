@@ -63,11 +63,7 @@ public class Commands implements CommandExecutor {
                                         new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("Toggle_Status"))
                                                 .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autosmelt")))
                                                 .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.false"))))));
-                            } else {
-                                return true;
                             }
-                        } else {
-                            return true;
                         }
                     }
                 }
@@ -92,11 +88,13 @@ public class Commands implements CommandExecutor {
                         sender.sendMessage(Files.colorize("&aReloaded"));
                         try {
                             SpigotUpdater updater = new SpigotUpdater(Storage.get(), 100516);
-                            if (updater.checkForUpdates())
-                                sender.sendMessage(Files.colorize("&6An update was found!"));
-                            sender.sendMessage(Files.colorize("&aNew version: " + updater.getLatestVersion()));
-                            sender.sendMessage(Files.colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
-                            sender.sendMessage(Files.colorize("&cDownload: " + updater.getResourceURL()));
+                            if (!updater.getLatestVersion().equals(Storage.get().getDescription().getVersion())) {
+                                if (updater.checkForUpdates())
+                                    sender.sendMessage(Files.colorize("&6An update was found!"));
+                                sender.sendMessage(Files.colorize("&aNew version: " + updater.getLatestVersion()));
+                                sender.sendMessage(Files.colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
+                                sender.sendMessage(Files.colorize("&cDownload: " + updater.getResourceURL()));
+                            }
                         } catch (Exception e) {
                             Storage.get().getLogger().warning("Could not check for updates! Stacktrace:");
                             e.printStackTrace();

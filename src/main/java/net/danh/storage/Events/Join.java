@@ -7,12 +7,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
+import static net.danh.storage.Commands.TabCompleter.players;
 import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class Join implements Listener {
     @EventHandler
@@ -24,14 +23,8 @@ public class Join implements Listener {
             Data.setMaxStorage(p, item, getMaxStorageData(p, item));
             Data.setStorage(p, item, getStorageData(p, item));
         }
-        if (!(getPlayers() == null)) {
-            if (!getPlayers().contains(p.getName())) {
-                addPlayers(p);
-            }
-        } else {
-            List<String> ps = Arrays.asList(p.getName());
-            getdatafile().set("All_players", ps);
-            savedata();
+        if (!Objects.requireNonNull(players).contains(p.getName())) {
+            players.add(p.getName());
         }
     }
 }
