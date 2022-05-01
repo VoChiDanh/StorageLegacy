@@ -56,6 +56,35 @@ DECORATES:
       - 50
       - 51
       - 52
+ 'Sort_Default':
+    material: STORAGE_MINECART
+    slot: 4
+    name: '&eSort Items By Default'
+    lore: 
+      - '&aSelected'
+  'Sort_Name':
+    material: POWERED_MINECART
+    slot: 0
+    name: '&aSort Items By Name'
+    lore: 
+      - '&cComing soon...'
+  'Sort_Price':
+    material: HOPPER_MINECART
+    slot: 1
+    name: '&aSort Items By Price'
+    lore: 
+      - '&cComing soon...'
+  'Sort_Quality':
+    material: EXPLOSIVE_MINECART
+    slot: 7
+    name: '&aSort Items By Quality'
+    lore: 
+      - '&cComing soon...'
+  'Sort_Unused':
+    material: COMMAND_MINECART
+    slot: 8
+    name: '&aSort Items By Unsued'
+    lore: 
 ITEMS:
   '0':
     Convert_Status: true
