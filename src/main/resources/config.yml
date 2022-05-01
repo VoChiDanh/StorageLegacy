@@ -3,6 +3,11 @@ Blacklist-World:
   - world2
 VERSION: "1.0-B5"
 Number_Format: "#.###"
+Input:
+  Type: ONE #AGAIN
+  Cancel_Character:
+    - cancel
+    - stop
 Boolean:
   true: "On"
   false: "Off"
@@ -22,7 +27,7 @@ Blocks:
   LAPIS_ORE:
     Name: '&9Lapis Lazuli'
     Price: 150
-    Convert: LAPIS_LAZULI #If you use 1.9 - 1.12.2, set it to INK_SACK;4
+    Convert: INK_SACK;4 #If you use 1.13 or higher, set it to LAPIS_LAZULI.
   REDSTONE_ORE:
     Name: '&cRedstone'
     Price: 200
@@ -58,13 +63,14 @@ Blocks:
     Name: '&aEmerald'
     Price: 3000
   STONE:
-    Name: '&7Đá'
-  WHITE_STAINED_GLASS: If you use 1.9 - 1.12.2, set it to STAINED_GLASS
-    Name: "White_Glass"
-    Price: 50
-  YELLOW_STAINED_GLASS: If you use 1.9 - 1.12.2, set it to STAINED_GLASS;4
-    Name: "Yellow_Glass"
-    Price: 50
+    Name: '&7Stone'
+    Price: 10
+  STAINED_GLASS: #If you use 1.13 or higher, set it to WHITE_STAINED_GLASS.
+    Name: '&fWhite Glass'
+    Price: 30
+  STAINED_GLASS;4: #If you use 1.13 or higher, set it to YELLOW_STAINED_GLASS.
+    Name: '&eYellow Glass'
+    Price: 30
 Default_Max_Storage: 10000
 Fortune:
   Chance:

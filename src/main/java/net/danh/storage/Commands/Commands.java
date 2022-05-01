@@ -1,5 +1,7 @@
 package net.danh.storage.Commands;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.danh.storage.Gui.Loader.LoadMenu;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.danh.storage.Storage;
@@ -13,8 +15,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
+import static net.danh.storage.Gui.Loader.LoadMenu.*;
+import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Items.*;
@@ -71,21 +77,27 @@ public class Commands implements CommandExecutor {
         }
         if (label.equalsIgnoreCase("Storage") || label.equalsIgnoreCase("kho") || label.equalsIgnoreCase("store")) {
             if (args.length == 0) {
-                for (String user : getlanguagefile().getStringList("User.Help_User")) {
-                    sender.sendMessage(colorize(user));
-                }
-                if (sender.hasPermission("Storage.admin")) {
-                    for (String user : getlanguagefile().getStringList("Admin.Help_Admin")) {
-                        sender.sendMessage(colorize(user));
-                    }
-                }
-                return true;
+                OpenGui(((Player) sender).getPlayer());
+                SaveMenu(((Player) sender).getPlayer());
+                ReloadMenu();
             }
             if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("help")) {
+                    for (String user : getlanguagefile().getStringList("User.Help_User")) {
+                        sender.sendMessage(colorize(user));
+                    }
+                    if (sender.hasPermission("Storage.admin")) {
+                        for (String user : getlanguagefile().getStringList("Admin.Help_Admin")) {
+                            sender.sendMessage(colorize(user));
+                        }
+                    }
+                    return true;
+                }
                 if (sender.hasPermission("Storage.admin")) {
                     if (args[0].equalsIgnoreCase("reload")) {
+                        ReloadMenu();
                         reloadfiles();
-                        sender.sendMessage(Files.colorize("&aReloaded"));
+                        sender.sendMessage(Files.colorize(getlanguagefile().getString("Admin.Reload")));
                         try {
                             SpigotUpdater updater = new SpigotUpdater(Storage.get(), 100516);
                             if (!updater.getLatestVersion().equals(Storage.get().getDescription().getVersion())) {
@@ -116,10 +128,14 @@ public class Commands implements CommandExecutor {
                                 sender.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                             }
                         } else {
-                            if (args[2].equalsIgnoreCase("all")) {
-                                SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                            if (getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) > 0) {
+                                if (args[2].equalsIgnoreCase("all")) {
+                                    SellItems(((Player) sender).getPlayer(), args[1], getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                }
                             } else {
-                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Have_Any_Item")));
                             }
                         }
                     }
@@ -141,10 +157,14 @@ public class Commands implements CommandExecutor {
                             }
 
                         } else {
-                            if (args[2].equalsIgnoreCase("all")) {
-                                RemoveItems(((Player) sender).getPlayer(), args[1], Math.min(getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]), getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])));
+                            if (getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) > 0) {
+                                if (args[2].equalsIgnoreCase("all")) {
+                                    RemoveItems(((Player) sender).getPlayer(), args[1], Math.min(getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]), getAmountEmpty(Objects.requireNonNull(((Player) sender).getPlayer()), args[1])));
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                }
                             } else {
-                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Have_Any_Item")));
                             }
                         }
                     }
@@ -160,10 +180,22 @@ public class Commands implements CommandExecutor {
                                 sender.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                             }
                         } else {
-                            if (args[2].equalsIgnoreCase("all")) {
-                                AddItems((((Player) sender).getPlayer()), args[1], getAmountItem((Objects.requireNonNull(((Player) sender).getPlayer())), args[1]));
+                            if (getAmountItem((Objects.requireNonNull(((Player) sender).getPlayer())), args[1]) > 0) {
+                                if (args[2].equalsIgnoreCase("all")) {
+                                    if (getMaxStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) >= getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) + getAmountItem((Objects.requireNonNull(((Player) sender).getPlayer())), args[1])) {
+                                        AddItems((((Player) sender).getPlayer()), args[1], getAmountItem((Objects.requireNonNull(((Player) sender).getPlayer())), args[1]));
+                                    } else {
+                                        if (getMaxStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) - getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) > 0) {
+                                            AddItems((((Player) sender).getPlayer()), args[1], getMaxStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]) - getStorage(Objects.requireNonNull(((Player) sender).getPlayer()), args[1]));
+                                        } else {
+                                            sender.sendMessage(colorize(getlanguagefile().getString("User.Add_Full_Storage")));
+                                        }
+                                    }
+                                } else {
+                                    sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                }
                             } else {
-                                sender.sendMessage(colorize(getlanguagefile().getString("Invaild_Character")));
+                                sender.sendMessage(colorize(getlanguagefile().getString("User.Not_Have_Any_Item")));
                             }
                         }
                     }
@@ -171,7 +203,8 @@ public class Commands implements CommandExecutor {
             }
             if (args.length == 5) {
                 if (args[0].equalsIgnoreCase("storage")) {
-                    if (Material.getMaterial(args[3]) != null) {
+                    Set<String> items = getconfigfile().getConfigurationSection("Blocks.").getKeys(false);
+                    if (items.contains(args[3].toUpperCase())) {
                         if (Bukkit.getPlayer(args[2]) != null) {
                             if (Integer.parseInt(args[4]) > 0) {
                                 if (sender.hasPermission("Storage.admin")) {
@@ -231,7 +264,8 @@ public class Commands implements CommandExecutor {
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("max_storage")) {
-                    if (Material.getMaterial(args[3]) != null) {
+                    Set<String> items = getconfigfile().getConfigurationSection("Blocks.").getKeys(false);
+                    if (items.contains(args[3].toUpperCase())) {
                         if (Bukkit.getPlayer(args[2]) != null) {
                             if (Integer.parseInt(args[4]) > 0) {
                                 if (sender.hasPermission("Storage.admin")) {

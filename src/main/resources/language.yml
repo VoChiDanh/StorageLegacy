@@ -1,5 +1,6 @@
 VERSION: "1.0-B5"
 Admin:
+  Reload: "&aReloaded"
   Help_Admin:
     - "&9/Storage storage [set/add/remove] [Player] [Items] [Amount]"
     - "&9/Storage max_storage [set/add/remove] [Player] [Items] [Amount]"
@@ -26,9 +27,11 @@ User:
     - "&9/ASmelt - Toggle Auto Smelt"
   Sell: "&a+ %money%$ &7| %item% x%amount% &3(%storage%/%max%)"
   Full_Storage: "&c%item%&6 storage has reached its limit"
+  Add_Full_Storage: "&cThe storage is full, you can not add more!"
   Not_Enough: "&cYou do not have enough item! Currently have: &d%item%"
   Not_Enough_Inventory: "&cYou do not have enough space! Current free space: &d%space%"
   Not_Correct_Item: "&aYou need type correct item!"
+  Not_Have_Any_Item: "&cYou don't have any items!"
   Take_Item: "&cTake %item% x%amount%&c from Storage &c(%storage%/%max%)"
   Remove_Item: "&c-%amount% %item% &c(%storage%/%max%)"
   Add_Item: "&aAdd %item% &7(x%amount%)&a to Storage (%storage%/%max%)"
@@ -38,6 +41,13 @@ Errol: "&cErrol!"
 Invaild_Number: "&cYou must type a number greater than 0"
 Invaild_Character: "&cYou must type 'all', not another letter"
 Number_To_Big: "&cThe number is too big"
+Input:
+  Again: "&cPlease type again."
+  Cancel: "&cYou canceled the input process!"
+  Start: "&ePlease type a number greater than 0 in the chat. Type cancel/stop to cancel input process."
+  Not_A_Number: "&cThe input is not a number."
+  Space_Error: "&cThe input can not contain space character."
+  Invaild_Number: "&cYou must type a number greater than 0"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

@@ -10,18 +10,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static net.danh.storage.Manager.Data.getPlayers;
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class TabCompleter implements org.bukkit.command.TabCompleter {
     @Nullable
-    public static List<String> players = new ArrayList<>();
-
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> none = new ArrayList<>();
-        List<String> aarg0 = Arrays.asList("storage", "max_storage", "reload", "add", "take", "sell");
+        List<String> aarg0 = Arrays.asList("help", "storage", "max_storage", "reload", "add", "take", "sell");
         List<String> aarg1 = Arrays.asList("set", "add", "remove");
-        List<String> arg0 = Arrays.asList("add", "take", "sell");
+        List<String> arg0 = Arrays.asList("help", "add", "take", "sell");
         List<String> amount = Arrays.asList("all", "<positive number>");
         List<String> result = new ArrayList<>();
         List<String> items = new ArrayList<>(Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false));
@@ -76,7 +75,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                         return result;
                     }
                     if (args.length == 3) {
-                        for (String r : Objects.requireNonNull(players)) {
+                        for (String r : getPlayers()) {
                             if (r.toUpperCase().startsWith(args[2].toUpperCase())) {
                                 result.add(r);
                             }

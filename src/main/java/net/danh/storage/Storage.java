@@ -6,6 +6,8 @@ import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.BlockExplode;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
+import net.danh.storage.Gui.Listener.GuiClickListener;
+import net.danh.storage.Gui.Listener.InputListener;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
@@ -36,7 +38,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     public static Economy economy;
     private static Storage instance;
-
+    public static boolean ecostatus;
     public static Storage get() {
         return instance;
     }
@@ -51,9 +53,12 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     public void onEnable() {
         Metrics metrics = new Metrics(this, 14622);
         if (!setupEconomy()) {
+            ecostatus = false;
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
+        } else {
+            ecostatus = true;
         }
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with Vault!");
@@ -132,7 +137,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {
-        return new ArrayList<>(Arrays.asList(new BlockBreak(), new Quit(), new Join(), new BlockExplode()));
+        return new ArrayList<Listener>(Arrays.asList(new BlockBreak(), new Quit(), new Join(), new BlockExplode(), new GuiClickListener(), new InputListener()));
     }
 
     /**

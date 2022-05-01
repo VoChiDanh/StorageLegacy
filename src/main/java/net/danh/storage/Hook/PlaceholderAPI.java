@@ -12,6 +12,9 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
+import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Files.getconfigfile;
+
 public class PlaceholderAPI extends PlaceholderExpansion {
     @Override
     public @NotNull String getIdentifier() {
@@ -40,7 +43,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         }
         if (identifier.startsWith("storage_")) {
             String item = identifier.substring(8);
-            return String.valueOf(Data.getStorage(p, item));
+            return String.valueOf(getStorage(p, item));
         }
         if (identifier.startsWith("max_storage_")) {
             String item = identifier.substring(12);
@@ -52,7 +55,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         }
         if (identifier.startsWith("count_")) {
             String name = identifier.substring(6);
-            return String.valueOf(Data.getMaxStorage(p, name) - Data.getStorage(p, name));
+            return getCount(p, name);
         }
         if (identifier.startsWith("auto_smelt")) {
             if (Data.autoSmelt(p)) {
@@ -70,21 +73,23 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         }
         if (identifier.startsWith("used_")) {
             String name = identifier.substring(5);
-            float min = Data.getStorage(p, name);
-            float max = Data.getMaxStorage(p, name);
-            double n = (min / max) * 100;
-            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
-            df.setRoundingMode(RoundingMode.CEILING);
-            return df.format(n) + "%";
+            return getUsed(p, name);
         }
         if (identifier.startsWith("empty_")) {
             String name = identifier.substring(6);
-            float min = Data.getMaxStorage(p, name) - Data.getStorage(p, name);
-            float max = Data.getMaxStorage(p, name);
-            double n = (min / max) * 100;
-            DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
-            df.setRoundingMode(RoundingMode.CEILING);
-            return df.format(n) + "%";
+            return getEmpty(p, name);
+        }
+        if (identifier.startsWith("total_storage")) {
+            return getTotalStorage(p);
+        }
+        if (identifier.startsWith("total_max_storage")) {
+            return getTotalMaxStorage(p);
+        }
+        if (identifier.startsWith("total_used_storage")) {
+            return getTotalUsed(p);
+        }
+        if (identifier.startsWith("total_empty_storage")) {
+            return getTotalEmpty(p);
         }
         return null;
     }

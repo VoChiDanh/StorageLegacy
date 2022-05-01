@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static net.danh.storage.Commands.TabCompleter.players;
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class Quit implements Listener {
@@ -19,9 +18,6 @@ public class Quit implements Listener {
         Player p = e.getPlayer();
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
             Data.savePlayerData(p, item);
-        }
-        if (Objects.requireNonNull(players).contains(p.getName())) {
-            players.remove(p.getName());
         }
     }
 }

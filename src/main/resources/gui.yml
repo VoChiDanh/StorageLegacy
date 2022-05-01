@@ -1,0 +1,447 @@
+TITLE: '&dTest items GUI'
+ROWS: 6
+DECORATES:
+  '0':
+    material: STAINED_GLASS_PANE
+    amount: 1
+    data: 14
+    name: '&f'
+    slot:
+      - 2
+      - 6
+  '1':
+    material: STAINED_GLASS_PANE
+    amount: 1
+    data: 1
+    name: '&f'
+    slot:
+      - 3
+      - 5
+  '2':
+    material: STAINED_GLASS_PANE
+    amount: 1
+    data: 2
+    name: '&f'
+    slot:
+      - 9
+      - 10
+      - 11
+      - 15
+      - 16
+      - 17
+  '3':
+    material: STAINED_GLASS_PANE
+    amount: 1
+    data: 5
+    name: '&f'
+    slot:
+      - 18
+      - 26
+      - 27
+      - 35
+      - 36
+      - 44
+      - 45
+      - 53
+  '4':
+    material: STAINED_GLASS_PANE
+    amount: 1
+    data: 3
+    name: '&f'
+    slot:
+      - 46
+      - 47
+      - 48
+      - 49
+      - 50
+      - 51
+      - 52
+ITEMS:
+  '0':
+    Convert_Status: true
+    Actions:
+      BLOCK: COAL_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 19
+    Block:
+      material: COAL_ORE
+      amount: 1
+      name: '&8Coal Ore'
+      lore:
+        - '&f'
+        - '&8Coal Ore Storage'
+    Convert:
+      material: COAL
+      amount: 1
+      name: '&8Coal'
+      lore:
+        - '&f'
+        - '&8Coal Storage'
+  '1':
+    Convert_Status: true
+    Actions:
+      BLOCK: IRON_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 20
+    Block:
+      material: IRON_ORE
+      amount: 1
+      name: '&fIron Ore'
+      lore:
+        - '&f'
+        - '&fIron Ore Storage'
+    Convert:
+      material: IRON_INGOT
+      amount: 1
+      name: '&fIron Ingot'
+      lore:
+        - '&f'
+        - '&fIron Storage'
+  '2':
+    Convert_Status: true
+    Actions:
+      BLOCK: GOLD_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 21
+    Block:
+      material: GOLD_ORE
+      amount: 1
+      name: '&eGold Ore'
+      lore:
+        - '&f'
+        - '&eGold Ore Storage'
+    Convert:
+      material: GOLD_INGOT
+      amount: 1
+      name: '&eGold Ingot'
+      lore:
+        - '&f'
+        - '&eGold Storage'
+  '3':
+    Convert_Status: true
+    Actions:
+      BLOCK: LAPIS_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 22
+    Block:
+      material: LAPIS_ORE
+      amount: 1
+      name: '&9Lapis Ore'
+      lore:
+        - '&f'
+        - '&9Lapis Ore Storage'
+    Convert:
+      material: INK_SACK
+      data: 4
+      amount: 1
+      name: '&9Lapis Lazuli'
+      lore:
+        - '&f'
+        - '&9Lapis Storage'
+  '4':
+    Convert_Status: true
+    Actions:
+      BLOCK: REDSTONE_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 23
+    Block:
+      material: REDSTONE_ORE
+      amount: 1
+      name: '&cRedstone Ore'
+      lore:
+        - '&f'
+        - '&cRedstone Ore Storage'
+    Convert:
+      material: REDSTONE
+      amount: 1
+      name: '&cRedstone'
+      lore:
+        - '&f'
+        - '&cRedstone Storage'
+  '5':
+    Convert_Status: true
+    Actions:
+      BLOCK: DIAMOND_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 24
+    Block:
+      material: DIAMOND_ORE
+      amount: 1
+      name: '&bDiamond Ore'
+      lore:
+        - '&f'
+        - '&bDiamond Ore Storage'
+    Convert:
+      material: DIAMOND
+      amount: 1
+      name: '&bDiamond'
+      lore:
+        - '&f'
+        - '&bDiamond Storage'
+  '6':
+    Convert_Status: true
+    Actions:
+      BLOCK: EMERALD_ORE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 25
+    Block:
+      material: EMERALD_ORE
+      amount: 1
+      name: '&aEmerald Ore'
+      lore:
+        - '&f'
+        - '&aEmerald Ore Storage'
+    Convert:
+      material: EMERALD
+      amount: 1
+      name: '&aEmerald'
+      lore:
+        - '&f'
+        - '&aEmerald Storage'
+  '7':
+    Convert_Status: false
+    Actions:
+      BLOCK: COAL_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 28
+    Block:
+      material: COAL_BLOCK
+      amount: 1
+      name: '&8Coal Block'
+      lore:
+        - '&f'
+        - '&8Coal Block Storage'
+  '8':
+    Convert_Status: false
+    Actions:
+      BLOCK: IRON_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 29
+    Block:
+      material: IRON_BLOCK
+      amount: 1
+      name: '&fIron Block'
+      lore:
+        - '&f'
+        - '&fIron Block Storage'
+  '9':
+    Convert_Status: false
+    Actions:
+      BLOCK: GOLD_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 30
+    Block:
+      material: GOLD_BLOCK
+      amount: 1
+      name: '&eGold Block'
+      lore:
+        - '&f'
+        - '&eGold Block Storage'
+  '10':
+    Convert_Status: false
+    Actions:
+      BLOCK: LAPIS_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 31
+    Block:
+      material: LAPIS_BLOCK
+      amount: 1
+      name: '&9Lapis Block'
+      lore:
+        - '&f'
+        - '&9Lapis Block Storage'
+  '11':
+    Convert_Status: false
+    Actions:
+      BLOCK: REDSTONE_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 32
+    Block:
+      material: REDSTONE_BLOCK
+      amount: 1
+      name: '&cRedstone Block'
+      lore:
+        - '&f'
+        - '&cRedstone Block Storage'
+  '12':
+    Convert_Status: false
+    Actions:
+      BLOCK: DIAMOND_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 33
+    Block:
+      material: DIAMOND_BLOCK
+      amount: 1
+      name: '&bDiamond Block'
+      lore:
+        - '&f'
+        - '&bDiamond Block Storage'
+  '13':
+    Convert_Status: false
+    Actions:
+      BLOCK: EMERALD_BLOCK
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 34
+    Block:
+      material: EMERALD_BLOCK
+      amount: 1
+      name: '&aEmerald Block'
+      lore:
+        - '&f'
+        - '&aEmerald Block Storage'
+  '14':
+    Convert_Status: false
+    Actions:
+      BLOCK: WHITE_STAINED_GLASS
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 39
+    Block:
+      material: STAINED_GLASS
+      amount: 1
+      name: '&fWhite Glass'
+      lore:
+        - '&f'
+        - '&fWhite Glass Storage'
+  '15':
+    Convert_Status: false
+    Actions:
+      BLOCK: STONE
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 40
+    Block:
+      material: STONE
+      amount: 1
+      name: '&7Stone'
+      lore:
+        - '&f'
+        - '&7Stone Storage'
+  '16':
+    Convert_Status: false
+    Actions:
+      BLOCK: YELLOW_STAINED_GLASS
+      LEFT: INPUT_TAKE
+      SHIFT_LEFT: TAKE_ALL
+      RIGHT: INPUT_ADD
+      SHIFT_RIGHT: ADD_ALL
+      DROP: INPUT_SELL
+      CONTROL_DROP: SELL_ALL
+    Slot: 41
+    Block:
+      material: STAINED_GLASS
+      data: 4
+      amount: 1
+      name: '&eYellow Glass'
+      lore:
+        - '&f'
+        - '&eYellow Glass Storage'
+BUTTONS:
+  Auto_Pickup:
+    'True':
+      material: HOPPER
+      amount: 1
+      name: '&6Auto Pickup'
+      lore:
+        - '&aTrue'
+      slot: 12
+    'False':
+      material: HOPPER
+      amount: 1
+      name: '&6Auto Pickup'
+      lore:
+        - '&cFalse'
+      slot: 12
+  Auto_Smelt:
+    'True':
+      material: FURNACE
+      amount: 1
+      name: '&6Auto Smelt'
+      lore:
+        - '&aTrue'
+      slot: 14
+    'False':
+      material: FURNACE
+      amount: 1
+      name: '&6Auto Smelt'
+      lore:
+        - '&cFalse'
+      slot: 14

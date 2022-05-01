@@ -23,9 +23,31 @@ public class Items {
     public static void AddItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
-            ItemStack checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)));
+            NMSAssistant nmsAssistant = new NMSAssistant();
+            ItemStack checkitems;
+            if (nmsAssistant.isVersionLessThan(13)) {
+                String[] iname = name.split(";");
+                if (iname.length == 1) {
+                    checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
+                } else {
+                    checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
+                    checkitems.setDurability(Short.parseShort(iname[1]));
+                }
+            } else {
+                checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)));
+            }
             if (p.getInventory().containsAtLeast(checkitems, amount)) {
-                ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
+                ItemStack items;
+                if (nmsAssistant.isVersionLessThan(13)) {
+                    String[] iname = name.split(";");
+                    if (iname.length == 1) {
+                        items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount);
+                    } else {
+                        items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount, Short.parseShort(iname[1]));
+                    }
+                } else {
+                    items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
+                }
                 p.getInventory().removeItem(items);
                 Data.addStorage(p, name, amount);
                 if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
@@ -194,9 +216,28 @@ public class Items {
     public static int getAmountItem(Player p, String name) {
         name = name.toUpperCase();
         int amount = 0;
-        for (ItemStack is : p.getInventory().getContents()) {
-            if (is != null && is.getType().equals(Material.getMaterial(name))) {
-                amount = amount + is.getAmount();
+        NMSAssistant nmsAssistant = new NMSAssistant();
+        if (!nmsAssistant.isVersionLessThan(13)) {
+            for (ItemStack is : p.getInventory().getContents()) {
+                if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
+                    amount = amount + is.getAmount();
+                }
+            }
+        } else {
+            String[] iname = name.split(";");
+            short data = Short.parseShort(iname[1]);
+            if (iname.length == 1) {
+                for (ItemStack is : p.getInventory().getContents()) {
+                    if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
+                        amount = amount + is.getAmount();
+                    }
+                }
+            } else {
+                for (ItemStack is : p.getInventory().getContents()) {
+                    if (is != null && is.getType().equals(Material.getMaterial(iname[0])) && is.getDurability() == data) {
+                        amount = amount + is.getAmount();
+                    }
+                }
             }
         }
         return amount;
@@ -205,13 +246,41 @@ public class Items {
     public static int getAmountEmpty(Player p, String name) {
         name = name.toUpperCase();
         int EmptyAmount = 0;
-        for (ItemStack i : p.getInventory().getStorageContents()) {
-            if (i != null) {
-                if (i.getType() == Material.getMaterial(name) && i.getAmount() != i.getMaxStackSize()) {
-                    EmptyAmount += i.getMaxStackSize() - i.getAmount();
+        NMSAssistant nmsAssistant = new NMSAssistant();
+        if (nmsAssistant.isVersionLessThan(13)) {
+            String[] iname = name.split(";");
+            if (iname.length == 1) {
+                for (ItemStack i : p.getInventory().getStorageContents()) {
+                    if (i != null) {
+                        if (i.getType() == Material.getMaterial(name) && i.getAmount() != i.getMaxStackSize()) {
+                            EmptyAmount += i.getMaxStackSize() - i.getAmount();
+                        }
+                    } else {
+                        EmptyAmount += Objects.requireNonNull(Material.getMaterial(name)).getMaxStackSize();
+                    }
                 }
             } else {
-                EmptyAmount += Objects.requireNonNull(Material.getMaterial(name)).getMaxStackSize();
+                for (ItemStack i : p.getInventory().getStorageContents()) {
+                    if (i != null) {
+                        if (i.getType() == Material.getMaterial(iname[0]) && i.getDurability() == Short.parseShort(iname[1]) && i.getAmount() != i.getMaxStackSize()) {
+                            EmptyAmount += i.getMaxStackSize() - i.getAmount();
+                        }
+                    } else {
+                        ItemStack item = new ItemStack(Material.getMaterial(iname[0]));
+                        item.setDurability(Short.parseShort(iname[1]));
+                        EmptyAmount += item.getMaxStackSize();
+                    }
+                }
+            }
+        } else {
+            for (ItemStack i : p.getInventory().getStorageContents()) {
+                if (i != null) {
+                    if (i.getType() == Material.getMaterial(name) && i.getAmount() != i.getMaxStackSize()) {
+                        EmptyAmount += i.getMaxStackSize() - i.getAmount();
+                    }
+                } else {
+                    EmptyAmount += Objects.requireNonNull(Material.getMaterial(name)).getMaxStackSize();
+                }
             }
         }
         return EmptyAmount;
