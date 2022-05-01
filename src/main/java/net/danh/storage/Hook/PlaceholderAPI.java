@@ -8,12 +8,7 @@ import net.danh.storage.Storage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.Objects;
-
 import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class PlaceholderAPI extends PlaceholderExpansion {
     @Override

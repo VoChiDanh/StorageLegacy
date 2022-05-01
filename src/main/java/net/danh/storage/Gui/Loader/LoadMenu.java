@@ -1,4 +1,5 @@
 package net.danh.storage.Gui.Loader;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,8 @@ public class LoadMenu {
     public static List<Boolean> converts_status = new ArrayList<Boolean>();
     public static String tittle;
     public static int size;
-    public static void  LoadMenu(Player p) {
+
+    public static void LoadMenu(Player p) {
         LoadCancel();
         LoadItemActions();
         LoadDecorate(p);
@@ -48,7 +50,7 @@ public class LoadMenu {
         LoadSmelt(p);
         try {
             tittle = colorize(papi(getguifile().getString("TITLE"), p));
-        } catch (Exception e){
+        } catch (Exception e) {
             tittle = "Default tittle";
         }
         try {
@@ -57,7 +59,8 @@ public class LoadMenu {
             size = 54;
         }
     }
-    public static void ReloadMenu () {
+
+    public static void ReloadMenu() {
         decorate = new ArrayList<ItemStack>();
         decorate_slot = new ArrayList<List<Integer>>();
         items = new ArrayList<ItemStack>();
@@ -69,12 +72,14 @@ public class LoadMenu {
         actions_block = new ArrayList<String>();
         actions_slot = new ArrayList<Integer>();
     }
+
     public static void SaveMenu(Player p) {
         player_gui.put(p, gui);
         player_actions.put(p, actions);
         player_actions_slot.put(p, actions_slot);
         player_actions_block.put(p, actions_block);
     }
+
     public static void LoadCancel() {
         if (getconfigfile().getStringList("Input.Cancel_Character").isEmpty()) {
             cancel = new ArrayList<>();

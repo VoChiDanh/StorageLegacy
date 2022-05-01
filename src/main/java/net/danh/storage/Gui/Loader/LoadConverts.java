@@ -11,7 +11,6 @@ import java.util.Set;
 
 import static net.danh.storage.Gui.Loader.LoadMenu.*;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Files.getguifile;
 
 public class LoadConverts {
     public static void LoadItemsConvert(Player p) {
@@ -20,7 +19,7 @@ public class LoadConverts {
             ItemStack item;
             Set<String> type = getguifile().getConfigurationSection("ITEMS." + key + ".").getKeys(false);
             boolean status = getguifile().getBoolean("ITEMS." + key + ".Convert_Status");
-            int i =0;
+            int i = 0;
             if (status) {
                 if (type.contains("Convert")) {
                     Set<String> properties = getguifile().getConfigurationSection("ITEMS." + key + ".Convert.").getKeys(false);
@@ -63,7 +62,7 @@ public class LoadConverts {
                         Bukkit.getLogger().warning("[Storage] The item (" + key + ") do not have slot propertie");
                     }
                     i++;
-                } else  {
+                } else {
                     converts.add(null);
                     converts_slot.add(null);
                     converts_status.add(null);

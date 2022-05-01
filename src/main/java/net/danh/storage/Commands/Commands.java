@@ -1,25 +1,22 @@
 package net.danh.storage.Commands;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.danh.storage.Gui.Loader.LoadMenu;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.danh.storage.Storage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-import static net.danh.storage.Gui.Loader.LoadMenu.*;
+import static net.danh.storage.Gui.Loader.LoadMenu.ReloadMenu;
+import static net.danh.storage.Gui.Loader.LoadMenu.SaveMenu;
 import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;

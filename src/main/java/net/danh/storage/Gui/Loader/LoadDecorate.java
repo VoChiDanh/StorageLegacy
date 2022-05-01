@@ -14,7 +14,7 @@ import static net.danh.storage.Gui.Loader.LoadMenu.decorate;
 import static net.danh.storage.Gui.Loader.LoadMenu.decorate_slot;
 import static net.danh.storage.Manager.Files.*;
 
-public  class LoadDecorate {
+public class LoadDecorate {
     public static void LoadDecorate(Player p) {
         Set<String> ditems = getguifile().getConfigurationSection("DECORATES.").getKeys(false);
         for (String key : ditems) {

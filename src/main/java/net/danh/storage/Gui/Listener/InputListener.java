@@ -17,6 +17,7 @@ import static net.danh.storage.Manager.Files.*;
 public class InputListener implements Listener {
     public static List<Player> input = new ArrayList<>();
     public static HashMap<Player, Object> input_result = new HashMap<>();
+
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player p = event.getPlayer();
