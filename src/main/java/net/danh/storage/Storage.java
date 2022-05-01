@@ -37,8 +37,9 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
 
     public static Economy economy;
-    private static Storage instance;
     public static boolean ecostatus;
+    private static Storage instance;
+
     public static Storage get() {
         return instance;
     }

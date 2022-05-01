@@ -1,6 +1,5 @@
 package net.danh.storage.Gui;
 
-import net.danh.storage.Gui.Loader.LoadMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -15,6 +14,7 @@ import static net.danh.storage.Manager.Data.autoSmelt;
 
 public class OpenGui {
     public static Inventory gui;
+
     public static void OpenGui(Player p) {
         LoadMenu(p);
         gui = Bukkit.createInventory(null, size, tittle);

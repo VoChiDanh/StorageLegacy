@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import static net.danh.storage.Gui.Loader.LoadMenu.*;
+import static net.danh.storage.Gui.Loader.LoadMenu.smelt_buttons;
+import static net.danh.storage.Gui.Loader.LoadMenu.smelt_buttons_slot;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Files.getguifile;
 
 public class LoadAutoSmelt {
     public static void LoadSmelt(Player p) {

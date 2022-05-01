@@ -9,7 +9,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 import java.util.Set;
 
-import static net.danh.storage.Gui.Loader.LoadMenu.*;
+import static net.danh.storage.Gui.Loader.LoadMenu.items;
+import static net.danh.storage.Gui.Loader.LoadMenu.items_slot;
 import static net.danh.storage.Manager.Files.*;
 
 public class LoadBlocks {

@@ -10,8 +10,9 @@ import static net.danh.storage.Manager.Files.colorize;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 
 public class CatchInput {
-    private static HashMap<Player, String> type_input = new HashMap<>();
     public static HashMap<Player, String> block_input = new HashMap<>();
+    private static final HashMap<Player, String> type_input = new HashMap<>();
+
     public static void InputCatch(Player player, String type, String block) {
         type_input.put(player, type);
         block_input.put(player, block);
@@ -20,7 +21,8 @@ public class CatchInput {
             player.sendMessage(colorize(getlanguagefile().getString("Input.Start")));
         }
     }
-    public static void InputAction (Player p, String block) {
+
+    public static void InputAction(Player p, String block) {
         String type = type_input.get(p);
         String input = (String) input_result.get(p);
         if (type.equalsIgnoreCase("take")) {

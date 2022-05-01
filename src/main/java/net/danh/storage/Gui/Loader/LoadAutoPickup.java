@@ -2,7 +2,6 @@ package net.danh.storage.Gui.Loader;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,7 +13,6 @@ import java.util.Set;
 import static net.danh.storage.Gui.Loader.LoadMenu.pickup_buttons;
 import static net.danh.storage.Gui.Loader.LoadMenu.pickup_buttons_slot;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Files.getguifile;
 
 public class LoadAutoPickup {
     public static void LoadPickup(Player p) {

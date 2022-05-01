@@ -1,7 +1,6 @@
 package net.danh.storage.Manager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -149,7 +148,7 @@ public class Files {
                 .replaceAll("#player#", p.getName());
         if (ecostatus) {
             output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
-            output = output.replaceAll("#money_commas#", String.format("%,d",(long) economy.getBalance(p)));
+            output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
             output = output.replaceAll("#money_fixed#", String.valueOf((long) economy.getBalance(p)));
         } else {
             output = output.replaceAll("#money#", "null");
@@ -184,6 +183,7 @@ public class Files {
         output = PlaceholderAPI.setPlaceholders(p, output);
         return output;
     }
+
     public static List<String> lorepapi(List<String> lores, Player p) {
         List<String> final_lores = new ArrayList<>();
         for (String input : lores) {
@@ -195,7 +195,7 @@ public class Files {
                     .replaceAll("#player#", p.getName());
             if (ecostatus) {
                 output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
-                output = output.replaceAll("#money_commas#", String.format("%,d",(long) economy.getBalance(p)));
+                output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
                 output = output.replaceAll("#money_fixed#", String.valueOf((long) economy.getBalance(p)));
             } else {
                 output = output.replaceAll("#money#", "null");

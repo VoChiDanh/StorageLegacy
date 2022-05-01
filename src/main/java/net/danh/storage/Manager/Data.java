@@ -199,7 +199,7 @@ public class Data {
         float max = getMaxStorage(p, name);
         double n = (min / max) * 100;
         double f = max / 100;
-        n = Math.round(n * f) /  f;
+        n = Math.round(n * f) / f;
         DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
         df.setRoundingMode(RoundingMode.HALF_UP);
         return df.format(n) + "%";
@@ -210,7 +210,7 @@ public class Data {
         float max = Data.getMaxStorage(p, name);
         double n = (min / max) * 100;
         double f = max / 100;
-        n = Math.round(n * f) /  f;
+        n = Math.round(n * f) / f;
         DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
         df.setRoundingMode(RoundingMode.HALF_UP);
         return df.format(n) + "%";
@@ -272,7 +272,7 @@ public class Data {
         float total_empty = total_max - total;
         double e = (total_empty / total_max) * 100;
         double f = total_max / 100;
-        e = Math.round(e * f) /  f;
+        e = Math.round(e * f) / f;
         DecimalFormat df = new DecimalFormat(Objects.requireNonNull(Files.getconfigfile().getString("Number_Format")));
         df.setRoundingMode(RoundingMode.HALF_UP);
         return df.format(e) + "%";
