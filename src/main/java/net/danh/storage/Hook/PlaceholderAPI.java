@@ -8,12 +8,8 @@ import net.danh.storage.Storage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.Objects;
 
 import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class PlaceholderAPI extends PlaceholderExpansion {
     @Override
@@ -85,11 +81,14 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         if (identifier.startsWith("total_max_storage")) {
             return getTotalMaxStorage(p);
         }
-        if (identifier.startsWith("total_used_storage")) {
+        if (identifier.startsWith("total_used")) {
             return getTotalUsed(p);
         }
-        if (identifier.startsWith("total_empty_storage")) {
+        if (identifier.startsWith("total_empty")) {
             return getTotalEmpty(p);
+        }
+        if (identifier.startsWith("total_count")) {
+            return getTotalCount(p);
         }
         return null;
     }
