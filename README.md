@@ -6,7 +6,7 @@
 
 > /Storage storage [add/set/remove] [Player] [Item] [Amount] - Add/Set/Remove Item in Player's Storage
 
-> /Storage maxstorage [add/set/remove] [Player] [Amount] - Add/Set/Remove Max Item in Player's Storage
+> /Storage maxstorage [add/set/remove] [Player] [Item] [Amount] - Add/Set/Remove Max Item in Player's Storage
 
 > /Storage sell [Item] [Amount] - Sell Item
 
@@ -32,9 +32,20 @@
 
 > %Storage_auto_smelt% / %Storage_auto_pickup% | Show status
 
-> %Storage_used_(MATERIAL)% | Show item's empty percentage component
->
-> %Storage_empty_(MATERIAL)% | Show item's used percent composition
+> %Storage_used_(MATERIAL)% | Show item's used percentage component
+
+> %Storage_empty_(MATERIAL)% | Show item's empty percent composition
+
+> %Storage_total_storage% | Show total amount of all item
+
+> %Storage_total_max_storage% | Show total max amount of all item
+
+> %Storage_total_count% | Show the number of all item that can be contained
+
+> %Storage_total_used% | Show all item's used percentage component
+
+> %Storage_total_empty% | Show all item's empty percentage component
+
 
 ## Soft Depends
 
