@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Items.getPrice;
 import static net.danh.storage.Storage.*;
 
 public class Files {
@@ -170,6 +171,9 @@ public class Files {
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
             output = output.replaceAll("#count_" + item + "#", getCount(p, item));
         }
+        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+            output = output.replaceAll("#price_" + item + "#", String.valueOf(getPrice(item)));
+        }
         if (autoPick(p)) {
             output = output.replaceAll("#auto_pickup#", getconfigfile().getString("Boolean.true"));
         } else {
@@ -216,6 +220,9 @@ public class Files {
             }
             for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                 output = output.replaceAll("#count_" + item + "#", getCount(p, item));
+            }
+            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                output = output.replaceAll("#price_" + item + "#", String.valueOf(getPrice(item)));
             }
             if (autoPick(p)) {
                 output = output.replaceAll("#auto_pickup#", getconfigfile().getString("Boolean.true"));
