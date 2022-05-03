@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
-import static net.danh.storage.Gui.Loader.LoadMenu.ReloadMenu;
-import static net.danh.storage.Gui.Loader.LoadMenu.SaveMenu;
+import static net.danh.storage.Gui.LoadMenu.ReloadMenu;
+import static net.danh.storage.Gui.LoadMenu.SaveMenu;
 import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;

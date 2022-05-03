@@ -1,25 +1,81 @@
-package net.danh.storage.Gui.Listener;
+package net.danh.storage.Gui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import static net.danh.storage.Gui.CatchInput.InputCatch;
-import static net.danh.storage.Gui.Loader.LoadMenu.*;
+import static net.danh.storage.Gui.CatchInput.*;
+import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Manager.Files.getlanguagefile;
 import static net.danh.storage.Storage.get;
 
-public class GuiClickListener implements Listener {
+public class GuiEventListener implements Listener {
     public static Player gplayer;
     private String block;
-
+    public static List<Player> input = new ArrayList<>();
+    public static HashMap<Player, Object> input_result = new HashMap<>();
+    @EventHandler
+    public void onChat(AsyncPlayerChatEvent event) {
+        Player p = event.getPlayer();
+        if (input.contains(p)) {
+            event.setCancelled(true);
+            String message = event.getMessage();
+            if (cancel.contains(message)) {
+                input.remove(p);
+                p.sendMessage(colorize(getlanguagefile().getString("Input.Cancel")));
+            } else {
+                if (getconfigfile().getString("Input.Type").equalsIgnoreCase("ONE")) {
+                    if (message.contains(" ")) {
+                        p.sendMessage(colorize(getlanguagefile().getString("Input.Space_Error")));
+                        input.remove(p);
+                    } else {
+                        if (isInt(message)) {
+                            if (Integer.parseInt(message) > 0) {
+                                input_result.put(p, message);
+                                InputAction(p, block_input.get(p));
+                                input.remove(p);
+                            } else {
+                                p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number")));
+                                input.remove(p);
+                            }
+                        } else {
+                            p.sendMessage(colorize(getlanguagefile().getString("Input.Not_A_Number")));
+                            input.remove(p);
+                        }
+                    }
+                }
+                if (getconfigfile().getString("Input.Type").equalsIgnoreCase("AGAIN")) {
+                    if (message.contains(" ")) {
+                        p.sendMessage(colorize(getlanguagefile().getString("Input.Space_Error") + " " + getlanguagefile().getString("Input.Again")));
+                    } else {
+                        if (isInt(message)) {
+                            if (Integer.parseInt(message) > 0) {
+                                input_result.put(p, message);
+                                InputAction(p, block_input.get(p));
+                                input.remove(p);
+                            } else {
+                                p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number") + " " + getlanguagefile().getString("Input.Again")));
+                            }
+                        } else {
+                            p.sendMessage(colorize(getlanguagefile().getString("Input.Not_A_Number") + " " + getlanguagefile().getString("Input.Again")));
+                        }
+                    }
+                }
+            }
+        }
+    }
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClickInv(InventoryClickEvent event) {
         Player p = (Player) event.getWhoClicked();

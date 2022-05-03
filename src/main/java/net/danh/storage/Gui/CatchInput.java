@@ -4,8 +4,8 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-import static net.danh.storage.Gui.Listener.InputListener.input;
-import static net.danh.storage.Gui.Listener.InputListener.input_result;
+import static net.danh.storage.Gui.GuiEventListener.input_result;
+import static net.danh.storage.Gui.GuiEventListener.input;
 import static net.danh.storage.Manager.Files.colorize;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 

@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
-import static net.danh.storage.Gui.Loader.LoadMenu.*;
+import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Data.autoSmelt;
 
