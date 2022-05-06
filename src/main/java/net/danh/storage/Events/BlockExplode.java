@@ -20,8 +20,10 @@ public class BlockExplode implements Listener {
             for (Player entity : e.getBlock().getWorld().getPlayers()) {
                 if (entity.getLocation().distance(e.getBlock().getLocation()) <= 5) {
                     Data.addStorage(entity, block.toString(), 1);
+                    block.getDrops().clear();
                 }
             }
         }
+        blocks.clear();
     }
 }
