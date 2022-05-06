@@ -8,7 +8,6 @@ import net.danh.storage.Storage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-
 import static net.danh.storage.Manager.Data.*;
 
 public class PlaceholderAPI extends PlaceholderExpansion {

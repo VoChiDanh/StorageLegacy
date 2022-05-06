@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.List;
 
+import static net.danh.storage.Gui.LoadMenu.LoadMenu;
 import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Data.autoSmelt;
@@ -99,13 +100,13 @@ public class UpdateManager {
                         }
                     }
                     p.updateInventory();
-                }
-                else {
+                } else {
                     cancel();
                 }
             }
         }.runTaskTimer(get(), 20L * getguifile().getInt("UPDATE.TIME"), 20L * getguifile().getInt("UPDATE.TIME"));
     }
+
     public static void UpdateA(Player p) {
         new BukkitRunnable() {
             @Override

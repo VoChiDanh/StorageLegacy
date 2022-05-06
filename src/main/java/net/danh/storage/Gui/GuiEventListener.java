@@ -18,14 +18,14 @@ import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Manager.Files.getlanguagefile;
 import static net.danh.storage.Storage.get;
 
 public class GuiEventListener implements Listener {
     public static Player gplayer;
-    private String block;
     public static List<Player> input = new ArrayList<>();
     public static HashMap<Player, Object> input_result = new HashMap<>();
+    private String block;
+
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player p = event.getPlayer();
@@ -85,6 +85,7 @@ public class GuiEventListener implements Listener {
             }
         }
     }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClickInv(InventoryClickEvent event) {
         Player p = (Player) event.getWhoClicked();

@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 import java.util.List;
 
+import static net.danh.storage.Gui.LoadMenu.LoadMenu;
 import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.UpdateManager.UpdateA;
 import static net.danh.storage.Gui.UpdateManager.UpdateI;
@@ -20,7 +21,7 @@ public class OpenGui {
 
     public static void SetItem(Player p) {
         LoadMenu(p);
-        gui = Bukkit.createInventory(null, size, tittle);
+        gui = Bukkit.createInventory(p, size, tittle);
         int d = 0;
         for (List<Integer> a : decorate_slot) {
             if (a == null) {
@@ -77,6 +78,7 @@ public class OpenGui {
             }
         }
     }
+
     public static void OpenGui(Player p) {
         LoadMenu(p);
         if (getguifile().getBoolean("UPDATE.STATUS")) {

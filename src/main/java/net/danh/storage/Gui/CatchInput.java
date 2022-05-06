@@ -4,14 +4,14 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-import static net.danh.storage.Gui.GuiEventListener.input_result;
 import static net.danh.storage.Gui.GuiEventListener.input;
+import static net.danh.storage.Gui.GuiEventListener.input_result;
 import static net.danh.storage.Manager.Files.colorize;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 
 public class CatchInput {
-    public static HashMap<Player, String> block_input = new HashMap<>();
     private static final HashMap<Player, String> type_input = new HashMap<>();
+    public static HashMap<Player, String> block_input = new HashMap<>();
 
     public static void InputCatch(Player player, String type, String block) {
         type_input.put(player, type);
