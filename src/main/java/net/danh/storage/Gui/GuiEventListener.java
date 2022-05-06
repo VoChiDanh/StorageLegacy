@@ -42,12 +42,17 @@ public class GuiEventListener implements Listener {
                         input.remove(p);
                     } else {
                         if (isInt(message)) {
-                            if (Integer.parseInt(message) > 0) {
-                                input_result.put(p, message);
-                                InputAction(p, block_input.get(p));
-                                input.remove(p);
-                            } else {
-                                p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number")));
+                            try {
+                                if (Integer.parseInt(message) > 0) {
+                                    input_result.put(p, message);
+                                    InputAction(p, block_input.get(p));
+                                    input.remove(p);
+                                } else {
+                                    p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number")));
+                                    input.remove(p);
+                                }
+                            } catch (Exception e) {
+                                p.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                                 input.remove(p);
                             }
                         } else {
@@ -61,12 +66,16 @@ public class GuiEventListener implements Listener {
                         p.sendMessage(colorize(getlanguagefile().getString("Input.Space_Error") + " " + getlanguagefile().getString("Input.Again")));
                     } else {
                         if (isInt(message)) {
-                            if (Integer.parseInt(message) > 0) {
-                                input_result.put(p, message);
-                                InputAction(p, block_input.get(p));
-                                input.remove(p);
-                            } else {
-                                p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number") + " " + getlanguagefile().getString("Input.Again")));
+                            try {
+                                if (Integer.parseInt(message) > 0) {
+                                    input_result.put(p, message);
+                                    InputAction(p, block_input.get(p));
+                                    input.remove(p);
+                                } else {
+                                    p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number") + " " + getlanguagefile().getString("Input.Again")));
+                                }
+                            } catch (Exception e) {
+                                p.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
                             }
                         } else {
                             p.sendMessage(colorize(getlanguagefile().getString("Input.Not_A_Number") + " " + getlanguagefile().getString("Input.Again")));
@@ -80,19 +89,16 @@ public class GuiEventListener implements Listener {
     public void onClickInv(InventoryClickEvent event) {
         Player p = (Player) event.getWhoClicked();
         if (!event.getInventory().equals(gui) || !event.getInventory().equals(player_gui.get(p))) return;
+        if (event.getClickedInventory() == null) return;
         else {
             if (event.getClickedInventory().equals(player_gui.get(p))) {
                 if (event.getSlot() == pickup_buttons_slot) {
                     setautoPick(p, !autoPick(p));
                     OpenGui(p);
-                    SaveMenu(p);
-                    ReloadMenu();
                 }
                 if (event.getSlot() == smelt_buttons_slot) {
                     setautoSmelt(p, !autoSmelt(p));
                     OpenGui(p);
-                    SaveMenu(p);
-                    ReloadMenu();
                 }
             }
             int i = 0;

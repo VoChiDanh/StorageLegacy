@@ -1,5 +1,6 @@
 package net.danh.storage.Commands;
 
+import net.danh.storage.Gui.LoadMenu;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.danh.storage.Storage;
@@ -11,13 +12,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import sun.font.BidiUtils;
 
 import java.util.Objects;
 import java.util.Set;
 
-import static net.danh.storage.Gui.LoadMenu.ReloadMenu;
-import static net.danh.storage.Gui.LoadMenu.SaveMenu;
+import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.OpenGui.OpenGui;
+import static net.danh.storage.Gui.OpenGui.SetItem;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Items.*;
@@ -75,8 +77,6 @@ public class Commands implements CommandExecutor {
         if (label.equalsIgnoreCase("Storage") || label.equalsIgnoreCase("kho") || label.equalsIgnoreCase("store")) {
             if (args.length == 0) {
                 OpenGui(((Player) sender).getPlayer());
-                SaveMenu(((Player) sender).getPlayer());
-                ReloadMenu();
             }
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("help")) {

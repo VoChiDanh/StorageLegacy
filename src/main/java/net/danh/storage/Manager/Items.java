@@ -225,7 +225,6 @@ public class Items {
             }
         } else {
             String[] iname = name.split(";");
-            short data = Short.parseShort(iname[1]);
             if (iname.length == 1) {
                 for (ItemStack is : p.getInventory().getContents()) {
                     if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
@@ -233,6 +232,7 @@ public class Items {
                     }
                 }
             } else {
+                short data = Short.parseShort(iname[1]);
                 for (ItemStack is : p.getInventory().getContents()) {
                     if (is != null && is.getType().equals(Material.getMaterial(iname[0])) && is.getDurability() == data) {
                         amount = amount + is.getAmount();

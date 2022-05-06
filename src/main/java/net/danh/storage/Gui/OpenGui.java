@@ -9,13 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import static net.danh.storage.Gui.LoadMenu.*;
+import static net.danh.storage.Gui.UpdateManager.UpdateA;
+import static net.danh.storage.Gui.UpdateManager.UpdateI;
 import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Data.autoSmelt;
+import static net.danh.storage.Manager.Files.getguifile;
 
 public class OpenGui {
     public static Inventory gui;
 
-    public static void OpenGui(Player p) {
+    public static void SetItem(Player p) {
         LoadMenu(p);
         gui = Bukkit.createInventory(null, size, tittle);
         int d = 0;
@@ -23,8 +26,8 @@ public class OpenGui {
             if (a == null) {
                 decorate.remove(d);
             } else {
-                for (int j = 0; j < a.size(); j++) {
-                    gui.setItem(a.get(j), decorate.get(d));
+                for (Integer integer : a) {
+                    gui.setItem(integer, decorate.get(d));
                 }
                 d++;
             }
@@ -73,6 +76,21 @@ public class OpenGui {
                 Bukkit.getLogger().warning("[Storage] One or more items do not have block type so the items will not be loaded");
             }
         }
+    }
+    public static void OpenGui(Player p) {
+        LoadMenu(p);
+        if (getguifile().getBoolean("UPDATE.STATUS")) {
+            if (getguifile().getString("UPDATE.TYPE").equalsIgnoreCase("ITEMS")) {
+                UpdateI(p);
+            } else if (getguifile().getString("UPDATE.TYPE").equalsIgnoreCase("ALL")) {
+                UpdateA(p);
+            } else {
+                Bukkit.getLogger().warning("[Storage] cant not find update type, the update will be disabled");
+            }
+        }
+        SetItem(p);
+        SaveMenu(p);
+        ReloadMenu();
         p.openInventory(gui);
     }
 }
