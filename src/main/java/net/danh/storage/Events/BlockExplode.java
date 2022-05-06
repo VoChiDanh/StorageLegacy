@@ -15,11 +15,11 @@ public class BlockExplode implements Listener {
     @EventHandler
     public void onBlockExplode(@NotNull BlockExplodeEvent e) {
         List<Block> blocks = e.blockList();
+        e.getBlock().getDrops().clear();
         for (Block block : blocks) {
             for (Player entity : e.getBlock().getWorld().getPlayers()) {
                 if (entity.getLocation().distance(e.getBlock().getLocation()) <= 5) {
                     Data.addStorage(entity, block.toString(), 1);
-                    e.getBlock().getDrops().clear();
                 }
             }
         }
