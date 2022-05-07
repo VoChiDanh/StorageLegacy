@@ -116,10 +116,10 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
     private void checkFilesVersion() {
-        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase("1.0-B5") || getconfigfile().getString("VERSION") == null) {
+        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase("1.0-B6") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update config.yml!");
         }
-        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase("1.0-B5") || getconfigfile().getString("VERSION") == null) {
+        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase("1.0-B6") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update language.yml!");
         }
     }

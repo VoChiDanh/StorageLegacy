@@ -22,8 +22,9 @@ import static net.danh.storage.Storage.get;
 public class Manager {
     public static HashMap<Player, BukkitTask> update_task = new HashMap<>();
     public static HashMap<Player, Long> cooldown = new HashMap<>();
+
     public static void UpdateI(Player p) {
-        update_task.put(p, new  BukkitRunnable() {
+        update_task.put(p, new BukkitRunnable() {
             @Override
             public void run() {
                 Inventory inv = p.getOpenInventory().getTopInventory();
