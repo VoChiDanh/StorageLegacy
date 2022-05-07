@@ -26,7 +26,7 @@ jobs:
           msg: ${{github.repository}}
           separator: "/"
       - name: Build passsed
-        if: ${{ contains(github.event.commits[0].message, '-') }}
+        if: ${{ contains(github.event.head_commit.message, '.') }}
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
@@ -47,7 +47,7 @@ jobs:
             
 
       - name: Build waiting
-        if: ${{ contains(github.event.commits[0].message, '!') }}
+        if: ${{ !contains(github.event.head_commit.message, '.') }}
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
