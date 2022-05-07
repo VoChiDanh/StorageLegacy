@@ -5,20 +5,25 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.List;
 
 import static net.danh.storage.Gui.LoadMenu.LoadMenu;
 import static net.danh.storage.Gui.LoadMenu.*;
+import static net.danh.storage.Gui.OpenGui.SetItem;
+import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Data.autoSmelt;
 import static net.danh.storage.Manager.Files.getguifile;
 import static net.danh.storage.Storage.get;
 
-public class UpdateManager {
+public class Manager {
+    public static HashMap<Player, BukkitTask> update_task = new HashMap<>();
+    public static HashMap<Player, Long> cooldown = new HashMap<>();
     public static void UpdateI(Player p) {
-        new BukkitRunnable() {
+        update_task.put(p, new  BukkitRunnable() {
             @Override
             public void run() {
                 Inventory inv = p.getOpenInventory().getTopInventory();
@@ -104,20 +109,23 @@ public class UpdateManager {
                     cancel();
                 }
             }
-        }.runTaskTimer(get(), 20L * getguifile().getInt("UPDATE.TIME"), 20L * getguifile().getInt("UPDATE.TIME"));
+        }.runTaskTimer(get(), 20L * getguifile().getInt("UPDATE.TIME"), 20L * getguifile().getInt("UPDATE.TIME")));
     }
 
     public static void UpdateA(Player p) {
-        new BukkitRunnable() {
+        update_task.put(p, new BukkitRunnable() {
             @Override
             public void run() {
                 Inventory inv = p.getOpenInventory().getTopInventory();
                 if (player_gui.get(p).equals(inv)) {
-                    OpenGui.OpenGui(p);
+                    SetItem(p);
+                    SaveMenu(p);
+                    ReloadMenu();
+                    p.openInventory(gui);
                 } else {
                     cancel();
                 }
             }
-        }.runTaskTimer(get(), 20L * getguifile().getInt("UPDATE.TIME"), 20L * getguifile().getInt("UPDATE.TIME"));
+        }.runTaskTimer(get(), 20L * getguifile().getInt("UPDATE.TIME"), 20L * getguifile().getInt("UPDATE.TIME")));
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 import static net.danh.storage.Gui.CatchInput.*;
 import static net.danh.storage.Gui.LoadMenu.*;
+import static net.danh.storage.Gui.Manager.update_task;
 import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Data.*;
@@ -95,10 +96,12 @@ public class GuiEventListener implements Listener {
             if (event.getClickedInventory().equals(player_gui.get(p))) {
                 if (event.getSlot() == pickup_buttons_slot) {
                     setautoPick(p, !autoPick(p));
+                    update_task.get(p).cancel();
                     OpenGui(p);
                 }
                 if (event.getSlot() == smelt_buttons_slot) {
                     setautoSmelt(p, !autoSmelt(p));
+                    update_task.get(p).cancel();
                     OpenGui(p);
                 }
             }

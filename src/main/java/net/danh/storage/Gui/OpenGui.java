@@ -10,8 +10,8 @@ import java.util.List;
 
 import static net.danh.storage.Gui.LoadMenu.LoadMenu;
 import static net.danh.storage.Gui.LoadMenu.*;
-import static net.danh.storage.Gui.UpdateManager.UpdateA;
-import static net.danh.storage.Gui.UpdateManager.UpdateI;
+import static net.danh.storage.Gui.Manager.UpdateA;
+import static net.danh.storage.Gui.Manager.UpdateI;
 import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Data.autoSmelt;
 import static net.danh.storage.Manager.Files.getguifile;
