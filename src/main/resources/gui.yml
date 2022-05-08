@@ -1,9 +1,9 @@
-TITLE: '&b#player# &d✚ &aStorage'
+TITLE: '&b&l#player# &d✚ &a&lStorage'
 ROWS: 6
 UPDATE:
   STATUS: true
   TIME: 1
-  TYPE: ALL
+  TYPE: ITEMS
 DECORATES:
   '0':
     update: false
@@ -754,10 +754,25 @@ BUTTONS:
           - '&eWhen its off, items wont be stored in'
           - '&estorage and fall on the ground.'
           - '&3➤ Info:'
-          - ' &d● Status: &a#auto_pickup#'
+          - ' &d● Status: &aOn'
           - ' &6● Items will be picked up automatically.'
           - '&c✪ Click to &4Turn off auto pick up &c✪'
       Cooldown:
+        material: BARRIER
+        amount: 1
+        name: '    &d&lSuper Hopper (Auto Pickup)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically pick up the blocks you'
+          - '&edig and store them in your storage.'
+          - '&eWhen its off, items wont be stored in'
+          - '&estorage and fall on the ground.'
+          - '&3➤ Info:'
+          - ' &d● Status: &aOn'
+          - ' &6● Items will be picked up automatically.'
+          - '&b✪ Wait for &9#cooldown_pickup# seconds &bto execute ✪'
+    False:
+      Block:
         material: HOPPER
         amount: 1
         name: '    &d&lSuper Hopper (Auto Pickup)'
@@ -768,22 +783,7 @@ BUTTONS:
           - '&eWhen its off, items wont be stored in'
           - '&estorage and fall on the ground.'
           - '&3➤ Info:'
-          - ' &d● Status: &a#auto_pickup#'
-          - ' &6● Items will be picked up automatically.'
-          - '&c✪ Click to &4Turn off auto pick up &c✪'
-    False:
-      Block:
-        material: BARRIER
-        amount: 1
-        name: '    &d&lSuper Hopper (Auto Pickup)'
-        lore:
-          - '&3➤ Introduce:'
-          - ' &e● Automatically pick up the blocks you'
-          - '&edig and store them in your storage.'
-          - '&eWhen its off, items wont be stored in'
-          - '&estorage and fall on the ground.'
-          - '&3➤ Info:'
-          - ' &d● Status: &c#auto_pickup#'
+          - ' &d● Status: &cOff'
           - ' &6● Items wont be picked up automatically.'
           - '&a✪ Click to &2Turn on auto pick up &a✪'
       Cooldown:
@@ -797,9 +797,9 @@ BUTTONS:
           - '&eWhen its off, items wont be stored in'
           - '&estorage and fall on the ground.'
           - '&3➤ Info:'
-          - ' &d● Status: &c#auto_pickup#'
+          - ' &d● Status: &cOff'
           - ' &6● Items wont be picked up automatically.'
-          - '&a✪ Click to &2Turn on auto pick up &a✪'
+          - '&b✪ Wait for &9#cooldown_pickup# seconds &bto execute ✪'
   Auto_Smelt:
     Cooldown: 30
     Update: true
@@ -815,7 +815,7 @@ BUTTONS:
           - '&ethe smelted items out of your storage'
           - '&eor take the original items easily.'
           - '&3➤ Info:'
-          - ' &d● Status: &a#auto_smelt#'
+          - ' &d● Status: &aOn'
           - ' &6● Items will be smelt automatically.'
           - '&c✪ Click to &4Turn off auto smelt &c✪'
       Cooldown:
@@ -828,9 +828,9 @@ BUTTONS:
           - '&ethe smelted items out of your storage'
           - '&eor take the original items easily.'
           - '&3➤ Info:'
-          - ' &d● Status: &a#auto_smelt#'
+          - ' &d● Status: &aOn'
           - ' &6● Items will be smelt automatically.'
-          - '&c✪ Click to &4Turn off auto smelt &c✪'
+          - '&b✪ Wait for &9#cooldown_smelt# seconds &bto execute ✪'
     False:
       Block:
         material: FURNACE
@@ -842,7 +842,7 @@ BUTTONS:
           - '&ethe smelted items out of your storage'
           - '&eor take the original items easily.'
           - '&3➤ Info:'
-          - ' &d● Status: &c#auto_smelt#'
+          - ' &d● Status: &cOff'
           - ' &6● Items wont be smelt automatically.'
           - '&a✪ Click to &2Turn on auto smelt &a✪'
       Cooldown:
@@ -855,6 +855,6 @@ BUTTONS:
           - '&ethe smelted items out of your storage'
           - '&eor take the original items easily.'
           - '&3➤ Info:'
-          - ' &d● Status: &c#auto_smelt#'
+          - ' &d● Status: &cOff'
           - ' &6● Items will be smelt automatically.'
-          - '&a✪ Click to &2Turn on auto smelt &a✪'
+          - '&b✪ Wait for &9#cooldown_smelt# seconds &bto execute ✪'
