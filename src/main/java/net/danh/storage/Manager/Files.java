@@ -17,6 +17,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.danh.storage.Gui.Manager.*;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Items.getPrice;
 import static net.danh.storage.Storage.*;
@@ -146,7 +147,9 @@ public class Files {
                 .replaceAll("#total_used#", getTotalUsed(p))
                 .replaceAll("#total_empty#", getTotalEmpty(p))
                 .replaceAll("#total_count#", getTotalCount(p))
-                .replaceAll("#player#", p.getName());
+                .replaceAll("#player#", p.getName())
+                .replaceAll("#cooldown_pickup#", getrowpcd(p))
+                .replaceAll("#cooldown_smelt#", getrowscd(p));
         if (ecostatus) {
             output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
             output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
@@ -196,7 +199,9 @@ public class Files {
                     .replaceAll("#total_used#", getTotalUsed(p))
                     .replaceAll("#total_empty#", getTotalEmpty(p))
                     .replaceAll("#total_count#", getTotalCount(p))
-                    .replaceAll("#player#", p.getName());
+                    .replaceAll("#player#", p.getName())
+                    .replaceAll("#cooldown_pickup#", getrowpcd(p))
+                    .replaceAll("#cooldown_smelt#", getrowscd(p));
             if (ecostatus) {
                 output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
                 output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));

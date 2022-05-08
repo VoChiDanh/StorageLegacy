@@ -16,6 +16,9 @@ import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Files.*;
 
 public class LoadMenu {
+    public static HashMap<String, Long> cooldown_time = new HashMap<>();
+    public static HashMap<Player, HashMap<String, HashMap<Boolean, ItemStack>>> pickup_buttons_cooldown = new HashMap<>();
+    public static HashMap<Player, HashMap<String, HashMap<Boolean, ItemStack>>> smelt_buttons_cooldown = new HashMap<>();
     public static HashMap<String, Boolean> update_buttons = new HashMap<>();
     public static List<Boolean> update_decorate = new ArrayList<>();
     public static List<Boolean> update_items_block = new ArrayList<>();
@@ -50,6 +53,8 @@ public class LoadMenu {
         LoadItemsConvert(p);
         LoadPickup(p);
         LoadSmelt(p);
+        LoadPickupCoolDown(p);
+        LoadSmeltCoolDown(p);
         try {
             tittle = colorize(papi(getguifile().getString("TITLE"), p));
         } catch (Exception e) {
@@ -63,6 +68,8 @@ public class LoadMenu {
     }
 
     public static void ReloadMenu() {
+        pickup_buttons_cooldown = new HashMap<>();
+        smelt_buttons_cooldown = new HashMap<>();
         update_decorate = new ArrayList<>();
         update_items_block = new ArrayList<>();
         update_items_convert = new ArrayList<>();
@@ -95,12 +102,12 @@ public class LoadMenu {
     }
 
     public static void LoadItemActions() {
-        actions = new ArrayList<List<String>>();
-        actions_block = new ArrayList<String>();
-        actions_slot = new ArrayList<Integer>();
+        actions = new ArrayList<>();
+        actions_block = new ArrayList<>();
+        actions_slot = new ArrayList<>();
         Set<String> iactions = getguifile().getConfigurationSection("ITEMS.").getKeys(false);
         for (String key : iactions) {
-            List<String> as = new ArrayList<String>();
+            List<String> as = new ArrayList<>();
             int slot = getguifile().getInt("ITEMS." + key + ".Slot");
             Set<String> action = getguifile().getConfigurationSection("ITEMS." + key + ".Actions.").getKeys(false);
             for (String type : action) {
@@ -124,36 +131,36 @@ public class LoadMenu {
             if (a.contains("true") || a.contains("false")) {
                 if (pickup.equalsIgnoreCase("true") || pickup.equalsIgnoreCase("false")) {
                     ItemStack item;
-                    Set<String> properties = getguifile().getConfigurationSection("BUTTONS.Auto_Pickup." + pickup + ".").getKeys(false);
+                    Set<String> properties = getguifile().getConfigurationSection("BUTTONS.Auto_Pickup." + pickup + ".Block.").getKeys(false);
                     if (properties.contains("material")) {
-                        int d = getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".data");
+                        int d = getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".Block.data");
                         short data = (short) d;
                         if (properties.contains("amount")) {
                             if (properties.contains("data")) {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".material")), getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".amount"), data);
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Block.material")), getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".Block.amount"), data);
                             } else {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".material")), getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".amount"));
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Block.material")), getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".Block.amount"));
                             }
                         } else {
                             if (properties.contains("data")) {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".material")), 1, data);
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Block.material")), 1, data);
                             } else {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".material")), 1);
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Block.material")), 1);
                             }
                         }
                         ItemMeta meta = item.getItemMeta();
                         if (properties.contains("name")) {
-                            meta.setDisplayName(colorize(papi(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".name"), p)));
+                            meta.setDisplayName(colorize(papi(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Block.name"), p)));
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".lore"), p));
+                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".Block.lore"), p));
                             meta.setLore(lores);
                             item.setItemMeta(meta);
                         }
                     } else {
                         item = new ItemStack(Material.AIR);
-                        Bukkit.getLogger().warning("[Storage] The button auto_pickup (" + pickup + ") do not have material propertie");
+                        Bukkit.getLogger().warning("[Storage] The button auto_pickup icon block (" + pickup + ") do not have material propertie");
                     }
                     auto_pickup.put(Boolean.parseBoolean(pickup), item);
                     HashMap<String, HashMap<Boolean, ItemStack>> pick = new HashMap<>();
@@ -175,6 +182,56 @@ public class LoadMenu {
                     }
                 }
             }
+            if (a.contains("Cooldown")) {
+                cooldown_time.put("Pickup", getguifile().getLong("BUTTONS.Auto_Pickup.Cooldown"));
+            }
+        }
+    }
+
+    public static void LoadPickupCoolDown(Player p) {
+        HashMap<Boolean, ItemStack> auto_pickup = new HashMap<>();
+        Set<String> a = getguifile().getConfigurationSection("BUTTONS.Auto_Pickup.").getKeys(false);
+        for (String pickup : a) {
+            if (a.contains("true") || a.contains("false")) {
+                if (pickup.equalsIgnoreCase("true") || pickup.equalsIgnoreCase("false")) {
+                    ItemStack item;
+                    Set<String> properties = getguifile().getConfigurationSection("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.").getKeys(false);
+                    if (properties.contains("material")) {
+                        int d = getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.data");
+                        short data = (short) d;
+                        if (properties.contains("amount")) {
+                            if (properties.contains("data")) {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.material")), getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.amount"), data);
+                            } else {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.material")), getguifile().getInt("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.amount"));
+                            }
+                        } else {
+                            if (properties.contains("data")) {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.material")), 1, data);
+                            } else {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.material")), 1);
+                            }
+                        }
+                        ItemMeta meta = item.getItemMeta();
+                        if (properties.contains("name")) {
+                            meta.setDisplayName(colorize(papi(getguifile().getString("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.name"), p)));
+                            item.setItemMeta(meta);
+                        }
+                        if (properties.contains("lore")) {
+                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.lore"), p));
+                            meta.setLore(lores);
+                            item.setItemMeta(meta);
+                        }
+                    } else {
+                        item = new ItemStack(Material.AIR);
+                        Bukkit.getLogger().warning("[Storage] The button auto_pickup icon cooldown (" + pickup + ") do not have material propertie");
+                    }
+                    auto_pickup.put(Boolean.parseBoolean(pickup), item);
+                    HashMap<String, HashMap<Boolean, ItemStack>> pick = new HashMap<>();
+                    pick.put("Pickup", auto_pickup);
+                    pickup_buttons_cooldown.put(p, pick);
+                }
+            }
         }
     }
 
@@ -185,36 +242,36 @@ public class LoadMenu {
             if (a.contains("true") || a.contains("false")) {
                 if (pickup.equalsIgnoreCase("true") || pickup.equalsIgnoreCase("false")) {
                     ItemStack item;
-                    Set<String> properties = getguifile().getConfigurationSection("BUTTONS.Auto_Smelt." + pickup + ".").getKeys(false);
+                    Set<String> properties = getguifile().getConfigurationSection("BUTTONS.Auto_Smelt." + pickup + ".Block.").getKeys(false);
                     if (properties.contains("material")) {
-                        int d = getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".data");
+                        int d = getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".Block.data");
                         short data = (short) d;
                         if (properties.contains("amount")) {
                             if (properties.contains("data")) {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".material")), getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".amount"), data);
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Block.material")), getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".Block.amount"), data);
                             } else {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".material")), getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".amount"));
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Block.material")), getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".Block.amount"));
                             }
                         } else {
                             if (properties.contains("data")) {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".material")), 1, data);
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Block.material")), 1, data);
                             } else {
-                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".material")), 1);
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Block.material")), 1);
                             }
                         }
                         ItemMeta meta = item.getItemMeta();
                         if (properties.contains("name")) {
-                            meta.setDisplayName(colorize(papi(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".name"), p)));
+                            meta.setDisplayName(colorize(papi(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Block.name"), p)));
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".lore"), p));
+                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".Block.lore"), p));
                             meta.setLore(lores);
                             item.setItemMeta(meta);
                         }
                     } else {
                         item = new ItemStack(Material.AIR);
-                        Bukkit.getLogger().warning("[Storage] The button auto_smelt (" + pickup + ") do not have material propertie");
+                        Bukkit.getLogger().warning("[Storage] The button auto_smelt icon block (" + pickup + ") do not have material propertie");
                     }
                     auto_smelt.put(Boolean.parseBoolean(pickup), item);
                     HashMap<String, HashMap<Boolean, ItemStack>> smelt = new HashMap<>();
@@ -234,6 +291,56 @@ public class LoadMenu {
                     } else {
                         update_buttons.put("Smelt", false);
                     }
+                }
+            }
+            if (a.contains("Cooldown")) {
+                cooldown_time.put("Smelt", getguifile().getLong("BUTTONS.Auto_Smelt.Cooldown"));
+            }
+        }
+    }
+
+    public static void LoadSmeltCoolDown(Player p) {
+        HashMap<Boolean, ItemStack> auto_smelt = new HashMap<>();
+        Set<String> a = getguifile().getConfigurationSection("BUTTONS.Auto_Smelt.").getKeys(false);
+        for (String pickup : a) {
+            if (a.contains("true") || a.contains("false")) {
+                if (pickup.equalsIgnoreCase("true") || pickup.equalsIgnoreCase("false")) {
+                    ItemStack item;
+                    Set<String> properties = getguifile().getConfigurationSection("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.").getKeys(false);
+                    if (properties.contains("material")) {
+                        int d = getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.data");
+                        short data = (short) d;
+                        if (properties.contains("amount")) {
+                            if (properties.contains("data")) {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.material")), getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.amount"), data);
+                            } else {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.material")), getguifile().getInt("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.amount"));
+                            }
+                        } else {
+                            if (properties.contains("data")) {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.material")), 1, data);
+                            } else {
+                                item = new ItemStack(Material.matchMaterial(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.material")), 1);
+                            }
+                        }
+                        ItemMeta meta = item.getItemMeta();
+                        if (properties.contains("name")) {
+                            meta.setDisplayName(colorize(papi(getguifile().getString("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.name"), p)));
+                            item.setItemMeta(meta);
+                        }
+                        if (properties.contains("lore")) {
+                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.lore"), p));
+                            meta.setLore(lores);
+                            item.setItemMeta(meta);
+                        }
+                    } else {
+                        item = new ItemStack(Material.AIR);
+                        Bukkit.getLogger().warning("[Storage] The button auto_smelt icon cooldown (" + pickup + ") do not have material propertie");
+                    }
+                    auto_smelt.put(Boolean.parseBoolean(pickup), item);
+                    HashMap<String, HashMap<Boolean, ItemStack>> smelt = new HashMap<>();
+                    smelt.put("Smelt", auto_smelt);
+                    smelt_buttons_cooldown.put(p, smelt);
                 }
             }
         }
@@ -378,7 +485,6 @@ public class LoadMenu {
         for (String key : ditems) {
             ItemStack item;
             Set<String> properties = getguifile().getConfigurationSection("DECORATES." + key + ".").getKeys(false);
-            int t = 0;
             if (properties.contains("material")) {
                 int d = getguifile().getInt("DECORATES." + key + ".data");
                 short data = (short) d;
@@ -412,7 +518,7 @@ public class LoadMenu {
             decorate.add(item);
             if (properties.contains("slot")) {
                 if (getguifile().getIntegerList("DECORATES." + key + ".slot").isEmpty()) {
-                    List<Integer> input = new ArrayList<Integer>();
+                    List<Integer> input = new ArrayList<>();
                     input.add(getguifile().getInt("DECORATES." + key + ".slot"));
                     decorate_slot.add(input);
                 } else {

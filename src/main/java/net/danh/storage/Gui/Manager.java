@@ -21,7 +21,109 @@ import static net.danh.storage.Storage.get;
 
 public class Manager {
     public static HashMap<Player, BukkitTask> update_task = new HashMap<>();
-    public static HashMap<Player, Long> cooldown = new HashMap<>();
+    public static HashMap<Player, Long> pickup_cooldown = new HashMap<>();
+    public static HashMap<Player, Long> smelt_cooldown = new HashMap<>();
+
+    public static void InstantUpdate(Player p) {
+        Inventory inv = p.getOpenInventory().getTopInventory();
+        LoadMenu(p);
+        HashMap<String, HashMap<Boolean, ItemStack>> ppick = pickup_buttons.get(p);
+        HashMap<Boolean, ItemStack> pick = ppick.get("Pickup");
+        HashMap<String, HashMap<Boolean, ItemStack>> psmelt = smelt_buttons.get(p);
+        HashMap<Boolean, ItemStack> smelt = psmelt.get("Smelt");
+        HashMap<String, HashMap<Boolean, ItemStack>> cpick = pickup_buttons_cooldown.get(p);
+        HashMap<Boolean, ItemStack> pickcd = cpick.get("Pickup");
+        HashMap<String, HashMap<Boolean, ItemStack>> csmelt = smelt_buttons_cooldown.get(p);
+        HashMap<Boolean, ItemStack> smeltcd = csmelt.get("Smelt");
+        if (update_buttons.get("Pickup")) {
+            if (pickup_cooldown.containsKey(p)) {
+                if (getpickupcooldown(p) == 0) {
+                    inv.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
+                } else {
+                    inv.setItem(pickup_buttons_slot, pickcd.get(autoPick(p)));
+                }
+            } else {
+                inv.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
+            }
+        }
+        if (update_buttons.get("Smelt")) {
+            if (smelt_cooldown.containsKey(p)) {
+                if (getsmeltcooldown(p) == 0) {
+                    inv.setItem(smelt_buttons_slot, smelt.get(autoPick(p)));
+                } else {
+                    inv.setItem(smelt_buttons_slot, smeltcd.get(autoPick(p)));
+                }
+            } else {
+                inv.setItem(smelt_buttons_slot, smelt.get(autoPick(p)));
+            }
+        }
+        int d = 0;
+        for (List<Integer> a : decorate_slot) {
+            if (update_decorate.get(d)) {
+                if (a == null) {
+                    decorate.remove(d);
+                } else {
+                    for (Integer integer : a) {
+                        inv.setItem(integer, decorate.get(d));
+                    }
+                    d++;
+                }
+            } else {
+                d++;
+            }
+        }
+        if (autoSmelt(p)) {
+            int i = 0;
+            try {
+                for (Boolean ct : converts_status) {
+                    if (ct) {
+                        if (update_items_convert.get(i)) {
+                            if (converts_slot.get(i) == null) {
+                                converts_slot.remove(i);
+                            } else {
+                                inv.setItem(converts_slot.get(i), converts.get(i));
+                                i++;
+                            }
+                        } else {
+                            i++;
+                        }
+                    } else {
+                        if (update_items_block.get(i)) {
+                            if (items_slot.get(i) == null) {
+                                items_slot.remove(i);
+                            } else {
+                                inv.setItem(items_slot.get(i), items.get(i));
+                                i++;
+                            }
+                        } else {
+                            i++;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return;
+            }
+        } else {
+            int i = 0;
+            try {
+                for (Integer b : items_slot) {
+                    if (update_items_block.get(i)) {
+                        if (items_slot.get(i) == null) {
+                            items_slot.remove(i);
+                        } else {
+                            inv.setItem(b, items.get(i));
+                            i++;
+                        }
+                    } else {
+                        i++;
+                    }
+                }
+            } catch (Exception e) {
+                Bukkit.getLogger().warning("[Storage] One or more items do not have block type so the items will not be loaded");
+            }
+        }
+        p.updateInventory();
+    }
 
     public static void UpdateI(Player p) {
         update_task.put(p, new BukkitRunnable() {
@@ -32,13 +134,33 @@ public class Manager {
                 if (player_gui.get(p).equals(inv)) {
                     HashMap<String, HashMap<Boolean, ItemStack>> ppick = pickup_buttons.get(p);
                     HashMap<Boolean, ItemStack> pick = ppick.get("Pickup");
-                    if (update_buttons.get("Pickup")) {
-                        inv.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
-                    }
                     HashMap<String, HashMap<Boolean, ItemStack>> psmelt = smelt_buttons.get(p);
                     HashMap<Boolean, ItemStack> smelt = psmelt.get("Smelt");
+                    HashMap<String, HashMap<Boolean, ItemStack>> cpick = pickup_buttons_cooldown.get(p);
+                    HashMap<Boolean, ItemStack> pickcd = cpick.get("Pickup");
+                    HashMap<String, HashMap<Boolean, ItemStack>> csmelt = smelt_buttons_cooldown.get(p);
+                    HashMap<Boolean, ItemStack> smeltcd = csmelt.get("Smelt");
+                    if (update_buttons.get("Pickup")) {
+                        if (pickup_cooldown.containsKey(p)) {
+                            if (getpickupcooldown(p) == 0) {
+                                inv.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
+                            } else {
+                                inv.setItem(pickup_buttons_slot, pickcd.get(autoPick(p)));
+                            }
+                        } else {
+                            inv.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
+                        }
+                    }
                     if (update_buttons.get("Smelt")) {
-                        inv.setItem(smelt_buttons_slot, smelt.get(autoSmelt(p)));
+                        if (smelt_cooldown.containsKey(p)) {
+                            if (getsmeltcooldown(p) == 0) {
+                                inv.setItem(smelt_buttons_slot, smelt.get(autoPick(p)));
+                            } else {
+                                inv.setItem(smelt_buttons_slot, smeltcd.get(autoPick(p)));
+                            }
+                        } else {
+                            inv.setItem(smelt_buttons_slot, smelt.get(autoPick(p)));
+                        }
                     }
                     int d = 0;
                     for (List<Integer> a : decorate_slot) {
@@ -128,5 +250,72 @@ public class Manager {
                 }
             }
         }.runTaskTimer(get(), 20L * getguifile().getInt("UPDATE.TIME"), 20L * getguifile().getInt("UPDATE.TIME")));
+    }
+
+    public static void startsmeltcooldown(Player p, Long time) {
+        smelt_cooldown.put(p, System.currentTimeMillis() + time);
+    }
+
+    public static long getsmeltcooldown(Player p) {
+        if (smelt_cooldown.containsKey(p)) {
+            if (smelt_cooldown.get(p) <= System.currentTimeMillis()) {
+                return 0;
+            } else {
+                return (smelt_cooldown.get(p) - System.currentTimeMillis()) / 1000;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    public static void startpickupcooldown(Player p, Long time) {
+        pickup_cooldown.put(p, System.currentTimeMillis() + time);
+    }
+
+    public static long getpickupcooldown(Player p) {
+        if (pickup_cooldown.containsKey(p)) {
+            if (pickup_cooldown.get(p) <= System.currentTimeMillis()) {
+                return 0;
+            } else {
+                return (pickup_cooldown.get(p) - System.currentTimeMillis()) / 1000;
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    private static Long roundlong(Long num) {
+        int length = String.valueOf(num).length() - 2;
+        String round = "1";
+        for (int i = 0; i < length; i++) {
+            round += "0";
+        }
+        double rounded =  num.doubleValue() / Long.parseLong(round);
+        Long result = Long.parseLong(String.valueOf(Math.round(rounded))) * Long.parseLong(round);
+        return result;
+    }
+
+    public static String getrowscd (Player p) {
+        if (smelt_cooldown.containsKey(p)) {
+            if (smelt_cooldown.get(p) <= System.currentTimeMillis()) {
+                return "0";
+            } else {
+                return String.valueOf(roundlong(smelt_cooldown.get(p) - System.currentTimeMillis()) / 1000);
+            }
+        } else {
+            return "0";
+        }
+    }
+
+    public static String getrowpcd (Player p) {
+        if (pickup_cooldown.containsKey(p)) {
+            if (pickup_cooldown.get(p) <= System.currentTimeMillis()) {
+                return "0";
+            } else {
+                return String.valueOf(roundlong(pickup_cooldown.get(p) - System.currentTimeMillis()) / 1000);
+            }
+        } else {
+            return "0";
+        }
     }
 }

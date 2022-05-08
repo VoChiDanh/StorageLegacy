@@ -3,7 +3,7 @@ ROWS: 6
 UPDATE:
   STATUS: true
   TIME: 1
-  TYPE: ITEMS
+  TYPE: ALL
 DECORATES:
   '0':
     update: false
@@ -739,62 +739,122 @@ ITEMS:
         - '&3[&6Control + Drop&3] &7Sell all &eYellow Glass&7.'
 BUTTONS:
   Auto_Pickup:
+    Cooldown: 30
     Update: true
     Slot: 12
-    'true':
-      material: HOPPER
-      amount: 1
-      name: '    &d&lSuper Hopper (Auto Pickup)'
-      lore:
-        - '&3➤ Introduce:'
-        - ' &e● Automatically pick up the blocks you'
-        - '&edig and store them in your storage.'
-        - '&eWhen its off, items wont be stored in'
-        - '&estorage and fall on the ground.'
-        - '&3➤ Info:'
-        - ' &d● Status: &a#auto_pickup#'
-        - ' &6● Items will be picked up automatically.'
-        - '&c✪ Click to &4Turn off auto pick up &c✪'
-    'false':
-      material: HOPPER
-      amount: 1
-      name: '    &d&lSuper Hopper (Auto Pickup)'
-      lore:
-        - '&3➤ Introduce:'
-        - ' &e● Automatically pick up the blocks you'
-        - '&edig and store them in your storage.'
-        - '&eWhen its off, items wont be stored in'
-        - '&estorage and fall on the ground.'
-        - '&3➤ Info:'
-        - ' &d● Status: &c#auto_pickup#'
-        - ' &6● Items wont be picked up automatically.'
-        - '&a✪ Click to &2Turn on auto pick up &a✪'
+    True:
+      Block:
+        material: HOPPER
+        amount: 1
+        name: '    &d&lSuper Hopper (Auto Pickup)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically pick up the blocks you'
+          - '&edig and store them in your storage.'
+          - '&eWhen its off, items wont be stored in'
+          - '&estorage and fall on the ground.'
+          - '&3➤ Info:'
+          - ' &d● Status: &a#auto_pickup#'
+          - ' &6● Items will be picked up automatically.'
+          - '&c✪ Click to &4Turn off auto pick up &c✪'
+      Cooldown:
+        material: HOPPER
+        amount: 1
+        name: '    &d&lSuper Hopper (Auto Pickup)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically pick up the blocks you'
+          - '&edig and store them in your storage.'
+          - '&eWhen its off, items wont be stored in'
+          - '&estorage and fall on the ground.'
+          - '&3➤ Info:'
+          - ' &d● Status: &a#auto_pickup#'
+          - ' &6● Items will be picked up automatically.'
+          - '&c✪ Click to &4Turn off auto pick up &c✪'
+    False:
+      Block:
+        material: BARRIER
+        amount: 1
+        name: '    &d&lSuper Hopper (Auto Pickup)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically pick up the blocks you'
+          - '&edig and store them in your storage.'
+          - '&eWhen its off, items wont be stored in'
+          - '&estorage and fall on the ground.'
+          - '&3➤ Info:'
+          - ' &d● Status: &c#auto_pickup#'
+          - ' &6● Items wont be picked up automatically.'
+          - '&a✪ Click to &2Turn on auto pick up &a✪'
+      Cooldown:
+        material: BARRIER
+        amount: 1
+        name: '    &d&lSuper Hopper (Auto Pickup)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically pick up the blocks you'
+          - '&edig and store them in your storage.'
+          - '&eWhen its off, items wont be stored in'
+          - '&estorage and fall on the ground.'
+          - '&3➤ Info:'
+          - ' &d● Status: &c#auto_pickup#'
+          - ' &6● Items wont be picked up automatically.'
+          - '&a✪ Click to &2Turn on auto pick up &a✪'
   Auto_Smelt:
+    Cooldown: 30
     Update: true
     Slot: 14
     True:
-      material: FURNACE
-      amount: 1
-      name: '  &c&lForge Furnace (Auto Smelt)'
-      lore:
-        - '&3➤ Introduce:'
-        - ' &e● Automatically smelt allow you take'
-        - '&ethe smelted items out of your storage'
-        - '&eor take the original items easily.'
-        - '&3➤ Info:'
-        - ' &d● Status: &a#auto_smelt#'
-        - ' &6● Items will be smelt automatically.'
-        - '&c✪ Click to &4Turn off auto smelt &c✪'
+      Block:
+        material: FURNACE
+        amount: 1
+        name: '  &c&lForge Furnace (Auto Smelt)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically smelt allow you take'
+          - '&ethe smelted items out of your storage'
+          - '&eor take the original items easily.'
+          - '&3➤ Info:'
+          - ' &d● Status: &a#auto_smelt#'
+          - ' &6● Items will be smelt automatically.'
+          - '&c✪ Click to &4Turn off auto smelt &c✪'
+      Cooldown:
+        material: BARRIER
+        amount: 1
+        name: '  &c&lForge Furnace (Auto Smelt)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically smelt allow you take'
+          - '&ethe smelted items out of your storage'
+          - '&eor take the original items easily.'
+          - '&3➤ Info:'
+          - ' &d● Status: &a#auto_smelt#'
+          - ' &6● Items will be smelt automatically.'
+          - '&c✪ Click to &4Turn off auto smelt &c✪'
     False:
-      material: FURNACE
-      amount: 1
-      name: '  &c&lForge Furnace (Auto Smelt)'
-      lore:
-        - '&3➤ Introduce:'
-        - ' &e● Automatically smelt allow you take'
-        - '&ethe smelted items out of your storage'
-        - '&eor take the original items easily.'
-        - '&3➤ Info:'
-        - ' &d● Status: &c#auto_smelt#'
-        - ' &6● Items wont be smelt automatically.'
-        - '&a✪ Click to &2Turn on auto smelt &a✪'
+      Block:
+        material: FURNACE
+        amount: 1
+        name: '  &c&lForge Furnace (Auto Smelt)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically smelt allow you take'
+          - '&ethe smelted items out of your storage'
+          - '&eor take the original items easily.'
+          - '&3➤ Info:'
+          - ' &d● Status: &c#auto_smelt#'
+          - ' &6● Items wont be smelt automatically.'
+          - '&a✪ Click to &2Turn on auto smelt &a✪'
+      Cooldown:
+        material: BARRIER
+        amount: 1
+        name: '  &c&lForge Furnace (Auto Smelt)'
+        lore:
+          - '&3➤ Introduce:'
+          - ' &e● Automatically smelt allow you take'
+          - '&ethe smelted items out of your storage'
+          - '&eor take the original items easily.'
+          - '&3➤ Info:'
+          - ' &d● Status: &c#auto_smelt#'
+          - ' &6● Items will be smelt automatically.'
+          - '&a✪ Click to &2Turn on auto smelt &a✪'
