@@ -61,7 +61,15 @@ public class LoadMenu {
             tittle = "Default tittle";
         }
         try {
-            size = getguifile().getInt("ROWS") * 9;
+            if (getguifile().getInt("ROWS") > 0) {
+                if (getguifile().getInt("ROWS") <= 6) {
+                    size = getguifile().getInt("ROWS") * 9;
+                } else {
+                    size = 54;
+                }
+            } else {
+                size = 54;
+            }
         } catch (Exception e) {
             size = 54;
         }
