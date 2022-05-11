@@ -7,24 +7,27 @@ UPDATE:
 DECORATES:
   '0':
     update: false
-    material: BLACK_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 14
     name: '&f'
     slot:
       - 2
       - 6
   '1':
     update: false
-    material: BLACK_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 1
     name: '&f'
     slot:
       - 3
       - 5
   '2':
     update: false
-    material: BLACK_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 2
     name: '&f'
     slot:
       - 9
@@ -35,8 +38,9 @@ DECORATES:
       - 17
   '3':
     update: false
-    material: BLACK_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 5
     name: '&f'
     slot:
       - 18
@@ -49,8 +53,9 @@ DECORATES:
       - 53
   '4':
     update: false
-    material: BLACK_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 3
     name: '&f'
     slot:
       - 46
@@ -282,7 +287,8 @@ ITEMS:
         - '&3[&6Control + Drop&3] &7Sell all &9Lapis Ore&7.'
     Convert:
       update: true
-      material: LAPIS_LAZULI
+      material: INK_SACK
+      data: 4
       amount: 1
       name: '               &9Lapis Lazuli'
       lore:
@@ -715,7 +721,8 @@ ITEMS:
     Slot: 41
     Block:
       update: true
-      material: YELLOW_STAINED_GLASS
+      material: STAINED_GLASS
+      data: 4
       amount: 1
       name: '             &eYellow Stained Glass %statistic_time_played%'
       lore:

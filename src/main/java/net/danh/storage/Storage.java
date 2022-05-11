@@ -108,6 +108,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     public void onDisable() {
         Files.saveconfig();
         Files.savelanguage();
+        Files.savegui();
         for (Player p : getServer().getOnlinePlayers()) {
             for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                 Data.savePlayerData(p, item);
