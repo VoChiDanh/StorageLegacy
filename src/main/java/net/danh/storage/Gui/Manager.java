@@ -10,7 +10,6 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.HashMap;
 import java.util.List;
 
-import static net.danh.storage.Gui.LoadMenu.LoadMenu;
 import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.OpenGui.SetItem;
 import static net.danh.storage.Gui.OpenGui.gui;
@@ -26,7 +25,7 @@ public class Manager {
 
     public static void InstantUpdate(Player p) {
         Inventory inv = p.getOpenInventory().getTopInventory();
-        LoadMenu(p);
+        LoadMenuGui(p);
         HashMap<String, HashMap<Boolean, ItemStack>> ppick = pickup_buttons.get(p);
         HashMap<Boolean, ItemStack> pick = ppick.get("Pickup");
         HashMap<String, HashMap<Boolean, ItemStack>> psmelt = smelt_buttons.get(p);
@@ -130,7 +129,7 @@ public class Manager {
             @Override
             public void run() {
                 Inventory inv = p.getOpenInventory().getTopInventory();
-                LoadMenu(p);
+                LoadMenuGui(p);
                 if (player_gui.get(p).equals(inv)) {
                     HashMap<String, HashMap<Boolean, ItemStack>> ppick = pickup_buttons.get(p);
                     HashMap<Boolean, ItemStack> pick = ppick.get("Pickup");
@@ -284,38 +283,4 @@ public class Manager {
         }
     }
 
-    private static Long roundlong(Long num) {
-        int length = String.valueOf(num).length() - 2;
-        String round = "1";
-        for (int i = 0; i < length; i++) {
-            round += "0";
-        }
-        double rounded =  num.doubleValue() / Long.parseLong(round);
-        Long result = Long.parseLong(String.valueOf(Math.round(rounded))) * Long.parseLong(round);
-        return result;
-    }
-
-    public static String getrowscd (Player p) {
-        if (smelt_cooldown.containsKey(p)) {
-            if (smelt_cooldown.get(p) <= System.currentTimeMillis()) {
-                return "0";
-            } else {
-                return String.valueOf(roundlong(smelt_cooldown.get(p) - System.currentTimeMillis()) / 1000);
-            }
-        } else {
-            return "0";
-        }
-    }
-
-    public static String getrowpcd (Player p) {
-        if (pickup_cooldown.containsKey(p)) {
-            if (pickup_cooldown.get(p) <= System.currentTimeMillis()) {
-                return "0";
-            } else {
-                return String.valueOf(roundlong(pickup_cooldown.get(p) - System.currentTimeMillis()) / 1000);
-            }
-        } else {
-            return "0";
-        }
-    }
 }

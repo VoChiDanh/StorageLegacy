@@ -6,8 +6,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ import java.util.List;
 import static net.danh.storage.Gui.CatchInput.*;
 import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.Manager.*;
-import static net.danh.storage.Gui.OpenGui.OpenGui;
 import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
@@ -96,11 +93,6 @@ public class GuiEventListener implements Listener {
         if (event.getClickedInventory() == null) return;
         else {
             if (event.getClickedInventory().equals(player_gui.get(p))) {
-                Inventory inv = p.getOpenInventory().getTopInventory();
-                HashMap<String, HashMap<Boolean, ItemStack>> ppick = pickup_buttons.get(p);
-                HashMap<Boolean, ItemStack> pick = ppick.get("Pickup");
-                HashMap<String, HashMap<Boolean, ItemStack>> psmelt = smelt_buttons.get(p);
-                HashMap<Boolean, ItemStack> smelt = psmelt.get("Smelt");
                 if (event.getSlot() == pickup_buttons_slot) {
                     if (pickup_cooldown.containsKey(p)) {
                         if (getpickupcooldown(p) == 0) {

@@ -138,7 +138,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Contract(" -> new")
     private @NotNull ArrayList<Listener> initializeListeners() {
-        return new ArrayList<Listener>(Arrays.asList(new BlockBreak(), new Quit(), new Join(), new BlockExplode(), new GuiEventListener()));
+        return new ArrayList<>(Arrays.asList(new BlockBreak(), new Quit(), new Join(), new BlockExplode(), new GuiEventListener()));
     }
 
     /**

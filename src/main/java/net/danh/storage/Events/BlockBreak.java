@@ -50,7 +50,7 @@ public class BlockBreak implements Listener {
                     addStorage(p, blocks, fortune);
                 } else {
                     if (getconfigfile().getBoolean("Vanilla_Drops")) {
-                        if(getconfigfile().getBoolean("Tool_Sensitive")) {
+                        if (getconfigfile().getBoolean("Tool_Sensitive")) {
                             int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
                             if (amount > 0) {
                                 addStorage(p, blocks, amount);
@@ -62,7 +62,7 @@ public class BlockBreak implements Listener {
                             addStorage(p, blocks, amount);
                         }
                     } else {
-                        if(getconfigfile().getBoolean("Tool_Sensitive")) {
+                        if (getconfigfile().getBoolean("Tool_Sensitive")) {
                             int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
                             if (amount > 0) {
                                 addStorage(p, blocks, 1);

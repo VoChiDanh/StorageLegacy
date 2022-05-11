@@ -1,6 +1,5 @@
 package net.danh.storage.Commands;
 
-import net.danh.storage.Gui.LoadMenu;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.danh.storage.Storage;
@@ -16,9 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Set;
 
-import static net.danh.storage.Gui.LoadMenu.*;
-import static net.danh.storage.Gui.Manager.*;
-import static net.danh.storage.Gui.OpenGui.OpenGui;
+import static net.danh.storage.Gui.LoadMenu.ReloadMenu;
+import static net.danh.storage.Gui.OpenGui.OpenGuiMenu;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Items.*;
@@ -76,7 +74,7 @@ public class Commands implements CommandExecutor {
         if (label.equalsIgnoreCase("Storage") || label.equalsIgnoreCase("kho") || label.equalsIgnoreCase("store")) {
             if (args.length == 0) {
                 Player p = ((Player) sender).getPlayer();
-                OpenGui(p);
+                OpenGuiMenu(p);
             }
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("help")) {

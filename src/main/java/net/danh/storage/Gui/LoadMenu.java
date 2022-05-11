@@ -45,7 +45,7 @@ public class LoadMenu {
     public static String tittle;
     public static int size;
 
-    public static void LoadMenu(Player p) {
+    public static void LoadMenuGui(Player p) {
         LoadCancel();
         LoadItemActions();
         LoadDecorate(p);
@@ -472,7 +472,6 @@ public class LoadMenu {
                     } else {
                         update_items_convert.add(false);
                     }
-                    i++;
                 } else {
                     converts.add(null);
                     converts_slot.add(null);
@@ -483,7 +482,6 @@ public class LoadMenu {
                 converts_status.add(false);
                 converts.add(items.get(i));
                 converts_slot.add(items_slot.get(i));
-                i++;
             }
         }
     }
