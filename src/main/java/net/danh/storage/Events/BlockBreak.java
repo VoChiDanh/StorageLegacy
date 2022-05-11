@@ -49,7 +49,30 @@ public class BlockBreak implements Listener {
                     int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
                     addStorage(p, blocks, fortune);
                 } else {
-                    addStorage(p, blocks, 1);
+                    if (getconfigfile().getBoolean("Vanilla_Drops")) {
+                        if(getconfigfile().getBoolean("Tool_Sensitive")) {
+                            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+                            if (amount > 0) {
+                                addStorage(p, blocks, amount);
+                            } else {
+                                return;
+                            }
+                        } else {
+                            int amount = e.getBlock().getDrops().size();
+                            addStorage(p, blocks, amount);
+                        }
+                    } else {
+                        if(getconfigfile().getBoolean("Tool_Sensitive")) {
+                            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+                            if (amount > 0) {
+                                addStorage(p, blocks, 1);
+                            } else {
+                                return;
+                            }
+                        } else {
+                            addStorage(p, blocks, 1);
+                        }
+                    }
                 }
                 e.getBlock().getDrops().clear();
                 e.setDropItems(false);

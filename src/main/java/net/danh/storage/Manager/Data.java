@@ -255,7 +255,7 @@ public class Data {
         df.setRoundingMode(RoundingMode.HALF_UP);
         String d = getconfigfile().getString("Number_Format") + "1";
         d = d.replaceAll("#", "0");
-        return df.format(u - Double.parseDouble(d)) + "%";
+        return df.format(u - Double.parseDouble(d)).replaceAll("-", "") + "%";
     }
 
     public static String getTotalEmpty(Player p) {

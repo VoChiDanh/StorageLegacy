@@ -24,46 +24,29 @@ import static net.danh.storage.Storage.*;
 public class Files {
 
     public final static char COLOR_CHAR = ChatColor.COLOR_CHAR;
-    private static File configFile, languageFile, dataFile, guiFile, guilegacyFile;
-    private static FileConfiguration config, language, data, gui, guilegacy;
-    private static NMSAssistant nms;
+    private static File configFile, languageFile, dataFile, guiFile;
+    private static FileConfiguration config, language, data, gui;
 
     public static void createfiles() {
         configFile = new File(get().getDataFolder(), "config.yml");
         languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
-        if (nms.isVersionGreaterThan(13)) {
-            guiFile = new File(get().getDataFolder(), "gui.yml");
-        } else {
-            guilegacyFile = new File(get().getDataFolder(), "gui-legacy.yml");
-        }
+        guiFile = new File(get().getDataFolder(), "gui.yml");
 
         if (!configFile.exists()) get().saveResource("config.yml", false);
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
-        if (nms.isVersionGreaterThan(13)) {
-            if (!guiFile.exists()) get().saveResource("gui.yml", false);
-        } else {
-            if (!guilegacyFile.exists()) get().saveResource("gui-legacy.yml", false);
-        }
+        if (!guiFile.exists()) get().saveResource("gui.yml", false);
         config = new YamlConfiguration();
         language = new YamlConfiguration();
         data = new YamlConfiguration();
-        if (nms.isVersionGreaterThan(13)) {
-            gui = new YamlConfiguration();
-        } else {
-            guilegacy = new YamlConfiguration();
-        }
+        gui = new YamlConfiguration();
 
         try {
             config.load(configFile);
             language.load(languageFile);
             data.load(dataFile);
-            if (nms.isVersionGreaterThan(13)) {
-                gui.load(guiFile);
-            } else {
-                guilegacy.load(guilegacyFile);
-            }
+            gui.load(guiFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -82,21 +65,13 @@ public class Files {
     }
 
     public static FileConfiguration getguifile() {
-        if (nms.isVersionGreaterThan(13)) {
-            return guilegacy;
-        } else {
-            return gui;
-        }
+        return gui;
     }
 
     public static void reloadfiles() {
         config = YamlConfiguration.loadConfiguration(configFile);
         language = YamlConfiguration.loadConfiguration(languageFile);
-        if (nms.isVersionGreaterThan(13)) {
-            gui = YamlConfiguration.loadConfiguration(guiFile);
-        } else {
-            guilegacy = YamlConfiguration.loadConfiguration(guilegacyFile);
-        }
+        gui = YamlConfiguration.loadConfiguration(guiFile);
     }
 
     public static void saveconfig() {
@@ -117,20 +92,6 @@ public class Files {
         try {
             data.save(dataFile);
         } catch (IOException ignored) {
-        }
-    }
-
-    public static void savegui() {
-        if (nms.isVersionGreaterThan(13)) {
-            try {
-                gui.save(guiFile);
-            } catch (IOException ignored) {
-            }
-        } else {
-            try {
-                guilegacy.save(guilegacyFile);
-            } catch (IOException ignored) {
-            }
         }
     }
 
@@ -163,7 +124,8 @@ public class Files {
         while (matcher.find()) {
 
             String group = matcher.group(1);
-            matcher.appendReplacement(buffer, COLOR_CHAR + "x" + COLOR_CHAR + group.charAt(0) + COLOR_CHAR + group.charAt(1) + COLOR_CHAR + group.charAt(2) + COLOR_CHAR + group.charAt(3) + COLOR_CHAR + group.charAt(4) + COLOR_CHAR + group.charAt(5));
+            matcher.appendReplacement(buffer, COLOR_CHAR + "x" + COLOR_CHAR + group.charAt(0) + COLOR_CHAR + group.charAt(1) + COLOR_CHAR
+                    + group.charAt(2) + COLOR_CHAR + group.charAt(3) + COLOR_CHAR + group.charAt(4) + COLOR_CHAR + group.charAt(5));
 
         }
 
@@ -179,7 +141,12 @@ public class Files {
     }
 
     public static String papi(String input, Player p) {
-        String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
+        String output = input.replaceAll("#total_storage#", getTotalStorage(p))
+                .replaceAll("#total_max_storage#", getTotalMaxStorage(p))
+                .replaceAll("#total_used#", getTotalUsed(p))
+                .replaceAll("#total_empty#", getTotalEmpty(p))
+                .replaceAll("#total_count#", getTotalCount(p))
+                .replaceAll("#player#", p.getName());
         if (ecostatus) {
             output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
             output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
@@ -224,7 +191,12 @@ public class Files {
     public static List<String> lorepapi(List<String> lores, Player p) {
         List<String> final_lores = new ArrayList<>();
         for (String input : lores) {
-            String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
+            String output = input.replaceAll("#total_storage#", getTotalStorage(p))
+                    .replaceAll("#total_max_storage#", getTotalMaxStorage(p))
+                    .replaceAll("#total_used#", getTotalUsed(p))
+                    .replaceAll("#total_empty#", getTotalEmpty(p))
+                    .replaceAll("#total_count#", getTotalCount(p))
+                    .replaceAll("#player#", p.getName());
             if (ecostatus) {
                 output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
                 output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
