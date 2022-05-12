@@ -50,14 +50,11 @@ public class OpenGui {
         }
         if (smelt_cooldown.containsKey(p)) {
             if (getsmeltcooldown(p) == 0) {
-                gui.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
                 gui.setItem(smelt_buttons_slot, smelt.get(autoSmelt(p)));
             } else {
-                gui.setItem(pickup_buttons_slot, pickcd.get(autoPick(p)));
                 gui.setItem(smelt_buttons_slot, smeltcd.get(autoSmelt(p)));
             }
         } else {
-            gui.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
             gui.setItem(smelt_buttons_slot, smelt.get(autoSmelt(p)));
         }
         if (autoSmelt(p)) {

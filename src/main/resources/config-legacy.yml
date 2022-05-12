@@ -29,7 +29,7 @@ Blocks:
   LAPIS_ORE:
     Name: '&9Lapis Lazuli'
     Price: 150
-    Convert: LAPIS_LAZULI
+    Convert: INK_SACK;4
   REDSTONE_ORE:
     Name: '&cRedstone'
     Price: 200
@@ -69,10 +69,10 @@ Blocks:
     Price: 10
     Convert: STONE
     Block: COBBLESTONE
-  STAINED_GLASS:
+  WHITE_STAINED_GLASS:
     Name: '&fWhite Glass'
     Price: 30
-  STAINED_GLASS;4:
+  YELLOW_STAINED_GLASS:
     Name: '&eYellow Glass'
     Price: 30
 Default_Max_Storage: 10000

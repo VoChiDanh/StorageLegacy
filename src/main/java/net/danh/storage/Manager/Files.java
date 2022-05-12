@@ -17,6 +17,8 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.danh.storage.Gui.Manager.getpickupcooldown;
+import static net.danh.storage.Gui.Manager.getsmeltcooldown;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Items.getPrice;
 import static net.danh.storage.Storage.*;
@@ -24,45 +26,49 @@ import static net.danh.storage.Storage.*;
 public class Files {
 
     public final static char COLOR_CHAR = ChatColor.COLOR_CHAR;
-    private static File configFile, languageFile, dataFile, guiFile, guilegacyFile;
-    private static FileConfiguration config, language, data, gui, guilegacy;
+    private static File configFile, configLegacyFile, languageFile, dataFile, guiFile, guilegacyFile;
+    private static FileConfiguration config, configlegacy, language, data, gui, guilegacy;
 
     public static void createfiles() {
-        configFile = new File(get().getDataFolder(), "config.yml");
         languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
         NMSAssistant nms = new NMSAssistant();
         if (nms.isVersionGreaterThan(13)) {
             guiFile = new File(get().getDataFolder(), "gui.yml");
+            configFile = new File(get().getDataFolder(), "config.yml");
         } else {
             guilegacyFile = new File(get().getDataFolder(), "gui-legacy.yml");
+            configLegacyFile = new File(get().getDataFolder(), "config-legacy.yml");
         }
-
         if (!configFile.exists()) get().saveResource("config.yml", false);
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
         if (nms.isVersionGreaterThan(13)) {
             if (!guiFile.exists()) get().saveResource("gui.yml", false);
+            if (!configFile.exists()) get().saveResource("config.yml", false);
         } else {
             if (!guilegacyFile.exists()) get().saveResource("gui-legacy.yml", false);
+            if (!configLegacyFile.exists()) get().saveResource("config-legacy.yml", false);
         }
-        config = new YamlConfiguration();
         language = new YamlConfiguration();
         data = new YamlConfiguration();
         if (nms.isVersionGreaterThan(13)) {
             gui = new YamlConfiguration();
+            config = new YamlConfiguration();
         } else {
             guilegacy = new YamlConfiguration();
+            configlegacy = new YamlConfiguration();
         }
 
         try {
-            config.load(configFile);
             language.load(languageFile);
             data.load(dataFile);
             if (nms.isVersionGreaterThan(13)) {
                 gui.load(guiFile);
+                config.load(configFile);
             } else {
                 guilegacy.load(guilegacyFile);
+                configlegacy.load(configLegacyFile);
             }
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
@@ -70,7 +76,12 @@ public class Files {
     }
 
     public static FileConfiguration getconfigfile() {
-        return config;
+        NMSAssistant nms = new NMSAssistant();
+        if (nms.isVersionGreaterThan(13)) {
+            return config;
+        } else {
+            return configlegacy;
+        }
     }
 
     public static FileConfiguration getlanguagefile() {
@@ -84,27 +95,36 @@ public class Files {
     public static FileConfiguration getguifile() {
         NMSAssistant nms = new NMSAssistant();
         if (nms.isVersionGreaterThan(13)) {
-            return guilegacy;
-        } else {
             return gui;
+        } else {
+            return guilegacy;
         }
     }
 
     public static void reloadfiles() {
         NMSAssistant nms = new NMSAssistant();
-        config = YamlConfiguration.loadConfiguration(configFile);
         language = YamlConfiguration.loadConfiguration(languageFile);
         if (nms.isVersionGreaterThan(13)) {
             gui = YamlConfiguration.loadConfiguration(guiFile);
+            config = YamlConfiguration.loadConfiguration(configFile);
         } else {
             guilegacy = YamlConfiguration.loadConfiguration(guilegacyFile);
+            configlegacy = YamlConfiguration.loadConfiguration(configLegacyFile);
         }
     }
 
     public static void saveconfig() {
-        try {
-            config.save(configFile);
-        } catch (IOException ignored) {
+        NMSAssistant nms = new NMSAssistant();
+        if (nms.isVersionGreaterThan(13)) {
+            try {
+                config.save(configFile);
+            } catch (IOException ignored) {
+            }
+        } else {
+            try {
+                configlegacy.save(configLegacyFile);
+            } catch (IOException ignored) {
+            }
         }
     }
 
@@ -139,20 +159,23 @@ public class Files {
 
     // Colorize messages with preset color codes (&) and if using 1.16+, applies hex values via "&#hexvalue"
     public static String colorize(String input) {
-
         input = ChatColor.translateAlternateColorCodes('&', input);
         NMSAssistant nms = new NMSAssistant();
         if (nms.isVersionGreaterThan(15)) {
             input = translateHexColorCodes("\\&#", "", input);
         }
-
         return input;
     }
 
     public static List<String> lorecolor(List<String> input) {
         List<String> output = new ArrayList<>();
         for (String string : input) {
-            output.add(ChatColor.translateAlternateColorCodes('&', string));
+            String colorstring = ChatColor.translateAlternateColorCodes('&', string);
+            NMSAssistant nms = new NMSAssistant();
+            if (nms.isVersionGreaterThan(15)) {
+                colorstring = translateHexColorCodes("\\&#", "", colorstring);
+            }
+            output.add(colorstring);
         }
         return output;
     }
@@ -164,7 +187,6 @@ public class Files {
         StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
 
         while (matcher.find()) {
-
             String group = matcher.group(1);
             matcher.appendReplacement(buffer, COLOR_CHAR + "x" + COLOR_CHAR + group.charAt(0) + COLOR_CHAR + group.charAt(1) + COLOR_CHAR + group.charAt(2) + COLOR_CHAR + group.charAt(3) + COLOR_CHAR + group.charAt(4) + COLOR_CHAR + group.charAt(5));
 
@@ -182,7 +204,7 @@ public class Files {
     }
 
     public static String papi(String input, Player p) {
-        String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
+        String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName()).replaceAll("#cooldown_pickup#", String.valueOf(getpickupcooldown(p))).replaceAll("#cooldown_smelt#", String.valueOf(getsmeltcooldown(p)));
         if (ecostatus) {
             output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
             output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
@@ -227,7 +249,7 @@ public class Files {
     public static List<String> lorepapi(List<String> lores, Player p) {
         List<String> final_lores = new ArrayList<>();
         for (String input : lores) {
-            String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
+            String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName()).replaceAll("#cooldown_pickup#", String.valueOf(getpickupcooldown(p))).replaceAll("#cooldown_smelt#", String.valueOf(getsmeltcooldown(p)));
             if (ecostatus) {
                 output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
                 output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
