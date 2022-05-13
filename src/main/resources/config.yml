@@ -1,7 +1,7 @@
 Blacklist-World:
   - example1
   - world2
-VERSION: "1.0-B6"
+VERSION: "1.0-B7"
 Vanilla_Drops: true
 Tool_Sensitive: false
 Number_Format: "#.###"

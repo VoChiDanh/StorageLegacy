@@ -29,8 +29,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 
-import static net.danh.storage.Manager.Files.getconfigfile;
-import static net.danh.storage.Manager.Files.getlanguagefile;
+import static net.danh.storage.Manager.Files.*;
 
 public final class Storage extends PonderBukkitPlugin implements Listener {
 
@@ -117,11 +116,14 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
     private void checkFilesVersion() {
-        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase("1.0-B6") || getconfigfile().getString("VERSION") == null) {
+        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase("1.0-B7") || getconfigfile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update config.yml!");
         }
-        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase("1.0-B6") || getconfigfile().getString("VERSION") == null) {
+        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase("1.0-B6") || getlanguagefile().getString("VERSION") == null) {
             getLogger().log(Level.SEVERE, "You need update language.yml!");
+        }
+        if (!Objects.requireNonNull(getguifile().getString("VERSION")).equalsIgnoreCase("1.0-B1") || getguifile().getString("VERSION") == null) {
+            getLogger().log(Level.SEVERE, "You need update gui.yml!");
         }
     }
 
