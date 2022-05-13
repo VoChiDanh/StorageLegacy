@@ -26,62 +26,37 @@ import static net.danh.storage.Storage.*;
 public class Files {
 
     public final static char COLOR_CHAR = ChatColor.COLOR_CHAR;
-    private static File configFile, configLegacyFile, languageFile, dataFile, guiFile, guilegacyFile;
-    private static FileConfiguration config, configlegacy, language, data, gui, guilegacy;
+    private static File configFile, languageFile, dataFile, guiFile;
+    private static FileConfiguration config, language, data, gui;
 
     public static void createfiles() {
         languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
-        NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThan(13)) {
-            guiFile = new File(get().getDataFolder(), "gui.yml");
-            configFile = new File(get().getDataFolder(), "config.yml");
-        } else {
-            guilegacyFile = new File(get().getDataFolder(), "gui-legacy.yml");
-            configLegacyFile = new File(get().getDataFolder(), "config-legacy.yml");
-        }
+        guiFile = new File(get().getDataFolder(), "gui.yml");
+        configFile = new File(get().getDataFolder(), "config.yml");
+
         if (!configFile.exists()) get().saveResource("config.yml", false);
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
-        if (nms.isVersionGreaterThan(13)) {
-            if (!guiFile.exists()) get().saveResource("gui.yml", false);
-            if (!configFile.exists()) get().saveResource("config.yml", false);
-        } else {
-            if (!guilegacyFile.exists()) get().saveResource("gui-legacy.yml", false);
-            if (!configLegacyFile.exists()) get().saveResource("config-legacy.yml", false);
-        }
+        if (!guiFile.exists()) get().saveResource("gui.yml", false);
+        if (!configFile.exists()) get().saveResource("config.yml", false);
         language = new YamlConfiguration();
         data = new YamlConfiguration();
-        if (nms.isVersionGreaterThan(13)) {
-            gui = new YamlConfiguration();
-            config = new YamlConfiguration();
-        } else {
-            guilegacy = new YamlConfiguration();
-            configlegacy = new YamlConfiguration();
-        }
+        gui = new YamlConfiguration();
+        config = new YamlConfiguration();
 
         try {
             language.load(languageFile);
             data.load(dataFile);
-            if (nms.isVersionGreaterThan(13)) {
-                gui.load(guiFile);
-                config.load(configFile);
-            } else {
-                guilegacy.load(guilegacyFile);
-                configlegacy.load(configLegacyFile);
-            }
+            gui.load(guiFile);
+            config.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }
 
     public static FileConfiguration getconfigfile() {
-        NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThan(13)) {
-            return config;
-        } else {
-            return configlegacy;
-        }
+        return config;
     }
 
     public static FileConfiguration getlanguagefile() {
@@ -93,38 +68,19 @@ public class Files {
     }
 
     public static FileConfiguration getguifile() {
-        NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThan(13)) {
-            return gui;
-        } else {
-            return guilegacy;
-        }
+        return gui;
     }
 
     public static void reloadfiles() {
-        NMSAssistant nms = new NMSAssistant();
         language = YamlConfiguration.loadConfiguration(languageFile);
-        if (nms.isVersionGreaterThan(13)) {
-            gui = YamlConfiguration.loadConfiguration(guiFile);
-            config = YamlConfiguration.loadConfiguration(configFile);
-        } else {
-            guilegacy = YamlConfiguration.loadConfiguration(guilegacyFile);
-            configlegacy = YamlConfiguration.loadConfiguration(configLegacyFile);
-        }
+        gui = YamlConfiguration.loadConfiguration(guiFile);
+        config = YamlConfiguration.loadConfiguration(configFile);
     }
 
     public static void saveconfig() {
-        NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThan(13)) {
-            try {
-                config.save(configFile);
-            } catch (IOException ignored) {
-            }
-        } else {
-            try {
-                configlegacy.save(configLegacyFile);
-            } catch (IOException ignored) {
-            }
+        try {
+            config.save(configFile);
+        } catch (IOException ignored) {
         }
     }
 
@@ -143,17 +99,9 @@ public class Files {
     }
 
     public static void savegui() {
-        NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThan(13)) {
-            try {
-                gui.save(guiFile);
-            } catch (IOException ignored) {
-            }
-        } else {
-            try {
-                guilegacy.save(guilegacyFile);
-            } catch (IOException ignored) {
-            }
+        try {
+            gui.save(guiFile);
+        } catch (IOException ignored) {
         }
     }
 

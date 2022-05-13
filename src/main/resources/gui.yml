@@ -7,24 +7,27 @@ UPDATE:
 DECORATES:
   '0':
     update: false
-    material: RED_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE #edit material if you use 1.13+
     amount: 1
+    data: 14 #Remove this line if you use 1.13+
     name: '&f'
     slot:
       - 2
       - 6
   '1':
     update: false
-    material: ORANGE_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 1
     name: '&f'
     slot:
       - 3
       - 5
   '2':
     update: false
-    material: MAGENTA_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 2
     name: '&f'
     slot:
       - 9
@@ -35,8 +38,9 @@ DECORATES:
       - 17
   '3':
     update: false
-    material: LIME_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 5
     name: '&f'
     slot:
       - 18
@@ -49,8 +53,9 @@ DECORATES:
       - 53
   '4':
     update: false
-    material: LIGHT_BLUE_STAINED_GLASS_PANE
+    material: STAINED_GLASS_PANE
     amount: 1
+    data: 3
     name: '&f'
     slot:
       - 46
@@ -60,7 +65,7 @@ DECORATES:
       - 50
       - 51
       - 52
-  Info:
+  'Info':
     update: true
     material: ENCHANTED_BOOK
     slot: 13
@@ -80,37 +85,37 @@ DECORATES:
       - ' &5● Total Used Space: #total_storage# / #total_used#'
       - ' &9● Total Empty Space: #total_count# / #total_empty#'
       - ' &3● Total Max Space: #total_max_storage#'
-  Sort_Default:
+  'Sort_Default':
     update: false
-    material: CHEST_MINECART
+    material: STORAGE_MINECART
     slot: 4
     name: '&eSort Items By Default'
     lore:
       - '&aSelected'
-  Sort_Name:
+  'Sort_Name':
     update: false
-    material: FURNACE_MINECART
+    material: POWERED_MINECART
     slot: 0
     name: '&aSort Items By Name'
     lore:
       - '&cComing soon...'
-  Sort_Price:
+  'Sort_Price':
     update: false
     material: HOPPER_MINECART
     slot: 1
     name: '&aSort Items By Price'
     lore:
       - '&cComing soon...'
-  Sort_Quality:
+  'Sort_Quality':
     update: false
-    material: TNT_MINECART
+    material: EXPLOSIVE_MINECART
     slot: 7
     name: '&aSort Items By Quality'
     lore:
       - '&cComing soon...'
-  Sort_Unused:
+  'Sort_Unused':
     update: false
-    material: COMMAND_BLOCK_MINECART
+    material: COMMAND_MINECART
     slot: 8
     name: '&aSort Items By Unsued'
     lore:
@@ -193,6 +198,7 @@ ITEMS:
       update: true
       material: IRON_INGOT
       amount: 1
+      Convert:
       name: '                &fIron Ingot'
       lore:
         - '&f● &2Used Space: &f#storage_IRON_ORE# / #used_IRON_ORE#'
@@ -281,7 +287,8 @@ ITEMS:
         - '&3[&6Control + Drop&3] &7Sell all &9Lapis Ore&7.'
     Convert:
       update: true
-      material: LAPIS_LAZULI
+      material: INK_SACK
+      data: 4
       amount: 1
       name: '               &9Lapis Lazuli'
       lore:
@@ -630,7 +637,7 @@ ITEMS:
   '14':
     Convert_Status: false
     Actions:
-      BLOCK: WHITE_STAINED_GLASS
+      BLOCK: STAINED_GLASS
       LEFT: INPUT_TAKE
       SHIFT_LEFT: TAKE_ALL
       RIGHT: INPUT_ADD
@@ -640,7 +647,7 @@ ITEMS:
     Slot: 39
     Block:
       update: true
-      material: WHITE_STAINED_GLASS
+      material: STAINED_GLASS
       amount: 1
       name: '             &fWhite Stained Glass'
       lore:
@@ -687,6 +694,7 @@ ITEMS:
       update: true
       material: STONE
       amount: 1
+      Convert:
       name: '                  &7Stone'
       lore:
         - '&f● &2Used Space: &7#storage_STONE# / &7#used_STONE#'
@@ -703,7 +711,7 @@ ITEMS:
   '16':
     Convert_Status: false
     Actions:
-      BLOCK: YELLOW_STAINED_GLASS
+      BLOCK: STAINED_GLASS;4
       LEFT: INPUT_TAKE
       SHIFT_LEFT: TAKE_ALL
       RIGHT: INPUT_ADD
@@ -713,7 +721,8 @@ ITEMS:
     Slot: 41
     Block:
       update: true
-      material: YELLOW_STAINED_GLASS
+      material: STAINED_GLASS
+      data: 4
       amount: 1
       name: '             &eYellow Stained Glass %statistic_time_played%'
       lore:
@@ -733,7 +742,7 @@ BUTTONS:
     Cooldown: 30
     Update: true
     Slot: 12
-    'true':
+    True:
       Block:
         material: HOPPER
         amount: 1
@@ -762,7 +771,7 @@ BUTTONS:
           - ' &d● Status: &aOn'
           - ' &6● Items will be picked up automatically.'
           - '&b✪ Wait for &9#cooldown_pickup# seconds &bto execute ✪'
-    'false':
+    False:
       Block:
         material: HOPPER
         amount: 1
@@ -795,7 +804,7 @@ BUTTONS:
     Cooldown: 30
     Update: true
     Slot: 14
-    'true':
+    True:
       Block:
         material: FURNACE
         amount: 1
@@ -822,7 +831,7 @@ BUTTONS:
           - ' &d● Status: &aOn'
           - ' &6● Items will be smelt automatically.'
           - '&b✪ Wait for &9#cooldown_smelt# seconds &bto execute ✪'
-    'false':
+    False:
       Block:
         material: FURNACE
         amount: 1

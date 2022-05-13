@@ -113,9 +113,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.VoChiDanh</groupId>
+            <groupId>com.github.Preponderous-Software</groupId>
             <artifactId>Ponder</artifactId>
-            <version>8000fc7309</version>
+            <version>d1c30fa562</version>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
