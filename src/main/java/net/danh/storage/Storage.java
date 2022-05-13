@@ -50,6 +50,11 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        if (getServer().getOnlinePlayers().size() > 0) {
+            for (Player p : getServer().getOnlinePlayers()) {
+                p.kickPlayer("Rejoin in few second");
+            }
+        }
         Metrics metrics = new Metrics(this, 14622);
         if (!setupEconomy()) {
             ecostatus = false;
