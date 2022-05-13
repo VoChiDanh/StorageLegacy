@@ -29,7 +29,7 @@ Blocks:
   LAPIS_ORE:
     Name: '&9Lapis Lazuli'
     Price: 150
-    Convert: LAPIS_LAZULI
+    Convert: INK_SACK;4 #If you use 1.13 +, set it to LAPIS_LAZULI
   REDSTONE_ORE:
     Name: '&cRedstone'
     Price: 200
@@ -69,10 +69,10 @@ Blocks:
     Price: 10
     Convert: STONE
     Block: COBBLESTONE
-  STAINED_GLASS:
+  STAINED_GLASS: #If you use 1.13 +, set it to WHITE_STAINED_GLASS
     Name: '&fWhite Glass'
     Price: 30
-  STAINED_GLASS;4: #Remove ;4 and edit material if you use 1.13+
+  STAINED_GLASS;4: #If you use 1.13 +, set it to YELLOW_STAINED_GLASS
     Name: '&eYellow Glass'
     Price: 30
 Default_Max_Storage: 10000
