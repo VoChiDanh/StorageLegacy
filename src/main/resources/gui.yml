@@ -9,7 +9,7 @@ DECORATES:
   '0':
     update: false
     material: BLACK_STAINED_GLASS_PANE #edit material if you use 1.12-
-#<- remove this if you use 1.12-    data: 3
+    #<- remove this if you use 1.12-    data: 3
     amount: 1
     name: '&f'
     slot:

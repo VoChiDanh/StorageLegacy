@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 import static net.danh.storage.Gui.CatchInput.*;
 import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.Manager.*;
@@ -34,11 +35,11 @@ public class GuiEventListener implements Listener {
             String message = event.getMessage();
             if (cancel.contains(message)) {
                 input.remove(p);
-                p.sendMessage(colorize(getlanguagefile().getString("Input.Cancel")));
+                sendPlayerMessage(p, getlanguagefile().getString("Input.Cancel"));
             } else {
                 if (getconfigfile().getString("Input.Type").equalsIgnoreCase("ONE")) {
                     if (message.contains(" ")) {
-                        p.sendMessage(colorize(getlanguagefile().getString("Input.Space_Error")));
+                        sendPlayerMessage(p, getlanguagefile().getString("Input.Space_Error"));
                         input.remove(p);
                     } else {
                         if (isInt(message)) {
@@ -48,22 +49,22 @@ public class GuiEventListener implements Listener {
                                     InputAction(p, block_input.get(p));
                                     input.remove(p);
                                 } else {
-                                    p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number")));
+                                    sendPlayerMessage(p, getlanguagefile().getString("Input.Invaild_Number"));
                                     input.remove(p);
                                 }
                             } catch (Exception e) {
-                                p.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
+                                sendPlayerMessage(p, getlanguagefile().getString("Number_To_Big"));
                                 input.remove(p);
                             }
                         } else {
-                            p.sendMessage(colorize(getlanguagefile().getString("Input.Not_A_Number")));
+                            sendPlayerMessage(p, getlanguagefile().getString("Input.Not_A_Number"));
                             input.remove(p);
                         }
                     }
                 }
                 if (getconfigfile().getString("Input.Type").equalsIgnoreCase("AGAIN")) {
                     if (message.contains(" ")) {
-                        p.sendMessage(colorize(getlanguagefile().getString("Input.Space_Error") + " " + getlanguagefile().getString("Input.Again")));
+                        sendPlayerMessage(p, getlanguagefile().getString("Input.Space_Error") + " " + getlanguagefile().getString("Input.Again"));
                     } else {
                         if (isInt(message)) {
                             try {
@@ -72,13 +73,13 @@ public class GuiEventListener implements Listener {
                                     InputAction(p, block_input.get(p));
                                     input.remove(p);
                                 } else {
-                                    p.sendMessage(colorize(getlanguagefile().getString("Input.Invaild_Number") + " " + getlanguagefile().getString("Input.Again")));
+                                    sendPlayerMessage(p, getlanguagefile().getString("Input.Invaild_Number") + " " + getlanguagefile().getString("Input.Again"));
                                 }
                             } catch (Exception e) {
-                                p.sendMessage(colorize(getlanguagefile().getString("Number_To_Big")));
+                                sendPlayerMessage(p, getlanguagefile().getString("Number_To_Big"));
                             }
                         } else {
-                            p.sendMessage(colorize(getlanguagefile().getString("Input.Not_A_Number") + " " + getlanguagefile().getString("Input.Again")));
+                            sendPlayerMessage(p, getlanguagefile().getString("Input.Not_A_Number") + " " + getlanguagefile().getString("Input.Again"));
                         }
                     }
                 }

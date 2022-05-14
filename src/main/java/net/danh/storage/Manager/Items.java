@@ -11,8 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Manager.Files.getconfigfile;
+import static net.danh.storage.Manager.Files.getlanguagefile;
 import static net.danh.storage.Storage.economy;
 
 public class Items {
@@ -74,11 +76,11 @@ public class Items {
                     }
                 }
             } else {
-                p.sendMessage(Files.colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
+                p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
                         .replaceAll("%item%", String.valueOf(getAmountItem(p, name)))));
             }
         } else {
-            p.sendMessage(Files.colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
+            p.sendMessage(colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
         }
     }
 

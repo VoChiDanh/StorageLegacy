@@ -1,7 +1,8 @@
 package net.danh.storage;
 
 import net.danh.dcore.NMS.NMSAssistant;
-import net.danh.storage.Commands.Commands;
+import net.danh.storage.Commands.AutoPickup;
+import net.danh.storage.Commands.AutoSmelt;
 import net.danh.storage.Commands.TabCompleter;
 import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.BlockExplode;
@@ -24,6 +25,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 import java.util.logging.Level;
 
+import static net.danh.dcore.DCore.dCoreLog;
+import static net.danh.dcore.DCore.getDCoreVersion;
+import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Files.*;
 
 public final class Storage extends JavaPlugin implements Listener {
@@ -71,12 +75,13 @@ public final class Storage extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new GuiEventListener(), this);
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Quit(), this);
-        Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
+        new net.danh.storage.Commands.Storage(this);
         Objects.requireNonNull(getCommand("Storage")).setTabCompleter(new TabCompleter());
-        Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
+        new AutoPickup(this);
         Objects.requireNonNull(getCommand("APick")).setTabCompleter(new TabCompleter());
-        Objects.requireNonNull(getCommand("ASmelt")).setExecutor(new Commands());
+        new AutoSmelt(this);
         Objects.requireNonNull(getCommand("ASmelt")).setTabCompleter(new TabCompleter());
+        dCoreLog("&3" + getDescription().getName() + " is using DCore " + getDCoreVersion());
         Files.createfiles();
         checkFilesVersion();
         (new BukkitRunnable() {
@@ -84,10 +89,10 @@ public final class Storage extends JavaPlugin implements Listener {
                 try {
                     SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
                     if (!updater.getLatestVersion().equals(getDescription().getVersion())) {
-                        if (updater.checkForUpdates()) getLogger().info(Files.colorize("&6An update was found!"));
-                        getLogger().info(Files.colorize("&aNew version: " + updater.getLatestVersion()));
-                        getLogger().info(Files.colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
-                        getLogger().info(Files.colorize("&cDownload: " + updater.getResourceURL()));
+                        if (updater.checkForUpdates()) getLogger().info(colorize("&6An update was found!"));
+                        getLogger().info(colorize("&aNew version: " + updater.getLatestVersion()));
+                        getLogger().info(colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
+                        getLogger().info(colorize("&cDownload: " + updater.getResourceURL()));
                     }
 
                 } catch (Exception e) {

@@ -9,6 +9,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Files.*;
 
 public class Data {
@@ -151,11 +152,6 @@ public class Data {
         } else {
             data.replace(p.getName() + "_max_" + item, 0);
         }
-    }
-
-    public static int getRandomInt(int min, int max) {
-        Random r = new Random();
-        return r.nextInt(max - min) + min;
     }
 
     public static List<String> getPlayers() {

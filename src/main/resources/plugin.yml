@@ -12,9 +12,9 @@ commands:
       - store
       - kho
     description: Storage Commands
-  APick:
-    aliases: [ autopickup ]
+  AutoPickup:
+    aliases: [ ap ]
     description: Toggle Pickup
-  ASmelt:
-    aliases: [ autosmelt ]
+  AutoSmelt:
+    aliases: [ as ]
     description: Toggle Smelt

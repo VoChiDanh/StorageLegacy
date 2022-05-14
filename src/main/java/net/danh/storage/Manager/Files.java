@@ -1,21 +1,16 @@
 package net.danh.storage.Manager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.danh.dcore.NMS.NMSAssistant;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static net.danh.storage.Gui.Manager.getpickupcooldown;
 import static net.danh.storage.Gui.Manager.getsmeltcooldown;
@@ -25,7 +20,6 @@ import static net.danh.storage.Storage.*;
 
 public class Files {
 
-    public final static char COLOR_CHAR = ChatColor.COLOR_CHAR;
     private static File configFile, languageFile, dataFile, guiFile;
     private static FileConfiguration config, language, data, gui;
 
@@ -103,44 +97,6 @@ public class Files {
             gui.save(guiFile);
         } catch (IOException ignored) {
         }
-    }
-
-    // Colorize messages with preset color codes (&) and if using 1.16+, applies hex values via "&#hexvalue"
-    public static String colorize(String input) {
-        input = ChatColor.translateAlternateColorCodes('&', input);
-        NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThan(15)) {
-            input = translateHexColorCodes("\\&#", "", input);
-        }
-        return input;
-    }
-
-    public static List<String> lorecolor(List<String> input) {
-        List<String> output = new ArrayList<>();
-        for (String string : input) {
-            String colorstring = ChatColor.translateAlternateColorCodes('&', string);
-            NMSAssistant nms = new NMSAssistant();
-            if (nms.isVersionGreaterThan(15)) {
-                colorstring = translateHexColorCodes("\\&#", "", colorstring);
-            }
-            output.add(colorstring);
-        }
-        return output;
-    }
-
-    public static @NotNull String translateHexColorCodes(String startTag, String endTag, String message) {
-
-        final Pattern hexPattern = Pattern.compile(startTag + "([A-Fa-f0-9]{6})" + endTag);
-        Matcher matcher = hexPattern.matcher(message);
-        StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
-
-        while (matcher.find()) {
-            String group = matcher.group(1);
-            matcher.appendReplacement(buffer, COLOR_CHAR + "x" + COLOR_CHAR + group.charAt(0) + COLOR_CHAR + group.charAt(1) + COLOR_CHAR + group.charAt(2) + COLOR_CHAR + group.charAt(3) + COLOR_CHAR + group.charAt(4) + COLOR_CHAR + group.charAt(5));
-
-        }
-
-        return matcher.appendTail(buffer).toString();
     }
 
     public static boolean isInt(String input) {

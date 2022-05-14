@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import static net.danh.dcore.Utils.Chat.colorize;
+import static net.danh.dcore.Utils.Items.Lore;
 import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Files.*;
 
@@ -163,7 +165,7 @@ public class LoadMenu {
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".Block.lore"), p));
+                            List<String> lores = Lore(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".Block.lore"), p));
                             meta.setLore(lores);
                             item.setItemMeta(meta);
                         }
@@ -227,7 +229,7 @@ public class LoadMenu {
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.lore"), p));
+                            List<String> lores = Lore(lorepapi(getguifile().getStringList("BUTTONS.Auto_Pickup." + pickup + ".Cooldown.lore"), p));
                             meta.setLore(lores);
                             item.setItemMeta(meta);
                         }
@@ -274,7 +276,7 @@ public class LoadMenu {
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".Block.lore"), p));
+                            List<String> lores = Lore(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".Block.lore"), p));
                             meta.setLore(lores);
                             item.setItemMeta(meta);
                         }
@@ -338,7 +340,7 @@ public class LoadMenu {
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lores = lorecolor(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.lore"), p));
+                            List<String> lores = Lore(lorepapi(getguifile().getStringList("BUTTONS.Auto_Smelt." + pickup + ".Cooldown.lore"), p));
                             meta.setLore(lores);
                             item.setItemMeta(meta);
                         }
@@ -384,7 +386,7 @@ public class LoadMenu {
                         item.setItemMeta(meta);
                     }
                     if (properties.contains("lore")) {
-                        List<String> lore = lorecolor(lorepapi(getguifile().getStringList("ITEMS." + key + ".Block.lore"), p));
+                        List<String> lore = Lore(lorepapi(getguifile().getStringList("ITEMS." + key + ".Block.lore"), p));
                         meta.setLore(lore);
                         item.setItemMeta(meta);
                     }
@@ -449,7 +451,7 @@ public class LoadMenu {
                             item.setItemMeta(meta);
                         }
                         if (properties.contains("lore")) {
-                            List<String> lore = lorecolor(lorepapi(getguifile().getStringList("ITEMS." + key + ".Convert.lore"), p));
+                            List<String> lore = Lore(lorepapi(getguifile().getStringList("ITEMS." + key + ".Convert.lore"), p));
                             meta.setLore(lore);
                             item.setItemMeta(meta);
                         }
@@ -508,7 +510,7 @@ public class LoadMenu {
                     item.setItemMeta(meta);
                 }
                 if (properties.contains("lore")) {
-                    List<String> lores = lorecolor(lorepapi(getguifile().getStringList("DECORATES." + key + ".lore"), p));
+                    List<String> lores = Lore(lorepapi(getguifile().getStringList("DECORATES." + key + ".lore"), p));
                     meta.setLore(lores);
                     item.setItemMeta(meta);
                 }

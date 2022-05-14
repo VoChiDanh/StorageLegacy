@@ -4,9 +4,9 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
+import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 import static net.danh.storage.Gui.GuiEventListener.input;
 import static net.danh.storage.Gui.GuiEventListener.input_result;
-import static net.danh.storage.Manager.Files.colorize;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 
 public class CatchInput {
@@ -18,7 +18,7 @@ public class CatchInput {
         block_input.put(player, block);
         if (!input.contains(player)) {
             input.add(player);
-            player.sendMessage(colorize(getlanguagefile().getString("Input.Start")));
+            sendPlayerMessage(player, getlanguagefile().getString("Input.Start"));
         }
     }
 
