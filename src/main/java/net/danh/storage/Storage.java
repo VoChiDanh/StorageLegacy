@@ -78,9 +78,9 @@ public final class Storage extends JavaPlugin implements Listener {
         new net.danh.storage.Commands.Storage(this);
         Objects.requireNonNull(getCommand("Storage")).setTabCompleter(new TabCompleter());
         new AutoPickup(this);
-        Objects.requireNonNull(getCommand("APick")).setTabCompleter(new TabCompleter());
+        Objects.requireNonNull(getCommand("AutoPickup")).setTabCompleter(new TabCompleter());
         new AutoSmelt(this);
-        Objects.requireNonNull(getCommand("ASmelt")).setTabCompleter(new TabCompleter());
+        Objects.requireNonNull(getCommand("AutoSmelt")).setTabCompleter(new TabCompleter());
         dCoreLog("&3" + getDescription().getName() + " is using DCore " + getDCoreVersion());
         Files.createfiles();
         checkFilesVersion();
@@ -125,13 +125,13 @@ public final class Storage extends JavaPlugin implements Listener {
     }
 
     private void checkFilesVersion() {
-        if (!Objects.requireNonNull(getconfigfile().getString("VERSION")).equalsIgnoreCase("1.0-B7") || getconfigfile().getString("VERSION") == null) {
+        if (getconfigfile().getString("VERSION") == null || !getconfigfile().getString("VERSION").equalsIgnoreCase("1.0-B7")) {
             getLogger().log(Level.SEVERE, "You need update config.yml!");
         }
-        if (!Objects.requireNonNull(getlanguagefile().getString("VERSION")).equalsIgnoreCase("1.0-B6") || getlanguagefile().getString("VERSION") == null) {
+        if (getlanguagefile().getString("VERSION") == null || !getlanguagefile().getString("VERSION").equalsIgnoreCase("1.0-B6")) {
             getLogger().log(Level.SEVERE, "You need update language.yml!");
         }
-        if (!Objects.requireNonNull(getguifile().getString("VERSION")).equalsIgnoreCase("1.0-B1") || getguifile().getString("VERSION") == null) {
+        if (getguifile().getString("VERSION") == null || !getguifile().getString("VERSION").equalsIgnoreCase("1.0-B1")) {
             getLogger().log(Level.SEVERE, "You need update gui.yml!");
         }
     }
