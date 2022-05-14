@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -488,24 +489,18 @@ public class LoadMenu {
 
     public static void LoadDecorate(Player p) {
         Set<String> ditems = getguifile().getConfigurationSection("DECORATES.").getKeys(false);
+        NMSAssistant nmsAssistant = new NMSAssistant();
+        ItemStack item = null;
         for (String key : ditems) {
-            ItemStack item;
             Set<String> properties = getguifile().getConfigurationSection("DECORATES." + key + ".").getKeys(false);
             if (properties.contains("material")) {
                 int d = getguifile().getInt("DECORATES." + key + ".data");
                 short data = (short) d;
-                if (properties.contains("amount")) {
-                    if (properties.contains("data")) {
-                        item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"), data);
-                    } else {
-                        item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"));
-                    }
+                if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
+                    item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"), data);
                 } else {
-                    if (properties.contains("data")) {
-                        item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), 1, data);
-                    } else {
-                        item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), 1);
-                    }
+                    item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"));
+
                 }
                 ItemMeta meta = item.getItemMeta();
                 if (properties.contains("name")) {

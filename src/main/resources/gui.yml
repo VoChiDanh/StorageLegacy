@@ -8,27 +8,25 @@ UPDATE:
 DECORATES:
   '0':
     update: false
-    material: STAINED_GLASS_PANE #edit material if you use 1.13+
+    material: BLACK_STAINED_GLASS_PANE #edit material if you use 1.12-
+#<- remove this if you use 1.12-    data: 3
     amount: 1
-    data: 14 #Remove this line if you use 1.13+
     name: '&f'
     slot:
       - 2
       - 6
   '1':
     update: false
-    material: STAINED_GLASS_PANE
+    material: RED_STAINED_GLASS_PANE
     amount: 1
-    data: 1
     name: '&f'
     slot:
       - 3
       - 5
   '2':
     update: false
-    material: STAINED_GLASS_PANE
+    material: BLUE_STAINED_GLASS_PANE
     amount: 1
-    data: 2
     name: '&f'
     slot:
       - 9
@@ -39,9 +37,8 @@ DECORATES:
       - 17
   '3':
     update: false
-    material: STAINED_GLASS_PANE
+    material: WHITE_STAINED_GLASS_PANE
     amount: 1
-    data: 5
     name: '&f'
     slot:
       - 18
@@ -54,9 +51,8 @@ DECORATES:
       - 53
   '4':
     update: false
-    material: STAINED_GLASS_PANE
+    material: PINK_STAINED_GLASS_PANE
     amount: 1
-    data: 3
     name: '&f'
     slot:
       - 46
