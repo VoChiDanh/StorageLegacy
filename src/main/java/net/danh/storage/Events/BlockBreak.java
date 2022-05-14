@@ -1,12 +1,12 @@
 package net.danh.storage.Events;
 
+import net.danh.dcore.NMS.NMSAssistant;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
-import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class BlockBreak implements Listener {
         String blocks = e.getBlock().getType().toString();
         String items = null;
         NMSAssistant nmsAssistant = new NMSAssistant();
-        if (nmsAssistant.isVersionLessThan(13)) {
+        if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
             String material = e.getBlock().getType().toString();
             short damaged = e.getBlock().getData();
             if (damaged != 0) {

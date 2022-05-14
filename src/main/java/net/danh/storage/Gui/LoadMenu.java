@@ -1,12 +1,12 @@
 package net.danh.storage.Gui;
 
+import net.danh.dcore.NMS.NMSAssistant;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -490,7 +490,7 @@ public class LoadMenu {
     public static void LoadDecorate(Player p) {
         Set<String> ditems = getguifile().getConfigurationSection("DECORATES.").getKeys(false);
         NMSAssistant nmsAssistant = new NMSAssistant();
-        ItemStack item = null;
+        ItemStack item;
         for (String key : ditems) {
             Set<String> properties = getguifile().getConfigurationSection("DECORATES." + key + ".").getKeys(false);
             if (properties.contains("material")) {

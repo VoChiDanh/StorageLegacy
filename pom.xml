@@ -113,9 +113,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Preponderous-Software</groupId>
-            <artifactId>Ponder</artifactId>
-            <version>d1c30fa562</version>
+            <groupId>com.github.D-x-Z</groupId>
+            <artifactId>DCore</artifactId>
+            <version>23893ab9d3</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>

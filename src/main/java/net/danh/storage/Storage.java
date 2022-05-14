@@ -1,5 +1,6 @@
 package net.danh.storage;
 
+import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.storage.Commands.Commands;
 import net.danh.storage.Commands.TabCompleter;
 import net.danh.storage.Events.BlockBreak;
@@ -17,21 +18,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
-import preponderous.ponder.minecraft.bukkit.nms.NMSAssistant;
-import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 
 import static net.danh.storage.Manager.Files.*;
 
-public final class Storage extends PonderBukkitPlugin implements Listener {
+public final class Storage extends JavaPlugin implements Listener {
 
 
     public static Economy economy;
@@ -71,7 +66,11 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             getLogger().log(Level.INFO, "Successfully hooked with PlaceholderAPI!");
             new PlaceholderAPI().register();
         }
-        registerEventHandlers();
+        getServer().getPluginManager().registerEvents(new BlockExplode(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+        getServer().getPluginManager().registerEvents(new GuiEventListener(), this);
+        getServer().getPluginManager().registerEvents(new Join(), this);
+        getServer().getPluginManager().registerEvents(new Quit(), this);
         Objects.requireNonNull(getCommand("Storage")).setExecutor(new Commands());
         Objects.requireNonNull(getCommand("Storage")).setTabCompleter(new TabCompleter());
         Objects.requireNonNull(getCommand("APick")).setExecutor(new Commands());
@@ -133,7 +132,7 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
     }
 
     private void performNMSChecks() {
-        final NMSAssistant nmsAssistant = new NMSAssistant();
+        NMSAssistant nmsAssistant = new NMSAssistant();
         if (nmsAssistant.isVersionGreaterThan(8)) {
             getLogger().log(Level.INFO, "Loading data matching server version " + nmsAssistant.getNMSVersion().toString());
         } else {
@@ -141,20 +140,6 @@ public final class Storage extends PonderBukkitPlugin implements Listener {
             getLogger().warning("Support version 1.9.x - 1.18.x");
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
-    }
-
-    @Contract(" -> new")
-    private @NotNull ArrayList<Listener> initializeListeners() {
-        return new ArrayList<>(Arrays.asList(new BlockBreak(), new Quit(), new Join(), new BlockExplode(), new GuiEventListener()));
-    }
-
-    /**
-     * Registers the event handlers of the plugin using Ponder.
-     */
-    private void registerEventHandlers() {
-        ArrayList<Listener> listeners = initializeListeners();
-        EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
-        eventHandlerRegistry.registerEventHandlers(listeners, this);
     }
 
     private boolean setupEconomy() {
