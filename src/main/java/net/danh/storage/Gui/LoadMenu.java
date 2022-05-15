@@ -492,17 +492,33 @@ public class LoadMenu {
     public static void LoadDecorate(Player p) {
         Set<String> ditems = getguifile().getConfigurationSection("DECORATES.").getKeys(false);
         NMSAssistant nmsAssistant = new NMSAssistant();
-        ItemStack item;
+        ItemStack item = null;
         for (String key : ditems) {
             Set<String> properties = getguifile().getConfigurationSection("DECORATES." + key + ".").getKeys(false);
             if (properties.contains("material")) {
                 int d = getguifile().getInt("DECORATES." + key + ".data");
                 short data = (short) d;
                 if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                    item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"), data);
-                } else {
-                    item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"));
-
+                    if (properties.contains("amount")) {
+                        if (properties.contains("data")) {
+                            item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"), data);
+                        } else {
+                            item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"));
+                        }
+                    } else {
+                        if (properties.contains("data")) {
+                            item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), 1, data);
+                        } else {
+                            item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), 1);
+                        }
+                    }
+                }
+                if (nmsAssistant.isVersionGreaterThan(12)) {
+                    if (properties.contains("amount")) {
+                        item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), getguifile().getInt("DECORATES." + key + ".amount"));
+                    } else {
+                        item = new ItemStack(Material.matchMaterial(getguifile().getString("DECORATES." + key + ".material")), 1);
+                    }
                 }
                 ItemMeta meta = item.getItemMeta();
                 if (properties.contains("name")) {

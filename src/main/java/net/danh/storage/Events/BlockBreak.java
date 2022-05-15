@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static net.danh.dcore.Random.Number.getRandomInt;
-import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Data.addStorage;
+import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class BlockBreak implements Listener {

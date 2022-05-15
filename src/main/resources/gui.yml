@@ -6,27 +6,23 @@ UPDATE:
   TIME: 1
   TYPE: ITEMS
 DECORATES:
-  '0':
+  BLACK_STAINED_GLASS_PANE:
     update: false
-    material: BLACK_STAINED_GLASS_PANE #edit material if you use 1.12-
-    #<- remove this if you use 1.12-    data: 3
-    amount: 1
+    material: BLACK_STAINED_GLASS_PANE
     name: '&f'
     slot:
       - 2
       - 6
-  '1':
+  RED_STAINED_GLASS_PANE:
     update: false
     material: RED_STAINED_GLASS_PANE
-    amount: 1
     name: '&f'
     slot:
       - 3
       - 5
-  '2':
+  BLUE_STAINED_GLASS_PANE:
     update: false
     material: BLUE_STAINED_GLASS_PANE
-    amount: 1
     name: '&f'
     slot:
       - 9
@@ -35,10 +31,9 @@ DECORATES:
       - 15
       - 16
       - 17
-  '3':
+  WHITE_STAINED_GLASS_PANE:
     update: false
     material: WHITE_STAINED_GLASS_PANE
-    amount: 1
     name: '&f'
     slot:
       - 18
@@ -49,10 +44,9 @@ DECORATES:
       - 44
       - 45
       - 53
-  '4':
+  PINK_STAINED_GLASS_PANE:
     update: false
     material: PINK_STAINED_GLASS_PANE
-    amount: 1
     name: '&f'
     slot:
       - 46
@@ -84,14 +78,14 @@ DECORATES:
       - ' &3● Total Max Space: #total_max_storage#'
   'Sort_Default':
     update: false
-    material: STORAGE_MINECART
+    material: CHEST_MINECART
     slot: 4
     name: '&eSort Items By Default'
     lore:
       - '&aSelected'
   'Sort_Name':
     update: false
-    material: POWERED_MINECART
+    material: FURNACE_MINECART
     slot: 0
     name: '&aSort Items By Name'
     lore:
@@ -105,14 +99,14 @@ DECORATES:
       - '&cComing soon...'
   'Sort_Quality':
     update: false
-    material: EXPLOSIVE_MINECART
+    material: TNT_MINECART
     slot: 7
     name: '&aSort Items By Quality'
     lore:
       - '&cComing soon...'
   'Sort_Unused':
     update: false
-    material: COMMAND_MINECART
+    material: COMMAND_BLOCK_MINECART
     slot: 8
     name: '&aSort Items By Unsued'
     lore:
@@ -284,8 +278,7 @@ ITEMS:
         - '&3[&6Control + Drop&3] &7Sell all &9Lapis Ore&7.'
     Convert:
       update: true
-      material: INK_SACK
-      data: 4
+      material: LAPIS_LAZULI
       amount: 1
       name: '               &9Lapis Lazuli'
       lore:
@@ -634,7 +627,7 @@ ITEMS:
   '14':
     Convert_Status: false
     Actions:
-      BLOCK: STAINED_GLASS
+      BLOCK: BLACK_STAINED_GLASS
       LEFT: INPUT_TAKE
       SHIFT_LEFT: TAKE_ALL
       RIGHT: INPUT_ADD
@@ -644,13 +637,13 @@ ITEMS:
     Slot: 39
     Block:
       update: true
-      material: STAINED_GLASS
+      material: WHITE_STAINED_GLASS
       amount: 1
       name: '             &fWhite Stained Glass'
       lore:
-        - '&f● &2Used Space: &f#storage_STAINED_GLASS# / &f#used_STAINED_GLASS#'
-        - '&f● &5Empty Space: &f#count_STAINED_GLASS# / &f#empty_STAINED_GLASS#'
-        - '&f● &6Max Space: &f#max_storage_STAINED_GLASS#'
+        - '&f● &2Used Space: &f#storage_WHITE_STAINED_GLASS# / &f#used_WHITE_STAINED_GLASS#'
+        - '&f● &5Empty Space: &f#count_WHITE_STAINED_GLASS# / &f#empty_WHITE_STAINED_GLASS#'
+        - '&f● &6Max Space: &f#max_storage_WHITE_STAINED_GLASS#'
         - '&f● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &fWhite Glass &7to take.'
@@ -708,7 +701,7 @@ ITEMS:
   '16':
     Convert_Status: false
     Actions:
-      BLOCK: STAINED_GLASS;4
+      BLOCK: YELLOW_STAINED_GLASS
       LEFT: INPUT_TAKE
       SHIFT_LEFT: TAKE_ALL
       RIGHT: INPUT_ADD
@@ -718,14 +711,13 @@ ITEMS:
     Slot: 41
     Block:
       update: true
-      material: STAINED_GLASS
-      data: 4
+      material: YELLOW_STAINED_GLASS
       amount: 1
       name: '             &eYellow Stained Glass %statistic_time_played%'
       lore:
-        - '&e● &2Used Space: &e#storage_STAINED_GLASS;4# / &e#used_STAINED_GLASS;4#'
-        - '&e● &5Empty Space: &e#count_STAINED_GLASS;4# / &e#empty_STAINED_GLASS;4#'
-        - '&e● &6Max Space: &e#max_storage_STAINED_GLASS;4#'
+        - '&e● &2Used Space: &e#storage_YELLOW_STAINED_GLASS# / &e#used_YELLOW_STAINED_GLASS#'
+        - '&e● &5Empty Space: &e#count_YELLOW_STAINED_GLASS# / &e#empty_YELLOW_STAINED_GLASS#'
+        - '&e● &6Max Space: &e#max_storage_YELLOW_STAINED_GLASS#'
         - '&e● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &eYellow Glass &7to take.'

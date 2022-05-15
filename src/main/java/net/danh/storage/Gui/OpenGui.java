@@ -97,6 +97,9 @@ public class OpenGui {
         }
     }
 
+    /**
+     * @param p Player
+     */
     public static void OpenGuiMenu(Player p) {
         LoadMenuGui(p);
         if (getguifile().getBoolean("UPDATE.STATUS")) {

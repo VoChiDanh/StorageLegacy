@@ -7,7 +7,7 @@
     <groupId>net.danh</groupId>
     <artifactId>Storage</artifactId>
     <name>Storage</name>
-    <version>1.0-B9</version>
+    <version>1.0-B10</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -115,7 +115,7 @@
         <dependency>
             <groupId>com.github.D-x-Z</groupId>
             <artifactId>DCore</artifactId>
-            <version>50ca2d5e77</version>
+            <version>8d6184b425</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

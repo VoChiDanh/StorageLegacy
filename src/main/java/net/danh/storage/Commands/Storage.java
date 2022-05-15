@@ -260,15 +260,17 @@ public class Storage extends CMDBase {
 
     @Override
     public void consoleexecute(ConsoleCommandSender c, String[] args) {
-        if (args.length == 1) {
+        if (args.length == 2) {
             Player p = Bukkit.getPlayer(args[0]);
             if (p == null) {
-                sendConsoleMessage(c, args[0] + " is null");
+                sendConsoleMessage(c, "Player " + args[1] + " is null");
                 return;
             }
-            OpenGuiMenu(p);
+            if (args[1].equalsIgnoreCase("open")) {
+                OpenGuiMenu(p);
+            }
         }
-        if (args.length == 2) {
+        if (args.length == 1) {
             if (args[0].equalsIgnoreCase("help")) {
                 sendConsoleMessage(c, getlanguagefile().getStringList("User.Help_User"));
                 sendConsoleMessage(c, getlanguagefile().getStringList("User.Help_Admin"));

@@ -99,6 +99,10 @@ public class Files {
         }
     }
 
+    /**
+     * @param input Something
+     * @return if it is int, return true
+     */
     public static boolean isInt(String input) {
         String regex = "-?\\d+";
         if (input == null) {
@@ -107,6 +111,11 @@ public class Files {
         return input.matches(regex);
     }
 
+    /**
+     * @param input String with #placeholder_...#
+     * @param p     Player
+     * @return String with replace #placeholder_...# to data
+     */
     public static String papi(String input, Player p) {
         String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName()).replaceAll("#cooldown_pickup#", String.valueOf(getpickupcooldown(p))).replaceAll("#cooldown_smelt#", String.valueOf(getsmeltcooldown(p)));
         if (ecostatus) {
@@ -150,6 +159,11 @@ public class Files {
         return output;
     }
 
+    /**
+     * @param lores List String with #placeholder_...#
+     * @param p     Player
+     * @return List String with replace #placeholder_...# to data
+     */
     public static List<String> lorepapi(List<String> lores, Player p) {
         List<String> final_lores = new ArrayList<>();
         for (String input : lores) {

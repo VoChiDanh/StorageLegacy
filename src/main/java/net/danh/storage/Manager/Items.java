@@ -22,6 +22,11 @@ public class Items {
     private static int price;
     private static String block;
 
+    /**
+     * @param p      Player
+     * @param name   Material
+     * @param amount Amount
+     */
     public static void AddItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
@@ -84,6 +89,11 @@ public class Items {
         }
     }
 
+    /**
+     * @param p      Player
+     * @param name   Material
+     * @param amount Amount
+     */
     public static void RemoveItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
@@ -153,11 +163,21 @@ public class Items {
         }
     }
 
+    /**
+     * @param name Material
+     * @return Other name ?
+     */
+    @Deprecated
     public static String getName(@NotNull String name) {
         name = name.toUpperCase();
         return getconfigfile().getString("Blocks." + name + ".Name");
     }
 
+    /**
+     * @param p      Player
+     * @param name   Material
+     * @param amount Amount
+     */
     public static void SellItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
@@ -212,11 +232,20 @@ public class Items {
         }
     }
 
+    /**
+     * @param m Material
+     * @return Price of material
+     */
     public static int getPrice(String m) {
         m = m.toUpperCase();
         return getconfigfile().getInt("Blocks." + m + ".Price");
     }
 
+    /**
+     * @param p    Player
+     * @param name Material
+     * @return Amount of item in player's storage
+     */
     public static int getAmountItem(Player p, String name) {
         name = name.toUpperCase();
         int amount = 0;
@@ -247,6 +276,11 @@ public class Items {
         return amount;
     }
 
+    /**
+     * @param p    Player
+     * @param name Material
+     * @return Amount of empty item in player's storage
+     */
     public static int getAmountEmpty(Player p, String name) {
         name = name.toUpperCase();
         int EmptyAmount = 0;
