@@ -57,7 +57,7 @@ public final class Storage extends JavaPlugin implements Listener {
         Metrics metrics = new Metrics(this, 14622);
         if (!setupEconomy()) {
             ecostatus = false;
-            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getLogger().severe(String.format("[%s] You need essentials and vault!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         } else {
@@ -114,12 +114,14 @@ public final class Storage extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        Files.saveconfig();
-        Files.savelanguage();
-        Files.savegui();
-        for (Player p : getServer().getOnlinePlayers()) {
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                Data.savePlayerData(p, item);
+        if (ecostatus) {
+            Files.saveconfig();
+            Files.savelanguage();
+            Files.savegui();
+            for (Player p : getServer().getOnlinePlayers()) {
+                for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
+                    Data.savePlayerData(p, item);
+                }
             }
         }
     }
