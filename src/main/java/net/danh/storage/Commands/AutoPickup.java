@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 import static net.danh.dcore.Utils.Player.sendPlayerMessageType;
-import static net.danh.storage.Manager.Data.autoSmelt;
+import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.getconfigfile;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 
@@ -25,13 +25,14 @@ public class AutoPickup extends CMDBase {
     public void playerexecute(Player p, String[] strings) {
         if (strings.length == 0) {
             if (p.hasPermission("storage.apick")) {
+                setautoPick(p, !autoPick(p));
                 if (Files.getconfigfile().getBoolean("Message.TOGGLE.STATUS")) {
-                    if (autoSmelt(p)) {
+                    if (autoPick(p)) {
                         sendPlayerMessageType(p, Files.getconfigfile().getString("Message.TOGGLE.TYPE"), getlanguagefile().getString("Toggle_Status")
                                 .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
                                 .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.true"))));
                     }
-                    if (!autoSmelt(p)) {
+                    if (!autoPick(p)) {
                         sendPlayerMessageType(p, Files.getconfigfile().getString("Message.TOGGLE.TYPE"), getlanguagefile().getString("Toggle_Status")
                                 .replaceAll("%type%", Objects.requireNonNull(getlanguagefile().getString("Type.autopickup")))
                                 .replaceAll("%status%", Objects.requireNonNull(getconfigfile().getString("Boolean.false"))));

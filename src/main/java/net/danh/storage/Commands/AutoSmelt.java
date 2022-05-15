@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 import static net.danh.dcore.Utils.Player.sendPlayerMessageType;
-import static net.danh.storage.Manager.Data.autoSmelt;
+import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.getconfigfile;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 
@@ -25,6 +25,7 @@ public class AutoSmelt extends CMDBase {
     public void playerexecute(Player p, String[] args) {
         if (args.length == 0) {
             if (p.hasPermission("storage.asmelt")) {
+                setautoSmelt(p, !autoSmelt(p));
                 if (Files.getconfigfile().getBoolean("Message.TOGGLE.STATUS")) {
                     if (autoSmelt(p)) {
                         sendPlayerMessageType(p, Files.getconfigfile().getString("Message.TOGGLE.TYPE"), getlanguagefile().getString("Toggle_Status")
