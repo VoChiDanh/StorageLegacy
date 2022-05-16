@@ -115,7 +115,7 @@
         <dependency>
             <groupId>com.github.D-x-Z</groupId>
             <artifactId>DCore</artifactId>
-            <version>8d6184b425</version>
+            <version>929cb5112a</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
