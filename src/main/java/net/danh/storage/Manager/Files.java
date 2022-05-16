@@ -1,6 +1,7 @@
 package net.danh.storage.Manager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.danh.dcore.NMS.NMSAssistant;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 
 import static net.danh.storage.Gui.Manager.getpickupcooldown;
 import static net.danh.storage.Gui.Manager.getsmeltcooldown;
@@ -24,16 +26,33 @@ public class Files {
     private static FileConfiguration config, language, data, gui;
 
     public static void createfiles() {
+        NMSAssistant nmsAssistant = new NMSAssistant();
+        if (nmsAssistant.isVersionGreaterThan(13)) {
+            guiFile = new File(get().getDataFolder(), "gui.yml");
+            configFile = new File(get().getDataFolder(), "config.yml");
+        } else {
+            guiFile = new File(get().getDataFolder(), "gui-legacy.yml");
+            configFile = new File(get().getDataFolder(), "config-legacy.yml");
+        }
         languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
-        guiFile = new File(get().getDataFolder(), "gui.yml");
-        configFile = new File(get().getDataFolder(), "config.yml");
 
-        if (!configFile.exists()) get().saveResource("config.yml", false);
+        if (!configFile.exists()) {
+            if (nmsAssistant.isVersionGreaterThan(13)) {
+                get().saveResource("config.yml", false);
+            } else {
+                get().saveResource("config-legacy.yml", false);
+            }
+        }
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
-        if (!guiFile.exists()) get().saveResource("gui.yml", false);
-        if (!configFile.exists()) get().saveResource("config.yml", false);
+        if (!guiFile.exists()) {
+            if (nmsAssistant.isVersionGreaterThan(13)) {
+                get().saveResource("gui.yml", false);
+            } else {
+                get().saveResource("gui-legacy.yml", false);
+            }
+        }
         language = new YamlConfiguration();
         data = new YamlConfiguration();
         gui = new YamlConfiguration();

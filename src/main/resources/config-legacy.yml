@@ -29,7 +29,7 @@ Blocks:
   LAPIS_ORE:
     Name: '&9Lapis Lazuli'
     Price: 150
-    Convert: LAPIS_LAZULI
+    Convert: INK_SACK;4
   REDSTONE_ORE:
     Name: '&cRedstone'
     Price: 200
@@ -67,7 +67,7 @@ Blocks:
   DIRT:
     Name: '&4Dirt'
     Price: 1
-  OAK_LOG:
+  LOG:
     Name: '&6Oak Log'
     Price: 5
   STONE:
@@ -78,13 +78,13 @@ Blocks:
   NETHERRACK:
     Name: '&3Netherrack'
     Price: 15
-  END_STONE:
+  ENDER_STONE :
     Name: '&dEnd Stone'
     Price: 20
-  WHITE_STAINED_GLASS:
+  STAINED_GLASS:
     Name: '&fWhite Glass'
     Price: 30
-  YELLOW_STAINED_GLASS:
+  STAINED_GLASS;4:
     Name: '&eYellow Glass'
     Price: 30
 Default_Max_Storage: 10000
