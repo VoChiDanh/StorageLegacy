@@ -46,7 +46,12 @@ public class GuiEventListener implements Listener {
                             try {
                                 if (Integer.parseInt(message) > 0) {
                                     input_result.put(p, message);
-                                    InputAction(p, block_input.get(p));
+                                    new BukkitRunnable() {
+                                        @Override
+                                        public void run() {
+                                            InputAction(p, block_input.get(p));
+                                        }
+                                    }.runTask(get());
                                     input.remove(p);
                                 } else {
                                     sendPlayerMessage(p, getlanguagefile().getString("Input.Invaild_Number"));
@@ -70,7 +75,12 @@ public class GuiEventListener implements Listener {
                             try {
                                 if (Integer.parseInt(message) > 0) {
                                     input_result.put(p, message);
-                                    InputAction(p, block_input.get(p));
+                                    new BukkitRunnable() {
+                                        @Override
+                                        public void run() {
+                                            InputAction(p, block_input.get(p));
+                                        }
+                                    }.runTask(get());
                                     input.remove(p);
                                 } else {
                                     sendPlayerMessage(p, getlanguagefile().getString("Input.Invaild_Number") + " " + getlanguagefile().getString("Input.Again"));
