@@ -151,7 +151,7 @@ public class Items {
                         p.getInventory().addItem(items);
                     }
                 } else {
-                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(Objects.requireNonNull(name))), amount);
+                    ItemStack items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
                     p.getInventory().addItem(items);
                 }
             } else {
