@@ -27,7 +27,7 @@ public class Files {
 
     public static void createfiles() {
         NMSAssistant nmsAssistant = new NMSAssistant();
-        if (nmsAssistant.isVersionGreaterThan(13)) {
+        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
             guiFile = new File(get().getDataFolder(), "gui.yml");
             configFile = new File(get().getDataFolder(), "config.yml");
         } else {
@@ -38,7 +38,7 @@ public class Files {
         dataFile = new File(get().getDataFolder(), "data.yml");
 
         if (!configFile.exists()) {
-            if (nmsAssistant.isVersionGreaterThan(13)) {
+            if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
                 get().saveResource("config.yml", false);
             } else {
                 get().saveResource("config-legacy.yml", false);
@@ -47,7 +47,7 @@ public class Files {
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
         if (!guiFile.exists()) {
-            if (nmsAssistant.isVersionGreaterThan(13)) {
+            if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
                 get().saveResource("gui.yml", false);
             } else {
                 get().saveResource("gui-legacy.yml", false);
