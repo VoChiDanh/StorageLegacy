@@ -673,9 +673,9 @@ ITEMS:
       amount: 1
       name: '                &6Oak Log'
       lore:
-        - '&6● &2Used Space: &6#storage_OAK_LOG# / &6#used_OAK_LOG#'
-        - '&6● &5Empty Space: &6#count_OAK_LOG# / &6#empty_OAK_LOG#'
-        - '&6● &6Max Space: &4#max_storage_OAK_LOG#'
+        - '&6● &2Used Space: &6#storage_LOG# / &6#used_LOG#'
+        - '&6● &5Empty Space: &6#count_LOG# / &6#empty_LOG#'
+        - '&6● &6Max Space: &4#max_storage_LOG#'
         - '&6● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &6Oak Log &7to take.'
@@ -802,9 +802,9 @@ ITEMS:
       amount: 1
       name: '             &fWhite Stained Glass'
       lore:
-        - '&f● &2Used Space: &f#storage_WHITE_STAINED_GLASS# / &f#used_WHITE_STAINED_GLASS#'
-        - '&f● &5Empty Space: &f#count_WHITE_STAINED_GLASS# / &f#empty_WHITE_STAINED_GLASS#'
-        - '&f● &6Max Space: &f#max_storage_WHITE_STAINED_GLASS#'
+        - '&f● &2Used Space: &f#storage_STAINED_GLASS# / &f#used_STAINED_GLASS#'
+        - '&f● &5Empty Space: &f#count_STAINED_GLASS# / &f#empty_STAINED_GLASS#'
+        - '&f● &6Max Space: &f#max_storage_STAINED_GLASS#'
         - '&f● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &fWhite Glass &7to take.'
@@ -831,9 +831,9 @@ ITEMS:
       amount: 1
       name: '             &eYellow Stained Glass'
       lore:
-        - '&e● &2Used Space: &e#storage_YELLOW_STAINED_GLASS# / &e#used_YELLOW_STAINED_GLASS#'
-        - '&e● &5Empty Space: &e#count_YELLOW_STAINED_GLASS# / &e#empty_YELLOW_STAINED_GLASS#'
-        - '&e● &6Max Space: &e#max_storage_YELLOW_STAINED_GLASS#'
+        - '&e● &2Used Space: &e#storage_STAINED_GLASS;4# / &e#used_STAINED_GLASS;4#'
+        - '&e● &5Empty Space: &e#count_STAINED_GLASS;4# / &e#empty_STAINED_GLASS;4#'
+        - '&e● &6Max Space: &e#max_storage_STAINED_GLASS;4'
         - '&e● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &eYellow Glass &7to take.'
