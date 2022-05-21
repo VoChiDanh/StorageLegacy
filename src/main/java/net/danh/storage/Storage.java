@@ -25,8 +25,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 import java.util.logging.Level;
 
-import static net.danh.dcore.DCore.dCoreLog;
-import static net.danh.dcore.DCore.getDCoreVersion;
+import static net.danh.dcore.DCore.RegisterDCore;
 import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Files.*;
 
@@ -81,7 +80,7 @@ public final class Storage extends JavaPlugin implements Listener {
         Objects.requireNonNull(getCommand("AutoPickup")).setTabCompleter(new TabCompleter());
         new AutoSmelt(this);
         Objects.requireNonNull(getCommand("AutoSmelt")).setTabCompleter(new TabCompleter());
-        dCoreLog("&3" + getDescription().getName() + " is using DCore " + getDCoreVersion());
+        RegisterDCore(this);
         Files.createfiles();
         checkFilesVersion();
         (new BukkitRunnable() {
