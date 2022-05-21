@@ -78,7 +78,7 @@ Blocks:
   NETHERRACK:
     Name: '&3Netherrack'
     Price: 15
-  ENDER_STONE :
+  ENDER_STONE:
     Name: '&dEnd Stone'
     Price: 20
   STAINED_GLASS:

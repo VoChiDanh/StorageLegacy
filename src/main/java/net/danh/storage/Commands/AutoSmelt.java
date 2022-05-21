@@ -11,7 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 import static net.danh.dcore.Utils.Player.sendPlayerMessageType;
-import static net.danh.storage.Manager.Data.*;
+import static net.danh.storage.Manager.Data.autoSmelt;
+import static net.danh.storage.Manager.Data.setautoSmelt;
 import static net.danh.storage.Manager.Files.getconfigfile;
 import static net.danh.storage.Manager.Files.getlanguagefile;
 
