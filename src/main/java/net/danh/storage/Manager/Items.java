@@ -32,7 +32,7 @@ public class Items {
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
             NMSAssistant nmsAssistant = new NMSAssistant();
             ItemStack checkitems;
-            if (nmsAssistant.isVersionLessThan(13)) {
+            if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
                 String[] iname = name.split(";");
                 if (iname.length == 1) {
                     checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
@@ -45,7 +45,7 @@ public class Items {
             }
             if (p.getInventory().containsAtLeast(checkitems, amount)) {
                 ItemStack items;
-                if (nmsAssistant.isVersionLessThan(13)) {
+                if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
                     String[] iname = name.split(";");
                     if (iname.length == 1) {
                         items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount);
@@ -139,7 +139,7 @@ public class Items {
                     name = getconfigfile().getString("Blocks." + name + ".Block");
                 }
                 NMSAssistant nmsAssistant = new NMSAssistant();
-                if (nmsAssistant.isVersionLessThan(13)) {
+                if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
                     String[] data = Objects.requireNonNull(name).split(";");
                     String material = data[0];
                     if (data.length == 1) {
@@ -250,7 +250,7 @@ public class Items {
         name = name.toUpperCase();
         int amount = 0;
         NMSAssistant nmsAssistant = new NMSAssistant();
-        if (!nmsAssistant.isVersionLessThan(13)) {
+        if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
             for (ItemStack is : p.getInventory().getContents()) {
                 if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
                     amount = amount + is.getAmount();
@@ -285,7 +285,7 @@ public class Items {
         name = name.toUpperCase();
         int EmptyAmount = 0;
         NMSAssistant nmsAssistant = new NMSAssistant();
-        if (nmsAssistant.isVersionLessThan(13)) {
+        if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
             String[] iname = name.split(";");
             if (iname.length == 1) {
                 for (ItemStack i : p.getInventory().getStorageContents()) {
