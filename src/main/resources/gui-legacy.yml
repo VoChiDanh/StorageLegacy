@@ -479,7 +479,7 @@ ITEMS:
       lore:
         - '&f● &2Used Space: &f#storage_IRON_BLOCK# / #used_IRON_BLOCK#'
         - '&f● &5Empty Space: &f#count_IRON_BLOCK# / #empty_IRON_BLOCK#'
-        - '&f● &6Max Space: &8#max_storage_IRON_BLOCK#'
+        - '&f● &6Max Space: &f#max_storage_IRON_BLOCK#'
         - '&f● &3Type: &cB&dl&eo&ac&9k'
         - '&f'
         - '&3[&6Left&3] &7Type amount &fIron Block &7to take.'

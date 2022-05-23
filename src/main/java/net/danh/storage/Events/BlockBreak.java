@@ -17,7 +17,41 @@ import static net.danh.storage.Manager.Data.autoPick;
 import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class BlockBreak implements Listener {
-
+    public static void drop(BlockBreakEvent e, Player p, String blocks) {
+        if (getconfigfile().getBoolean("Vanilla_Drops")) {
+            if (getconfigfile().getBoolean("Tool_Sensitive")) {
+                int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+                if (amount > 0) {
+                    addStorage(p, blocks, amount);
+                } else {
+                    return;
+                }
+            } else {
+                int amount = e.getBlock().getDrops().size();
+                addStorage(p, blocks, amount);
+            }
+        } else {
+            if (getconfigfile().getBoolean("Tool_Sensitive")) {
+                int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+                if (amount > 0) {
+                    addStorage(p, blocks, 1);
+                } else {
+                    return;
+                }
+            } else {
+                addStorage(p, blocks, 1);
+            }
+        }
+    }
+    public static void fortune(BlockBreakEvent e, Player p, String blocks, int level) {
+        int chance = getconfigfile().getInt("Fortune.Chance") * level;
+        if (getRandomInt(1, 100) <= chance) {
+            int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
+            addStorage(p, blocks, fortune);
+        } else {
+            drop(e, p, blocks);
+        }
+    }
     @EventHandler
     public void onBreaking(@NotNull BlockBreakEvent e) {
         Player p = e.getPlayer();
@@ -47,34 +81,18 @@ public class BlockBreak implements Listener {
                 if (items == null) {
                     return;
                 }
-                if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS) && getRandomInt(getconfigfile().getInt("Fortune.Chance.System.Min"), getconfigfile().getInt("Fortune.Chance.System.Max")) <= (p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) * getconfigfile().getInt("Fortune.Chance.Player"))) {
-                    int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
-                    addStorage(p, blocks, fortune);
-                } else {
-                    if (getconfigfile().getBoolean("Vanilla_Drops")) {
-                        if (getconfigfile().getBoolean("Tool_Sensitive")) {
-                            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
-                            if (amount > 0) {
-                                addStorage(p, blocks, amount);
-                            } else {
-                                return;
-                            }
+                if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
+                    if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
+                        if (getconfigfile().getBoolean("Fortune.Vanilla")) {
+                            drop(e, p, blocks);
                         } else {
-                            int amount = e.getBlock().getDrops().size();
-                            addStorage(p, blocks, amount);
+                            fortune(e, p, blocks, p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS));
                         }
                     } else {
-                        if (getconfigfile().getBoolean("Tool_Sensitive")) {
-                            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
-                            if (amount > 0) {
-                                addStorage(p, blocks, 1);
-                            } else {
-                                return;
-                            }
-                        } else {
-                            addStorage(p, blocks, 1);
-                        }
+                        fortune(e, p, blocks, p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS));
                     }
+                } else {
+                    drop(e, p, blocks);
                 }
                 e.getBlock().getDrops().clear();
                 e.setDropItems(false);

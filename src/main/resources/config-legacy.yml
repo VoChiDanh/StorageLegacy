@@ -89,14 +89,11 @@ Blocks:
     Price: 30
 Default_Max_Storage: 10000
 Fortune:
-  Chance:
-    Player: 10 # level fortune * 10, lv 2 => 20%
-    System:
-      Min: 1
-      Max: 100
+  #The chance * enchantment level is the real chance in system
+  Chance: 10 #Chance per level to apply custom fortune when player break block
   Drop:
-    Min: 1
-    Max: 5
+    Min: 1 #Minimum item can drop if fortune applied
+    Max: 5 #Maximum item can drop if fortune applied
 Message:
   TAKE:
     TYPE: CHAT # ACTION_BAR / CHAT / TITLE
