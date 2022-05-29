@@ -23,8 +23,6 @@ public class BlockBreak implements Listener {
                 int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
                 if (amount > 0) {
                     addStorage(p, blocks, amount);
-                } else {
-                    return;
                 }
             } else {
                 int amount = e.getBlock().getDrops().size();
@@ -35,8 +33,6 @@ public class BlockBreak implements Listener {
                 int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
                 if (amount > 0) {
                     addStorage(p, blocks, 1);
-                } else {
-                    return;
                 }
             } else {
                 addStorage(p, blocks, 1);

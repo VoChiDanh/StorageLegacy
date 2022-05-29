@@ -26,7 +26,7 @@ jobs:
           msg: ${{github.repository}}
           separator: "/"
       - name: Build passsed
-        if: ${{ contains(github.event.head_commit.message, '.') }}
+        if: ${{ contains(github.event.head_commit.message, 'add') || contains(github.event.head_commit.message, 'fix') }}
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
@@ -47,7 +47,7 @@ jobs:
 
 
       - name: Build waiting
-        if: ${{ !contains(github.event.head_commit.message, '.') }}
+        if: ${{ contains(github.event.head_commit.message, 'add') && contains(github.event.head_commit.message, 'fix') }}
         uses: tsickert/discord-webhook@v4.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
@@ -60,6 +60,23 @@ jobs:
           embed-author-icon-url: "https://github.com/${{ github.actor }}.png"
           embed-footer-text: "Build #${{github.run_number}} is pending..."
           embed-footer-icon-url: "https://i.imgur.com/7rp33Yk.gif"
+          embed-description: |
+            ${{ github.event.head_commit.message }}
+
+      - name: Build failed
+        if: ${{ !contains(github.event.head_commit.message, 'fix') && !contains(github.event.head_commit.message, 'add') }}
+        uses: tsickert/discord-webhook@v4.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: "${{ steps.split.outputs._0 }}"
+          embed-title: "${{ github.actor }} pushed an update for ${{ steps.split.outputs._1 }}"
+          avatar-url: "https://github.com/${{ steps.split.outputs._0 }}.png"
+          embed-color: "16711680"
+          embed-author-name: "${{ github.actor }}"
+          embed-author-url: "https://github.com/${{ github.actor }}"
+          embed-author-icon-url: "https://github.com/${{ github.actor }}.png"
+          embed-footer-text: "Build #${{github.run_number}} failed"
+          embed-footer-icon-url: "https://i.imgur.com/p5Hjg6S.png"
           embed-description: |
             ${{ github.event.head_commit.message }}
 
