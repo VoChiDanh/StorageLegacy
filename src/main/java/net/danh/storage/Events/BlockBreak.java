@@ -45,6 +45,12 @@ public class BlockBreak implements Listener {
             int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
             addStorage(p, blocks, fortune);
         } else {
+            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+            if (amount > 0) {
+                addStorage(p, blocks, amount);
+            } else {
+                return;
+            }
             drop(e, p, blocks);
         }
     }
@@ -80,7 +86,12 @@ public class BlockBreak implements Listener {
                 if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
                     if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
                         if (getconfigfile().getBoolean("Fortune.Vanilla")) {
-                            drop(e, p, blocks);
+                            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+                            if (amount > 0) {
+                                addStorage(p, blocks, amount);
+                            } else {
+                                return;
+                            }
                         } else {
                             fortune(e, p, blocks, p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS));
                         }
