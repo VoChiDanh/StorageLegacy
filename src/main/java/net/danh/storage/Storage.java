@@ -113,6 +113,10 @@ public final class Storage extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        saveconfig();
+        savedata();
+        savelanguage();
+        savegui();
         if (ecostatus) {
             Files.saveconfig();
             Files.savelanguage();

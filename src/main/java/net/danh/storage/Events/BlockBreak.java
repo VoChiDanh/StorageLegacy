@@ -40,18 +40,15 @@ public class BlockBreak implements Listener {
         }
     }
     public static void fortune(BlockBreakEvent e, Player p, String blocks, int level) {
-        int chance = getconfigfile().getInt("Fortune.Chance") * level;
-        if (getRandomInt(1, 100) <= chance) {
-            int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
-            addStorage(p, blocks, fortune);
-        } else {
-            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
-            if (amount > 0) {
-                addStorage(p, blocks, amount);
+        int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
+        if (amount > 0) {
+            int chance = getconfigfile().getInt("Fortune.Chance") * level;
+            if (getRandomInt(1, 100) <= chance) {
+                int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
+                addStorage(p, blocks, fortune);
             } else {
-                return;
+                addStorage(p, blocks, 1);
             }
-            drop(e, p, blocks);
         }
     }
     @EventHandler

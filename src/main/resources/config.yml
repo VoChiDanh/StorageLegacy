@@ -6,7 +6,8 @@ Vanilla_Drops: true
 Tool_Sensitive: false
 Number_Format: '#.###'
 Input:
-  Type: ONE # AGAIN
+  # AGAIN
+  Type: ONE
   Cancel_Character:
     - cancel
     - stop
@@ -89,16 +90,22 @@ Blocks:
     Price: 30
 Default_Max_Storage: 10000
 Fortune:
-  Vanilla: true #True for vanilla fortune / False for custom fortune
-  #The chance * enchantment level is the real chance in system
-  Chance: 10 #Chance per level to apply custom fortune when player break block
+  # True for vanilla fortune / False for custom fortune
+  Vanilla: true
+  # The chance * enchantment level is the real chance in system
+  # Chance per level to apply custom fortune when player break block
+  Chance: 10
   Drop:
-    Min: 1 #Minimum item can drop if fortune applied
-    Max: 5 #Maximum item can drop if fortune applied
+    # Minimum item can drop if fortune applied
+    Min: 1
+    # Maximum item can drop if fortune applied
+    Max: 5
 Message:
   TAKE:
-    TYPE: CHAT # ACTION_BAR / CHAT / TITLE
-    STATUS: true # true or false
+    # ACTION_BAR / CHAT / TITLE
+    TYPE: CHAT
+    # true or false
+    STATUS: true
     TITLE:
       TITLE: '&cTake %item% x%amount%&c from Storage'
       SUBTITLE: '&a(%storage%/%max%)'
@@ -106,8 +113,10 @@ Message:
       FADEOUT: 10
       STAY: 20
   REMOVE:
-    TYPE: ACTION_BAR # ACTION_BAR / CHAT / TITLE
-    STATUS: true # true or false
+    # ACTION_BAR / CHAT / TITLE
+    TYPE: ACTION_BAR
+    # true or false
+    STATUS: true
     TITLE:
       TITLE: '&c-%amount% %item%'
       SUBTITLE: '&a(%storage%/%max%)'
@@ -115,8 +124,10 @@ Message:
       FADEOUT: 10
       STAY: 20
   ADD:
-    TYPE: CHAT # ACTION_BAR / CHAT / TITLE
-    STATUS: true # true or false
+    # ACTION_BAR / CHAT / TITLE
+    TYPE: CHAT
+    # true or false
+    STATUS: true
     TITLE:
       TITLE: '&aAdd %item% &7(x%amount%)&a to Storage'
       SUBTITLE: '&a(%storage%/%max%)'
@@ -124,8 +135,10 @@ Message:
       FADEOUT: 10
       STAY: 20
   RECEIVE:
-    TYPE: ACTION_BAR # ACTION_BAR / CHAT / TITLE
-    STATUS: true # true or false
+    # ACTION_BAR / CHAT / TITLE
+    TYPE: ACTION_BAR
+    # true or false
+    STATUS: true
     TITLE:
       TITLE: '&a+%amount% %item%'
       SUBTITLE: '&a(%storage%/%max%)'
@@ -133,8 +146,10 @@ Message:
       FADEOUT: 10
       STAY: 20
   SELL:
-    TYPE: ACTION_BAR # ACTION_BAR / CHAT / TITLE
-    STATUS: true # true or false
+    # ACTION_BAR / CHAT / TITLE
+    TYPE: ACTION_BAR
+    # true or false
+    STATUS: true
     TITLE:
       TITLE: '&eSold %amount% x%item%'
       SUBTITLE: '&a+ %money% &d| &b(%storage%/%max%)'
@@ -142,7 +157,8 @@ Message:
       FADEOUT: 10
       STAY: 20
   FULL:
-    TYPE: TITLE # ACTION_BAR / CHAT / TITLE
+    # ACTION_BAR / CHAT / TITLE
+    TYPE: TITLE
     TITLE:
       TITLE: '&cWarning'
       SUBTITLE: '&c%item%&6 storage has reached its limit'
@@ -150,5 +166,7 @@ Message:
       FADEOUT: 10
       STAY: 20
   TOGGLE:
-    TYPE: CHAT # ACTION_BAR / CHAT
-    STATUS: true # true or false
+    # ACTION_BAR / CHAT
+    TYPE: CHAT
+    # true or false
+    STATUS: true
