@@ -39,6 +39,7 @@ public class BlockBreak implements Listener {
             }
         }
     }
+
     public static void fortune(BlockBreakEvent e, Player p, String blocks, int level) {
         int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
         if (amount > 0) {
@@ -51,6 +52,7 @@ public class BlockBreak implements Listener {
             }
         }
     }
+
     @EventHandler
     public void onBreaking(@NotNull BlockBreakEvent e) {
         Player p = e.getPlayer();
