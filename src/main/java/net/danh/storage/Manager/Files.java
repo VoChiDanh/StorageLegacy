@@ -231,7 +231,7 @@ public class Files {
         } else {
             output = output.replaceAll("#auto_smelt#", getconfigfile().getString("Boolean.false"));
         }
-        output = PlaceholderAPI.setPlaceholders(p, output);
+        if (papistatus) output = PlaceholderAPI.setPlaceholders(p, output);
         return output;
     }
 
@@ -281,7 +281,7 @@ public class Files {
             } else {
                 output = output.replaceAll("#auto_smelt#", getconfigfile().getString("Boolean.false"));
             }
-            output = PlaceholderAPI.setPlaceholders(p, output);
+            if (papistatus) output = PlaceholderAPI.setPlaceholders(p, output);
             final_lores.add(output);
         }
         return final_lores;

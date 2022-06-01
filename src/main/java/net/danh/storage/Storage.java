@@ -31,9 +31,9 @@ import static net.danh.storage.Manager.Files.*;
 
 public final class Storage extends JavaPlugin implements Listener {
 
-
     public static Economy economy;
     public static boolean ecostatus;
+    public static boolean papistatus;
     private static Storage instance;
 
     public static Storage get() {
@@ -109,6 +109,8 @@ public final class Storage extends JavaPlugin implements Listener {
                 }
             }
         }).runTaskTimer(this, 1800 * 20L, 1800 * 20L);
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) papistatus = false;
+        else papistatus = true;
     }
 
     @Override
