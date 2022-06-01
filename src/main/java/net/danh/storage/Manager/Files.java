@@ -32,14 +32,14 @@ public class Files {
         if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
             try {
                 InputStream stream = get().getResource("config.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(),"config.yml"));
+                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "config.yml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             try {
                 InputStream stream = get().getResource("config-legacy.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(),"config.yml"));
+                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "config.yml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -51,14 +51,14 @@ public class Files {
         if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
             try {
                 InputStream stream = get().getResource("gui.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(),"gui.yml"));
+                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "gui.yml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
             try {
                 InputStream stream = get().getResource("gui-legacy.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(),"gui.yml"));
+                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "gui.yml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -131,21 +131,13 @@ public class Files {
     }
 
     public static void savelanguage() {
-        NMSAssistant nmsAssistant = new NMSAssistant();
         try {
             language.save(languageFile);
         } catch (IOException ignored) {
         }
-        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
-            try {
-                ConfigUpdater.update(get(), "language.yml", languageFile, new ArrayList<>());
-            } catch (IOException ignored) {
-            }
-        } else {
-            try {
-                ConfigUpdater.update(get(), "language.yml", languageFile, new ArrayList<>());
-            } catch (IOException ignored) {
-            }
+        try {
+            ConfigUpdater.update(get(), "language.yml", languageFile, new ArrayList<>());
+        } catch (IOException ignored) {
         }
     }
 
