@@ -94,6 +94,11 @@ public final class Storage extends JavaPlugin implements Listener {
             File.updateFile(Storage.get(), getguifile(), "gui-legacy.yml");
         }
         File.updateFile(Storage.get(), getlanguagefile(), "language.yml");
+        if (nms.isVersionGreaterThanOrEqualTo(19)) {
+            DCore.dCoreLog("&eYou are running the plugin in 1.19+, if you find any bugs/errors please report them to github or discord!");
+            DCore.dCoreLog("&eDiscord: https://discord.gg/CWjaq5fZN9");
+            DCore.dCoreLog("&eGithub: " + getDescription().getWebsite());
+        }
         (new BukkitRunnable() {
             public void run() {
                 try {
