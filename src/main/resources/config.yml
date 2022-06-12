@@ -19,58 +19,73 @@ Blocks:
     Name: '&8Coal'
     Price: 25
     Convert: COAL
+    Block: COAL_ORE
   IRON_ORE:
     Name: '&fIron Ingot'
     Price: 50
     Convert: IRON_INGOT
+    Block: IRON_ORE
   GOLD_ORE:
     Name: '&eGold Ingot'
     Price: 100
     Convert: GOLD_INGOT
+    Block: GOLD_ORE
   LAPIS_ORE:
     Name: '&9Lapis Lazuli'
     Price: 150
     Convert: LAPIS_LAZULI
+    Block: LAPIS_ORE
   REDSTONE_ORE:
     Name: '&cRedstone'
     Price: 200
     Type: Ore
     Convert: REDSTONE
+    Block: REDSTONE_ORE
   DIAMOND_ORE:
     Name: '&bDiamond'
     Price: 250
     Convert: DIAMOND
+    Block: DIAMOND_ORE
   EMERALD_ORE:
     Name: '&aEmerald'
     Price: 300
     Convert: EMERALD
+    Block: EMERALD_ORE
   COAL_BLOCK:
     Name: '&8Coal Block'
     Price: 250
+    Convert: COAL_BLOCK
+    Block: COAL_BLOCK
   IRON_BLOCK:
     Name: '&fIron Block'
     Price: 500
+    Convert: IRON_BLOCK
+    Block: IRON_BLOCK
   GOLD_BLOCK:
     Name: '&eGold BLock'
     Price: 1000
+    Convert: GOLD_BLOCK
+    Block: GOLD_BLOCK
   LAPIS_BLOCK:
     Name: '&9Lapis Block'
     Price: 1500
+    Convert: LAPIS_BLOCK
+    Block: LAPIS_BLOCK
   REDSTONE_BLOCK:
     Name: '&cRedstone Block'
     Price: 2000
+    Convert: REDSTONE_BLOCK
+    Block: REDSTONE_BLOCK
   DIAMOND_BLOCK:
     Name: '&bDiamond BLock'
     Price: 2500
+    Convert: DIAMOND_BLOCK
+    Block: DIAMOND_BLOCK
   EMERALD_BLOCK:
     Name: '&aEmerald'
     Price: 3000
-  DIRT:
-    Name: '&4Dirt'
-    Price: 1
-  OAK_LOG:
-    Name: '&6Oak Log'
-    Price: 5
+    Convert: EMERALD_BLOCK
+    Block: EMERALD_BLOCK
   STONE:
     Name: '&7Stone'
     Price: 10
