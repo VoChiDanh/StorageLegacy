@@ -261,10 +261,10 @@ public class Data {
     }
 
     public static void addPlayers(@NotNull Player p) {
-        List<String> players = new PlayerData(p.getName()).getConfig().getStringList("All_players");
+        List<String> players = getdatafile().getStringList("All_players");
         players.add(p.getName());
         Collections.sort(players);
-        new PlayerData(p.getName()).getConfig().set("All_players", players);
+        getdatafile().set("All_players", players);
         savedata();
     }
 
