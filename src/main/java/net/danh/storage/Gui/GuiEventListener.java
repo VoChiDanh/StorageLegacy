@@ -1,5 +1,6 @@
 package net.danh.storage.Gui;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,11 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
 import static net.danh.storage.Gui.CatchInput.*;
 import static net.danh.storage.Gui.LoadMenu.*;
 import static net.danh.storage.Gui.Manager.*;
-import static net.danh.storage.Gui.OpenGui.gui;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Storage.get;
@@ -32,7 +33,7 @@ public class GuiEventListener implements Listener {
         Player p = event.getPlayer();
         if (input.contains(p)) {
             event.setCancelled(true);
-            String message = event.getMessage();
+            String message = ChatColor.stripColor(event.getMessage());
             if (cancel.contains(message)) {
                 input.remove(p);
                 sendPlayerMessage(p, getlanguagefile().getString("Input.Cancel"));
@@ -97,12 +98,19 @@ public class GuiEventListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClickInv(InventoryClickEvent event) {
         Player p = (Player) event.getWhoClicked();
-        if (!event.getInventory().equals(gui) || !event.getInventory().equals(player_gui.get(p))) return;
-        if (event.getClickedInventory() == null) return;
-        else {
+        if (event.getClickedInventory() == null) {
+            event.setCancelled(true);
+            return;
+        }
+        if (!event.getInventory().equals(player_gui.get(p))) {
+            event.setCancelled(true);
+            return;
+        }
+        if (event.getView().getTitle().equalsIgnoreCase(colorize(papi(getguifile().getString("TITLE"), p))) || event.getView().getTitle().equalsIgnoreCase("Default tittle")) {
+            event.setCancelled(true);
             if (event.getClickedInventory().equals(player_gui.get(p))) {
                 if (event.getSlot() == pickup_buttons_slot) {
                     if (pickup_cooldown.containsKey(p)) {
@@ -111,6 +119,7 @@ public class GuiEventListener implements Listener {
                             setautoPick(p, !autoPick(p));
                             InstantUpdate(p);
                             p.updateInventory();
+                            event.setCancelled(true);
                         } else {
                             event.setCancelled(true);
                         }
@@ -119,6 +128,7 @@ public class GuiEventListener implements Listener {
                         setautoPick(p, !autoPick(p));
                         InstantUpdate(p);
                         p.updateInventory();
+                        event.setCancelled(true);
                     }
                 }
                 if (event.getSlot() == smelt_buttons_slot) {
@@ -128,6 +138,7 @@ public class GuiEventListener implements Listener {
                             setautoSmelt(p, !autoSmelt(p));
                             InstantUpdate(p);
                             p.updateInventory();
+                            event.setCancelled(true);
                         } else {
                             event.setCancelled(true);
                         }
@@ -136,6 +147,7 @@ public class GuiEventListener implements Listener {
                         setautoSmelt(p, !autoSmelt(p));
                         InstantUpdate(p);
                         p.updateInventory();
+                        event.setCancelled(true);
                     }
                 }
             }
@@ -228,6 +240,5 @@ public class GuiEventListener implements Listener {
                 i++;
             }
         }
-        event.setCancelled(true);
     }
 }

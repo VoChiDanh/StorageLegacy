@@ -27,7 +27,7 @@ public class Data {
      */
     public static int getStorageData(@NotNull Player p, String item) {
         item = item.toUpperCase();
-        return getdatafile().getInt("players." + p.getName() + ".items." + item + ".amount");
+        return new PlayerData(p.getName()).getConfig().getInt("players." + p.getName() + ".items." + item + ".amount");
     }
 
     /**
@@ -207,7 +207,7 @@ public class Data {
      */
     public static int getMaxStorageData(@NotNull Player p, String item) {
         item = item.toUpperCase();
-        return getdatafile().getInt("players." + p.getName() + ".items." + item + ".max");
+        return new PlayerData(p.getName()).getConfig().getInt("players." + p.getName() + ".items." + item + ".max");
     }
 
     /**
@@ -261,10 +261,10 @@ public class Data {
     }
 
     public static void addPlayers(@NotNull Player p) {
-        List<String> players = getdatafile().getStringList("All_players");
+        List<String> players = new PlayerData(p.getName()).getConfig().getStringList("All_players");
         players.add(p.getName());
         Collections.sort(players);
-        getdatafile().set("All_players", players);
+        new PlayerData(p.getName()).getConfig().set("All_players", players);
         savedata();
     }
 
@@ -273,7 +273,7 @@ public class Data {
      * @return Autosmelt data (true/false) in data.yml
      */
     public static boolean autoSmeltData(@NotNull Player p) {
-        return getdatafile().getBoolean("players." + p.getName() + ".auto.Smelt");
+        return new PlayerData(p.getName()).getConfig().getBoolean("players." + p.getName() + ".auto.Smelt");
     }
 
 
@@ -282,7 +282,7 @@ public class Data {
      * @return Autopickup data (true/false) in data.yml
      */
     public static boolean autoPickData(@NotNull Player p) {
-        return getdatafile().getBoolean("players." + p.getName() + ".auto.Pick");
+        return new PlayerData(p.getName()).getConfig().getBoolean("players." + p.getName() + ".auto.Pick");
     }
 
     /**
@@ -441,10 +441,10 @@ public class Data {
      * @param item Material
      */
     public static void savePlayerData(@NotNull Player p, String item) {
-        getdatafile().set("players." + p.getName() + ".auto.Smelt", autoSmelt(p));
-        getdatafile().set("players." + p.getName() + ".auto.Pick", autoPick(p));
-        getdatafile().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
-        getdatafile().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
-        savedata();
+        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".auto.Smelt", autoSmelt(p));
+        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".auto.Pick", autoPick(p));
+        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
+        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
+        new PlayerData(p.getName()).save();
     }
 }

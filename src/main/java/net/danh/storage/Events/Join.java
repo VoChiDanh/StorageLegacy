@@ -2,6 +2,7 @@ package net.danh.storage.Events;
 
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,7 @@ public class Join implements Listener {
     @EventHandler
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
+        new PlayerData(p.getName()).load();
         setautoSmelt(p, Files.getconfigfile().getBoolean("Auto.Smelt"));
         setautoPick(p, Files.getconfigfile().getBoolean("Auto.Pickup"));
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {

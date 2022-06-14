@@ -2,6 +2,7 @@ package net.danh.storage.Commands;
 
 import net.danh.dcore.Commands.CMDBase;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.PlayerData;
 import net.danh.storage.Manager.SpigotUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -38,6 +39,20 @@ public class Storage extends CMDBase {
                 }
             }
             if (p.hasPermission("Storage.admin")) {
+                if (args[0].equalsIgnoreCase("convert")) {
+                    for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                        PlayerData playerData = new PlayerData(name);
+                        playerData.load();
+                        playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                        playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                            playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                            playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                        }
+                        playerData.save();
+                    }
+                    sendPlayerMessage(p, "&aDone");
+                }
                 if (args[0].equalsIgnoreCase("reload")) {
                     ReloadMenu();
                     reloadfiles();
@@ -274,6 +289,20 @@ public class Storage extends CMDBase {
             if (args[0].equalsIgnoreCase("help")) {
                 sendConsoleMessage(c, getlanguagefile().getStringList("User.Help_User"));
                 sendConsoleMessage(c, getlanguagefile().getStringList("User.Help_Admin"));
+            }
+            if (args[0].equalsIgnoreCase("convert")) {
+                for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                    PlayerData playerData = new PlayerData(name);
+                    playerData.load();
+                    playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                    playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                        playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                        playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                    }
+                    playerData.save();
+                }
+                sendConsoleMessage(c, "&aDone");
             }
             if (args[0].equalsIgnoreCase("reload")) {
                 ReloadMenu();
