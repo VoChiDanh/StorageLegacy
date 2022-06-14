@@ -69,15 +69,27 @@ public class Items {
                     }
                 } else {
                     if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
-                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                .replaceAll("%amount%", name)
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
+                        if (nmsAssistant.isVersionGreaterThanOrEqualTo(11)) {
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                    .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                    .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", name)
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
+                        } else {
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                    .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                    .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", name)
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
+                        }
                     }
                 }
             } else {
@@ -118,17 +130,32 @@ public class Items {
                     }
                 } else {
                     if (Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TYPE")).equalsIgnoreCase("TITLE")) {
-                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.TITLE"))
-                                .replaceAll("%item%", block.replaceAll("_", " ")
-                                        .replaceAll("-", " "))
-                                .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.SUBTITLE"))
-                                .replaceAll("%item%", block.replaceAll("_", " ")
-                                        .replaceAll("-", " "))
-                                .replaceAll("%amount%", String.valueOf(amount))
-                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.TAKE.TITLE.FADEIN"), getconfigfile().getInt("Message.TAKE.TITLE.STAY"), getconfigfile().getInt("Message.TAKE.TITLE.FADEOUT"));
+                        NMSAssistant nms = new NMSAssistant();
+                        if (nms.isVersionGreaterThanOrEqualTo(11)) {
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.TITLE"))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.SUBTITLE"))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.TAKE.TITLE.FADEIN"), getconfigfile().getInt("Message.TAKE.TITLE.STAY"), getconfigfile().getInt("Message.TAKE.TITLE.FADEOUT"));
+                        } else {
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.TITLE"))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.TAKE.TITLE.SUBTITLE"))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
+                        }
                     }
                 }
                 if (autoSmelt(p)) {
@@ -205,6 +232,23 @@ public class Items {
                                         .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
                     } else {
                         if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("TITLE")) {
+                            NMSAssistant nms = new NMSAssistant();
+                            if (nms.isVersionGreaterThanOrEqualTo(11)) {
+                                p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.TITLE"))
+                                        .replaceAll("%money%", String.valueOf(money))
+                                        .replaceAll("%item%", block.replaceAll("_", " ")
+                                                .replaceAll("-", " "))
+                                        .replaceAll("%amount%", String.valueOf(amount))
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.SUBTITLE"))
+                                        .replaceAll("%money%", String.valueOf(money))
+                                        .replaceAll("%item%", block.replaceAll("_", " ")
+                                                .replaceAll("-", " "))
+                                        .replaceAll("%amount%", String.valueOf(amount))
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.SELL.TITLE.FADEIN"), getconfigfile().getInt("Message.SELL.TITLE.STAY"), getconfigfile().getInt("Message.SELL.TITLE.FADEOUT"));
+                            }
+                        } else {
                             p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.TITLE"))
                                     .replaceAll("%money%", String.valueOf(money))
                                     .replaceAll("%item%", block.replaceAll("_", " ")
@@ -217,7 +261,7 @@ public class Items {
                                             .replaceAll("-", " "))
                                     .replaceAll("%amount%", String.valueOf(amount))
                                     .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.SELL.TITLE.FADEIN"), getconfigfile().getInt("Message.SELL.TITLE.STAY"), getconfigfile().getInt("Message.SELL.TITLE.FADEOUT"));
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
                         }
                     }
                 } else {

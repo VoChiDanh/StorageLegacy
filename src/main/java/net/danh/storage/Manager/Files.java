@@ -1,9 +1,7 @@
 package net.danh.storage.Manager;
 
-import com.tchristofferson.configupdater.ConfigUpdater;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.danh.dcore.NMS.NMSAssistant;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,53 +24,34 @@ public class Files {
     private static File configFile, languageFile, dataFile, guiFile;
     private static FileConfiguration config, language, data, gui;
 
-    private static void createConfig() {
-        NMSAssistant nmsAssistant = new NMSAssistant();
-        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
-            try {
-                InputStream stream = get().getResource("config.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "config.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                InputStream stream = get().getResource("config-legacy.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "config.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static void createGui() {
-        NMSAssistant nmsAssistant = new NMSAssistant();
-        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
-            try {
-                InputStream stream = get().getResource("gui.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "gui.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                InputStream stream = get().getResource("gui-legacy.yml");
-                FileUtils.copyInputStreamToFile(stream, new File(get().getDataFolder(), "gui.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public static void createfiles() {
-        guiFile = new File(get().getDataFolder(), "gui.yml");
-        configFile = new File(get().getDataFolder(), "config.yml");
+        NMSAssistant nmsAssistant = new NMSAssistant();
+        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
+            guiFile = new File(get().getDataFolder(), "gui.yml");
+            configFile = new File(get().getDataFolder(), "config.yml");
+        } else {
+            guiFile = new File(get().getDataFolder(), "gui-legacy.yml");
+            configFile = new File(get().getDataFolder(), "config-legacy.yml");
+        }
         languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
-        if (!configFile.exists()) createConfig();
+
+        if (!configFile.exists()) {
+            if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
+                get().saveResource("config.yml", false);
+            } else {
+                get().saveResource("config-legacy.yml", false);
+            }
+        }
         if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) get().saveResource("data.yml", false);
-        if (!guiFile.exists()) createGui();
+        if (!guiFile.exists()) {
+            if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
+                get().saveResource("gui.yml", false);
+            } else {
+                get().saveResource("gui-legacy.yml", false);
+            }
+        }
         language = new YamlConfiguration();
         data = new YamlConfiguration();
         gui = new YamlConfiguration();
@@ -112,31 +90,15 @@ public class Files {
     }
 
     public static void saveconfig() {
-        NMSAssistant nmsAssistant = new NMSAssistant();
         try {
             config.save(configFile);
         } catch (IOException ignored) {
-        }
-        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
-            try {
-                ConfigUpdater.update(get(), "config.yml", configFile, new ArrayList<>());
-            } catch (IOException ignored) {
-            }
-        } else {
-            try {
-                ConfigUpdater.update(get(), "config-legacy.yml", configFile, new ArrayList<>());
-            } catch (IOException ignored) {
-            }
         }
     }
 
     public static void savelanguage() {
         try {
             language.save(languageFile);
-        } catch (IOException ignored) {
-        }
-        try {
-            ConfigUpdater.update(get(), "language.yml", languageFile, new ArrayList<>());
         } catch (IOException ignored) {
         }
     }
@@ -149,21 +111,9 @@ public class Files {
     }
 
     public static void savegui() {
-        NMSAssistant nmsAssistant = new NMSAssistant();
         try {
             gui.save(guiFile);
         } catch (IOException ignored) {
-        }
-        if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
-            try {
-                ConfigUpdater.update(get(), "gui.yml", guiFile, new ArrayList<>());
-            } catch (IOException ignored) {
-            }
-        } else {
-            try {
-                ConfigUpdater.update(get(), "gui-legacy.yml", guiFile, new ArrayList<>());
-            } catch (IOException ignored) {
-            }
         }
     }
 
@@ -223,7 +173,7 @@ public class Files {
         } else {
             output = output.replaceAll("#auto_smelt#", getconfigfile().getString("Boolean.false"));
         }
-        if (papistatus) output = PlaceholderAPI.setPlaceholders(p, output);
+        output = PlaceholderAPI.setPlaceholders(p, output);
         return output;
     }
 
@@ -273,7 +223,7 @@ public class Files {
             } else {
                 output = output.replaceAll("#auto_smelt#", getconfigfile().getString("Boolean.false"));
             }
-            if (papistatus) output = PlaceholderAPI.setPlaceholders(p, output);
+            output = PlaceholderAPI.setPlaceholders(p, output);
             final_lores.add(output);
         }
         return final_lores;

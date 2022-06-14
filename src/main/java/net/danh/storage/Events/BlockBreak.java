@@ -4,6 +4,7 @@ import net.danh.dcore.NMS.NMSAssistant;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
@@ -53,7 +54,7 @@ public class BlockBreak implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreaking(@NotNull BlockBreakEvent e) {
         Player p = e.getPlayer();
         String blocks = e.getBlock().getType().toString();
@@ -69,7 +70,6 @@ public class BlockBreak implements Listener {
                 blocks = e.getBlock().getType().toString();
             }
         }
-        if (e.isCancelled()) return;
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {
             if (autoPick(p)) {
@@ -101,7 +101,9 @@ public class BlockBreak implements Listener {
                     drop(e, p, blocks);
                 }
                 e.getBlock().getDrops().clear();
-                e.setDropItems(false);
+                if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
+                    e.setDropItems(false);
+                }
             }
         }
     }

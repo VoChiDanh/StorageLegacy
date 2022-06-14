@@ -1,6 +1,8 @@
 package net.danh.storage;
 
+import net.danh.dcore.DCore;
 import net.danh.dcore.NMS.NMSAssistant;
+import net.danh.dcore.Utils.File;
 import net.danh.storage.Commands.AutoPickup;
 import net.danh.storage.Commands.AutoSmelt;
 import net.danh.storage.Commands.TabCompleter;
@@ -83,6 +85,20 @@ public final class Storage extends JavaPlugin implements Listener {
         RegisterDCore(this);
         Files.createfiles();
         checkFilesVersion();
+        NMSAssistant nms = new NMSAssistant();
+        if (nms.isVersionGreaterThanOrEqualTo(13)) {
+            File.updateFile(Storage.get(), getconfigfile(), "config.yml");
+            File.updateFile(Storage.get(), getguifile(), "gui.yml");
+        } else {
+            File.updateFile(Storage.get(), getconfigfile(), "config-legacy.yml");
+            File.updateFile(Storage.get(), getguifile(), "gui-legacy.yml");
+        }
+        File.updateFile(Storage.get(), getlanguagefile(), "language.yml");
+        if (nms.isVersionGreaterThanOrEqualTo(19)) {
+            DCore.dCoreLog("&eYou are running the plugin in 1.19+, if you find any bugs/errors please report them to github or discord!");
+            DCore.dCoreLog("&eDiscord: https://discord.gg/CWjaq5fZN9");
+            DCore.dCoreLog("&eGithub: " + getDescription().getWebsite());
+        }
         (new BukkitRunnable() {
             public void run() {
                 try {
@@ -109,8 +125,7 @@ public final class Storage extends JavaPlugin implements Listener {
                 }
             }
         }).runTaskTimer(this, 1800 * 20L, 1800 * 20L);
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) papistatus = false;
-        else papistatus = true;
+        papistatus = Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null;
     }
 
     @Override
