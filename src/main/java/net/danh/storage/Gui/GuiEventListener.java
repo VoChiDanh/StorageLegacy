@@ -100,8 +100,8 @@ public class GuiEventListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClickInv(InventoryClickEvent event) {
         Player p = (Player) event.getWhoClicked();
-        if (!event.getInventory().equals(gui) || !event.getInventory().equals(player_gui.get(p))) return;
         if (event.getClickedInventory() == null) return;
+        if (!event.getInventory().equals(player_gui.get(p))) return;
         else {
             if (event.getClickedInventory().equals(player_gui.get(p))) {
                 if (event.getSlot() == pickup_buttons_slot) {
