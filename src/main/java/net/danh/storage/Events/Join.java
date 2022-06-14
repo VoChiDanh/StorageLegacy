@@ -1,6 +1,7 @@
 package net.danh.storage.Events;
 
 import net.danh.storage.Manager.Data;
+import net.danh.storage.Manager.Files;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,8 +20,8 @@ public class Join implements Listener {
     @EventHandler
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        setautoSmelt(p, autoSmeltData(p));
-        setautoPick(p, autoPickData(p));
+        setautoSmelt(p, Files.getconfigfile().getBoolean("Auto.Smelt"));
+        setautoPick(p, Files.getconfigfile().getBoolean("Auto.Pickup"));
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
             Data.setMaxStorage(p, item, getMaxStorageData(p, item));
             Data.setStorage(p, item, getStorageData(p, item));
@@ -29,7 +31,7 @@ public class Join implements Listener {
                 addPlayers(p);
             }
         } else {
-            List<String> ps = Arrays.asList(p.getName());
+            List<String> ps = Collections.singletonList(p.getName());
             getdatafile().set("All_players", ps);
             savedata();
         }
