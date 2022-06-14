@@ -101,7 +101,9 @@ public class BlockBreak implements Listener {
                     drop(e, p, blocks);
                 }
                 e.getBlock().getDrops().clear();
-                e.setDropItems(false);
+                if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
+                    e.setDropItems(false);
+                }
             }
         }
     }
