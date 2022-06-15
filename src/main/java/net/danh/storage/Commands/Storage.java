@@ -1,6 +1,7 @@
 package net.danh.storage.Commands;
 
 import net.danh.dcore.Commands.CMDBase;
+import net.danh.storage.Gui.OpenGui;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
 import net.danh.storage.Manager.SpigotUpdater;
@@ -15,8 +16,6 @@ import java.util.Set;
 import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.dcore.Utils.Player.sendConsoleMessage;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
-import static net.danh.storage.Gui.LoadMenu.ReloadMenu;
-import static net.danh.storage.Gui.OpenGui.OpenGuiMenu;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Items.*;
@@ -29,7 +28,7 @@ public class Storage extends CMDBase {
     @Override
     public void playerexecute(Player p, String[] args) {
         if (args.length == 0) {
-            OpenGuiMenu(p);
+            p.openInventory(OpenGui.Open(p));
         }
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("help")) {
@@ -54,7 +53,6 @@ public class Storage extends CMDBase {
                     sendPlayerMessage(p, "&aDone");
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
-                    ReloadMenu();
                     reloadfiles();
                     sendPlayerMessage(p, getlanguagefile().getString("Admin.Reload"));
                     try {
@@ -282,7 +280,7 @@ public class Storage extends CMDBase {
                 return;
             }
             if (args[1].equalsIgnoreCase("open")) {
-                OpenGuiMenu(p);
+                p.openInventory(OpenGui.Open(p));
             }
         }
         if (args.length == 1) {
@@ -305,7 +303,6 @@ public class Storage extends CMDBase {
                 sendConsoleMessage(c, "&aDone");
             }
             if (args[0].equalsIgnoreCase("reload")) {
-                ReloadMenu();
                 reloadfiles();
                 sendConsoleMessage(c, getlanguagefile().getString("Admin.Reload"));
                 try {

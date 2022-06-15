@@ -10,7 +10,8 @@ import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.BlockExplode;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
-import net.danh.storage.Gui.GuiEventListener;
+import net.danh.storage.Gui.Chat;
+import net.danh.storage.Gui.InventoryClick;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
@@ -73,7 +74,8 @@ public final class Storage extends JavaPlugin implements Listener {
         }
         getServer().getPluginManager().registerEvents(new BlockExplode(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
-        getServer().getPluginManager().registerEvents(new GuiEventListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
+        getServer().getPluginManager().registerEvents(new Chat(), this);
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Quit(), this);
         new net.danh.storage.Commands.Storage(this);

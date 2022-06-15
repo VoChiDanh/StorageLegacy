@@ -1,119 +1,162 @@
 package net.danh.storage.Gui;
 
+import net.danh.dcore.Utils.Chat;
+import net.danh.dcore.Utils.Items;
+import net.danh.storage.Manager.Data;
+import net.danh.storage.Storage;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
-import static net.danh.storage.Gui.LoadMenu.*;
-import static net.danh.storage.Gui.Manager.*;
-import static net.danh.storage.Manager.Data.autoPick;
-import static net.danh.storage.Manager.Data.autoSmelt;
-import static net.danh.storage.Manager.Files.getguifile;
+import static net.danh.storage.Manager.Files.*;
 
 public class OpenGui {
-    public static Inventory gui;
 
-    public static void SetItem(Player p) {
-        LoadMenuGui(p);
-        gui = Bukkit.createInventory(p, size, tittle);
-        int d = 0;
-        for (List<Integer> a : decorate_slot) {
-            if (a == null) {
-                decorate.remove(d);
-            } else {
-                for (Integer integer : a) {
-                    gui.setItem(integer, decorate.get(d));
+    public static Inventory Open(Player p) {
+        Inventory gui = Bukkit.createInventory(p, getguifile().getInt("ROWS") * 9, Chat.colorize(getguifile().getString("TITLE").replaceAll("#player#", p.getName())));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                ItemDecorate(p, gui);
+                if (!Data.autoSmelt(p)) {
+                    ItemsBlock(p, gui);
+                } else {
+                    ItemsConvert(p, gui);
                 }
-                d++;
             }
-        }
-        HashMap<String, HashMap<Boolean, ItemStack>> ppick = pickup_buttons.get(p);
-        HashMap<Boolean, ItemStack> pick = ppick.get("Pickup");
-        HashMap<String, HashMap<Boolean, ItemStack>> psmelt = smelt_buttons.get(p);
-        HashMap<Boolean, ItemStack> smelt = psmelt.get("Smelt");
-        HashMap<String, HashMap<Boolean, ItemStack>> cpick = pickup_buttons_cooldown.get(p);
-        HashMap<Boolean, ItemStack> pickcd = cpick.get("Pickup");
-        HashMap<String, HashMap<Boolean, ItemStack>> csmelt = smelt_buttons_cooldown.get(p);
-        HashMap<Boolean, ItemStack> smeltcd = csmelt.get("Smelt");
-        if (pickup_cooldown.containsKey(p)) {
-            if (getpickupcooldown(p) == 0) {
-                gui.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
-            } else {
-                gui.setItem(pickup_buttons_slot, pickcd.get(autoPick(p)));
-            }
-        } else {
-            gui.setItem(pickup_buttons_slot, pick.get(autoPick(p)));
-        }
-        if (smelt_cooldown.containsKey(p)) {
-            if (getsmeltcooldown(p) == 0) {
-                gui.setItem(smelt_buttons_slot, smelt.get(autoSmelt(p)));
-            } else {
-                gui.setItem(smelt_buttons_slot, smeltcd.get(autoSmelt(p)));
-            }
-        } else {
-            gui.setItem(smelt_buttons_slot, smelt.get(autoSmelt(p)));
-        }
-        if (autoSmelt(p)) {
-            int i = 0;
-            try {
-                for (Boolean ct : converts_status) {
-                    if (ct) {
-                        if (converts_slot.get(i) == null) {
-                            converts_slot.remove(i);
-                        } else {
-                            gui.setItem(converts_slot.get(i), converts.get(i));
-                            i++;
-                        }
-                    } else {
-                        if (items_slot.get(i) == null) {
-                            items_slot.remove(i);
-                        } else {
-                            gui.setItem(items_slot.get(i), items.get(i));
-                            i++;
-                        }
-                    }
+        }.runTaskTimer(Storage.get(), 20L, 20L);
+        return gui;
+    }
+
+    private static void ItemsBlock(Player p, Inventory inv) {
+        for (String string : getguifile().getConfigurationSection("ITEMS").getKeys(false)) {
+            if (getguifile().contains("ITEMS." + string + ".Block.material")) {
+                if (!getguifile().contains("ITEMS." + string + ".Block.data")) {
+                    Material material = Material.getMaterial(getguifile().getString("ITEMS." + string + ".Block.material"));
+                    String name = Chat.colorize(papi(getguifile().getString("ITEMS." + string + ".Block.name"), p));
+                    int slot = getguifile().getInt("ITEMS." + string + ".Block.slot");
+                    int amount = getguifile().getInt("ITEMS." + string + ".Block.amount");
+                    List<String> lore = Items.Lore(lorepapi(getguifile().getStringList("ITEMS." + string + ".Block.lore"), p));
+                    ItemStack item = new ItemStack(material, amount);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(name);
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+                    inv.setItem(slot, item);
                 }
-            } catch (Exception e) {
-                Bukkit.getLogger().warning("[Storage] One or more items do not have block type or convert type so the items will not be loaded");
-            }
-        } else {
-            int i = 0;
-            try {
-                for (Integer b : items_slot) {
-                    if (items_slot.get(i) == null) {
-                        items_slot.remove(i);
-                    } else {
-                        gui.setItem(b, items.get(i));
-                        i++;
-                    }
+                if (getguifile().contains("ITEMS." + string + ".Block.data")) {
+                    Material material = Material.getMaterial(getguifile().getString("ITEMS." + string + ".Block.material"));
+                    String name = Chat.colorize(papi(getguifile().getString("ITEMS." + string + ".Block.name"), p));
+                    int slot = getguifile().getInt("ITEMS." + string + ".Block.slot");
+                    short data = Short.parseShort(getguifile().getString("ITEMS." + string + ".Block.data"));
+                    int amount = getguifile().getInt("ITEMS." + string + ".Block.amount");
+                    List<String> lore = Items.Lore(lorepapi(getguifile().getStringList("ITEMS." + string + ".Block.lore"), p));
+                    ItemStack item = new ItemStack(material, amount, data);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(name);
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+                    inv.setItem(slot, item);
                 }
-            } catch (Exception e) {
-                Bukkit.getLogger().warning("[Storage] One or more items do not have block type so the items will not be loaded");
             }
         }
     }
 
-    /**
-     * @param p Player
-     */
-    public static void OpenGuiMenu(Player p) {
-        LoadMenuGui(p);
-        if (getguifile().getBoolean("UPDATE.STATUS")) {
-            if (getguifile().getString("UPDATE.TYPE").equalsIgnoreCase("ITEMS")) {
-                UpdateI(p);
-            } else if (getguifile().getString("UPDATE.TYPE").equalsIgnoreCase("ALL")) {
-                UpdateA(p);
-            } else {
-                Bukkit.getLogger().warning("[Storage] cant not find update type, the update will be disabled");
+    private static void ItemsConvert(Player p, Inventory inv) {
+        for (String string : getguifile().getConfigurationSection("ITEMS").getKeys(false)) {
+            if (getguifile().contains("ITEMS." + string + ".Convert.material")) {
+                if (!getguifile().contains("ITEMS." + string + ".Convert.data")) {
+                    Material material = Material.getMaterial(getguifile().getString("ITEMS." + string + ".Convert.material"));
+                    String name = Chat.colorize(papi(getguifile().getString("ITEMS." + string + ".Convert.name"), p));
+                    int slot = getguifile().getInt("ITEMS." + string + ".Convert.slot");
+                    int amount = getguifile().getInt("ITEMS." + string + ".Convert.amount");
+                    List<String> lore = Items.Lore(lorepapi(getguifile().getStringList("ITEMS." + string + ".Convert.lore"), p));
+                    ItemStack item = new ItemStack(material, amount);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(name);
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+                    inv.setItem(slot, item);
+                }
+                if (getguifile().contains("ITEMS." + string + ".Convert.data")) {
+                    Material material = Material.getMaterial(getguifile().getString("ITEMS." + string + ".Convert.material"));
+                    String name = Chat.colorize(papi(getguifile().getString("ITEMS." + string + ".Convert.name"), p));
+                    int slot = getguifile().getInt("ITEMS." + string + ".Convert.slot");
+                    short data = Short.parseShort(getguifile().getString("ITEMS." + string + ".Convert.data"));
+                    int amount = getguifile().getInt("ITEMS." + string + ".Convert.amount");
+                    List<String> lore = Items.Lore(lorepapi(getguifile().getStringList("ITEMS." + string + ".Convert.lore"), p));
+                    ItemStack item = new ItemStack(material, amount, data);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(name);
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+                    inv.setItem(slot, item);
+                }
             }
         }
-        SetItem(p);
-        SaveMenu(p);
-        ReloadMenu();
-        p.openInventory(gui);
+    }
+
+    private static void ItemDecorate(Player p, Inventory inv) {
+        for (String string : getguifile().getConfigurationSection("DECORATES").getKeys(false)) {
+            Material material = Material.getMaterial(getguifile().getString("DECORATES." + string + ".material"));
+            if (material == null) {
+                Storage.get().getLogger().log(Level.INFO, "Decorate Material is null !");
+                return;
+            }
+
+            String name = Chat.colorize(papi(getguifile().getString("DECORATES." + string + ".name"), p));
+            List<Integer> slots = getguifile().getIntegerList("DECORATES." + string + ".slots");
+            int slot = getguifile().getInt("DECORATES." + string + ".slot");
+            List<String> lore = Items.Lore(lorepapi(getguifile().getStringList("DECORATES." + string + ".lore"), p));
+            if (getguifile().contains("DECORATES." + string + ".slot")) {
+                if (!getguifile().contains("DECORATES." + string + ".data")) {
+                    ItemStack item = new ItemStack(material, 1);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setLore(lore);
+                    meta.setDisplayName(name);
+                    item.setItemMeta(meta);
+                    inv.setItem(slot, item);
+                }
+                if (getguifile().contains("DECORATES." + string + ".data")) {
+                    short data = Short.parseShort(getguifile().getString("DECORATES." + string + ".data"));
+                    ItemStack item = new ItemStack(material, 1, data);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setLore(lore);
+                    meta.setDisplayName(name);
+                    item.setItemMeta(meta);
+                    inv.setItem(slot, item);
+                }
+            }
+            if (getguifile().contains("DECORATES." + string + ".slots")) {
+                if (!getguifile().contains("DECORATES." + string + ".data")) {
+                    ItemStack item = new ItemStack(material, 1);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setLore(lore);
+                    meta.setDisplayName(name);
+                    item.setItemMeta(meta);
+                    for (Integer s : slots) {
+                        inv.setItem(s, item);
+                    }
+                }
+                if (getguifile().contains("DECORATES." + string + ".data")) {
+                    short data = Short.parseShort(getguifile().getString("DECORATES." + string + ".data"));
+                    ItemStack item = new ItemStack(material, 1, data);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setLore(lore);
+                    meta.setDisplayName(name);
+                    item.setItemMeta(meta);
+                    for (Integer s : slots) {
+                        inv.setItem(s, item);
+                    }
+                }
+            }
+        }
     }
 }

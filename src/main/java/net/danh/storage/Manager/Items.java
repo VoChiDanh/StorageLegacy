@@ -29,7 +29,7 @@ public class Items {
      */
     public static void AddItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
-        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
+        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false).contains(name)) {
             NMSAssistant nmsAssistant = new NMSAssistant();
             ItemStack checkitems;
             if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
@@ -108,7 +108,7 @@ public class Items {
      */
     public static void RemoveItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
-        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
+        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false).contains(name)) {
             if (getStorage(p, name) >= amount) {
                 for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                     if (name.equalsIgnoreCase(getBlockType)) {
@@ -207,7 +207,7 @@ public class Items {
      */
     public static void SellItems(Player p, String name, Integer amount) {
         name = name.toUpperCase();
-        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false).contains(name)) {
+        if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false).contains(name)) {
             if (getStorage(p, name) >= amount) {
                 for (String getBlockType : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
                     if (name.equalsIgnoreCase(getBlockType)) {

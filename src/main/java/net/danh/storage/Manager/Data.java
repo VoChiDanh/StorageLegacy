@@ -4,14 +4,12 @@ import net.danh.dcore.NMS.NMSAssistant;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Files.*;
@@ -19,6 +17,10 @@ import static net.danh.storage.Manager.Files.*;
 public class Data {
     private static final HashMap<String, Integer> data = new HashMap<>();
     private static final HashMap<String, Boolean> status = new HashMap<>();
+    public static final HashMap<Player, String> item = new HashMap<>();
+    public static final Set<Player> action = new HashSet<>();
+    public static final HashMap<Player, ClickType> click = new HashMap<>();
+
 
     /**
      * @param p    Player
@@ -441,10 +443,11 @@ public class Data {
      * @param item Material
      */
     public static void savePlayerData(@NotNull Player p, String item) {
-        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".auto.Smelt", autoSmelt(p));
-        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".auto.Pick", autoPick(p));
-        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
-        new PlayerData(p.getName()).getConfig().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
-        new PlayerData(p.getName()).save();
+        PlayerData data = new PlayerData(p.getName());
+        data.getConfig().set("players." + p.getName() + ".auto.Smelt", autoSmelt(p));
+        data.getConfig().set("players." + p.getName() + ".auto.Pick", autoPick(p));
+        data.getConfig().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
+        data.getConfig().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
+        data.save();
     }
 }
