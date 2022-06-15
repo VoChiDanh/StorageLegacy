@@ -102,15 +102,15 @@ public class GuiEventListener implements Listener {
     public void onClickInv(InventoryClickEvent event) {
         Player p = (Player) event.getWhoClicked();
         if (event.getClickedInventory() == null) {
-            event.setCancelled(true);
             return;
         }
         if (!event.getInventory().equals(player_gui.get(p))) {
-            event.setCancelled(true);
+            return;
+        }
+        if (p == null) {
             return;
         }
         if (event.getView().getTitle().equalsIgnoreCase(colorize(papi(getguifile().getString("TITLE"), p))) || event.getView().getTitle().equalsIgnoreCase("Default tittle")) {
-            event.setCancelled(true);
             if (event.getClickedInventory().equals(player_gui.get(p))) {
                 if (event.getSlot() == pickup_buttons_slot) {
                     if (pickup_cooldown.containsKey(p)) {
