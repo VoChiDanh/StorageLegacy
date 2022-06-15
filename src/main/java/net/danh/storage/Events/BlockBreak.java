@@ -82,7 +82,7 @@ public class BlockBreak implements Listener {
                 if (items == null) {
                     return;
                 }
-                if (Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
+                if (p.getInventory().getItemInMainHand().getItemMeta() != null && Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
                     if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
                         if (getconfigfile().getBoolean("Fortune.Vanilla")) {
                             int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
