@@ -15,6 +15,7 @@ import net.danh.storage.Gui.InventoryClick;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.PlayerData;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -100,6 +101,21 @@ public final class Storage extends JavaPlugin implements Listener {
             DCore.dCoreLog("&eYou are running the plugin in 1.19+, if you find any bugs/errors please report them to github or discord!");
             DCore.dCoreLog("&eDiscord: https://discord.gg/CWjaq5fZN9");
             DCore.dCoreLog("&eGithub: " + getDescription().getWebsite());
+        }
+        if (Files.getdatafile().contains("players")) {
+            for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                PlayerData playerData = new PlayerData(name);
+                playerData.load();
+                if (playerData.getConfig().getKeys(true).size() == 0) {
+                    playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                    playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                        playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                        playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                    }
+                    playerData.save();
+                }
+            }
         }
         (new BukkitRunnable() {
             public void run() {

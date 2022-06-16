@@ -449,5 +449,6 @@ public class Data {
         data.getConfig().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
         data.getConfig().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
         data.save();
+        data.load();
     }
 }

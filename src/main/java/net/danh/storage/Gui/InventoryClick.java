@@ -13,8 +13,8 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static net.danh.storage.Manager.Files.getguifile;
-import static net.danh.storage.Manager.Files.papi;
+import static net.danh.dcore.Utils.Player.sendPlayerMessage;
+import static net.danh.storage.Manager.Files.*;
 
 public class InventoryClick implements Listener {
 
@@ -30,74 +30,73 @@ public class InventoryClick implements Listener {
                 e.setResult(Event.Result.DENY);
                 NMSAssistant nms = new NMSAssistant();
                 if (e.isCancelled()) {
-                    for (String string : getguifile().getConfigurationSection("ITEMS").getKeys(false)) {
-                        String name = e.getInventory().getItem(e.getSlot()).getType().toString();
-                        if (nms.isVersionLessThanOrEqualTo(12)) {
-                            short i_data = e.getInventory().getItem(e.getSlot()).getDurability();
-                            for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
-                                if (f_name.equalsIgnoreCase(name)) {
-                                    short data = Short.parseShort(getguifile().getString("CONVERT." + name + ".DATA"));
-                                    if (data == i_data) {
-                                        name = getguifile().getString("CONVERT." + name + ".MATERIAL");
-                                        break;
-                                    }
-                                }
-                            }
-                        } else {
-                            for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
-                                if (f_name.equalsIgnoreCase(name)) {
+                    String name = e.getInventory().getItem(e.getSlot()).getType().toString();
+                    if (nms.isVersionLessThanOrEqualTo(12)) {
+                        short i_data = e.getInventory().getItem(e.getSlot()).getDurability();
+                        for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
+                            if (f_name.equalsIgnoreCase(name)) {
+                                short data = Short.parseShort(getguifile().getString("CONVERT." + name + ".DATA"));
+                                if (data == i_data) {
                                     name = getguifile().getString("CONVERT." + name + ".MATERIAL");
                                     break;
                                 }
                             }
                         }
-                        if (e.getSlot() == getguifile().getInt("ITEMS." + string + ".Block.slot")) {
-                            if (e.getClick() == ClickType.LEFT) {
-                                Data.click.put(p, ClickType.LEFT);
-                                Data.action.add(p);
-                                Data.item.put(p, name);
-                                p.closeInventory();
-                            }
-                            if (e.getClick() == ClickType.RIGHT) {
-                                Data.click.put(p, ClickType.RIGHT);
-                                Data.action.add(p);
-                                Data.item.put(p, name);
-                                p.closeInventory();
-                            }
-                            if (e.getClick() == ClickType.DROP) {
-                                Data.click.put(p, ClickType.DROP);
-                                Data.action.add(p);
-                                Data.item.put(p, name);
-                                p.closeInventory();
-                            }
-                            if (e.getClick() == ClickType.SHIFT_LEFT) {
-                                String finalName = name;
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        p.performCommand("storage take " + finalName + " all");
-                                    }
-                                }.runTask(Storage.get());
-                            }
-                            if (e.getClick() == ClickType.SHIFT_RIGHT) {
-                                String finalName1 = name;
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        p.performCommand("storage add " + finalName1 + " all");
-                                    }
-                                }.runTask(Storage.get());
-                            }
-                            if (e.getClick() == ClickType.CONTROL_DROP) {
-                                String finalName2 = name;
-                                new BukkitRunnable() {
-                                    @Override
-                                    public void run() {
-                                        p.performCommand("storage sell " + finalName2 + " all");
-                                    }
-                                }.runTask(Storage.get());
+                    } else {
+                        for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
+                            if (f_name.equalsIgnoreCase(name)) {
+                                name = getguifile().getString("CONVERT." + name + ".MATERIAL");
+                                break;
                             }
                         }
+                    }
+                    if (e.getClick() == ClickType.LEFT) {
+                        Data.click.put(p, ClickType.LEFT);
+                        Data.action.add(p);
+                        Data.item.put(p, name);
+                        p.closeInventory();
+                        sendPlayerMessage(p, getlanguagefile().getString("Input.Chat"));
+                    }
+                    if (e.getClick() == ClickType.RIGHT) {
+                        Data.click.put(p, ClickType.RIGHT);
+                        Data.action.add(p);
+                        Data.item.put(p, name);
+                        p.closeInventory();
+                        sendPlayerMessage(p, getlanguagefile().getString("Input.Chat"));
+                    }
+                    if (e.getClick() == ClickType.DROP) {
+                        Data.click.put(p, ClickType.DROP);
+                        Data.action.add(p);
+                        Data.item.put(p, name);
+                        p.closeInventory();
+                        sendPlayerMessage(p, getlanguagefile().getString("Input.Chat"));
+                    }
+                    if (e.getClick() == ClickType.SHIFT_LEFT) {
+                        String finalName = name;
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                p.performCommand("storage take " + finalName + " all");
+                            }
+                        }.runTask(Storage.get());
+                    }
+                    if (e.getClick() == ClickType.SHIFT_RIGHT) {
+                        String finalName1 = name;
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                p.performCommand("storage add " + finalName1 + " all");
+                            }
+                        }.runTask(Storage.get());
+                    }
+                    if (e.getClick() == ClickType.CONTROL_DROP) {
+                        String finalName2 = name;
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                p.performCommand("storage sell " + finalName2 + " all");
+                            }
+                        }.runTask(Storage.get());
                     }
                 }
             }
