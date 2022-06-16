@@ -48,6 +48,7 @@ Input:
   Not_A_Number: "&cThe input is not a number."
   Space_Error: "&cThe input can not contain space character."
   Invaild_Number: "&cYou must type a number greater than 0"
+  Chat: "&6How many item you want? Type amount, chat 'exit' to exit"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

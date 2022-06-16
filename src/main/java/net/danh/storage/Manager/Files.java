@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static net.danh.storage.Gui.Manager.getpickupcooldown;
-import static net.danh.storage.Gui.Manager.getsmeltcooldown;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Items.getPrice;
 import static net.danh.storage.Storage.*;
@@ -135,7 +133,7 @@ public class Files {
      * @return String with replace #placeholder_...# to data
      */
     public static String papi(String input, Player p) {
-        String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName()).replaceAll("#cooldown_pickup#", String.valueOf(getpickupcooldown(p))).replaceAll("#cooldown_smelt#", String.valueOf(getsmeltcooldown(p)));
+        String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
         if (ecostatus) {
             output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
             output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
@@ -185,7 +183,7 @@ public class Files {
     public static List<String> lorepapi(List<String> lores, Player p) {
         List<String> final_lores = new ArrayList<>();
         for (String input : lores) {
-            String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName()).replaceAll("#cooldown_pickup#", String.valueOf(getpickupcooldown(p))).replaceAll("#cooldown_smelt#", String.valueOf(getsmeltcooldown(p)));
+            String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
             if (ecostatus) {
                 output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
                 output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));

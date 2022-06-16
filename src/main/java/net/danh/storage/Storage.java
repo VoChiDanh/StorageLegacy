@@ -10,10 +10,12 @@ import net.danh.storage.Events.BlockBreak;
 import net.danh.storage.Events.BlockExplode;
 import net.danh.storage.Events.Join;
 import net.danh.storage.Events.Quit;
-import net.danh.storage.Gui.GuiEventListener;
+import net.danh.storage.Gui.Chat;
+import net.danh.storage.Gui.InventoryClick;
 import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import net.danh.storage.Manager.PlayerData;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -73,7 +75,8 @@ public final class Storage extends JavaPlugin implements Listener {
         }
         getServer().getPluginManager().registerEvents(new BlockExplode(), this);
         getServer().getPluginManager().registerEvents(new BlockBreak(), this);
-        getServer().getPluginManager().registerEvents(new GuiEventListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClick(), this);
+        getServer().getPluginManager().registerEvents(new Chat(), this);
         getServer().getPluginManager().registerEvents(new Join(), this);
         getServer().getPluginManager().registerEvents(new Quit(), this);
         new net.danh.storage.Commands.Storage(this);
@@ -98,6 +101,21 @@ public final class Storage extends JavaPlugin implements Listener {
             DCore.dCoreLog("&eYou are running the plugin in 1.19+, if you find any bugs/errors please report them to github or discord!");
             DCore.dCoreLog("&eDiscord: https://discord.gg/CWjaq5fZN9");
             DCore.dCoreLog("&eGithub: " + getDescription().getWebsite());
+        }
+        if (Files.getdatafile().contains("players")) {
+            for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                PlayerData playerData = new PlayerData(name);
+                playerData.load();
+                if (playerData.getConfig().getKeys(true).size() == 0) {
+                    playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                    playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                        playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                        playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                    }
+                    playerData.save();
+                }
+            }
         }
         (new BukkitRunnable() {
             public void run() {

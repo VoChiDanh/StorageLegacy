@@ -1,6 +1,7 @@
 package net.danh.storage.Commands;
 
 import net.danh.dcore.Commands.CMDBase;
+import net.danh.storage.Gui.OpenGui;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
 import net.danh.storage.Manager.SpigotUpdater;
@@ -15,8 +16,6 @@ import java.util.Set;
 import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.dcore.Utils.Player.sendConsoleMessage;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
-import static net.danh.storage.Gui.LoadMenu.ReloadMenu;
-import static net.danh.storage.Gui.OpenGui.OpenGuiMenu;
 import static net.danh.storage.Manager.Data.*;
 import static net.danh.storage.Manager.Files.*;
 import static net.danh.storage.Manager.Items.*;
@@ -29,7 +28,7 @@ public class Storage extends CMDBase {
     @Override
     public void playerexecute(Player p, String[] args) {
         if (args.length == 0) {
-            OpenGuiMenu(p);
+            p.openInventory(OpenGui.Open(p));
         }
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("help")) {
@@ -43,18 +42,19 @@ public class Storage extends CMDBase {
                     for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
                         PlayerData playerData = new PlayerData(name);
                         playerData.load();
-                        playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
-                        playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
-                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
-                            playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
-                            playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                        if (playerData.getConfig().getKeys(true).size() == 0) {
+                            playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                            playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                                playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                                playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                            }
+                            playerData.save();
                         }
-                        playerData.save();
                     }
                     sendPlayerMessage(p, "&aDone");
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
-                    ReloadMenu();
                     reloadfiles();
                     sendPlayerMessage(p, getlanguagefile().getString("Admin.Reload"));
                     try {
@@ -282,7 +282,7 @@ public class Storage extends CMDBase {
                 return;
             }
             if (args[1].equalsIgnoreCase("open")) {
-                OpenGuiMenu(p);
+                p.openInventory(OpenGui.Open(p));
             }
         }
         if (args.length == 1) {
@@ -294,18 +294,19 @@ public class Storage extends CMDBase {
                 for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
                     PlayerData playerData = new PlayerData(name);
                     playerData.load();
-                    playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
-                    playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
-                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
-                        playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
-                        playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                    if (playerData.getConfig().getKeys(true).size() == 0) {
+                        playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                        playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                            playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                            playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                        }
+                        playerData.save();
                     }
-                    playerData.save();
                 }
                 sendConsoleMessage(c, "&aDone");
             }
             if (args[0].equalsIgnoreCase("reload")) {
-                ReloadMenu();
                 reloadfiles();
                 sendConsoleMessage(c, getlanguagefile().getString("Admin.Reload"));
                 try {

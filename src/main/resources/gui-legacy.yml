@@ -11,7 +11,7 @@ DECORATES:
     material: STAINED_GLASS_PANE
     data: 15
     name: '&f'
-    slot:
+    slots:
       - 2
       - 6
   RED_STAINED_GLASS_PANE:
@@ -19,7 +19,7 @@ DECORATES:
     material: STAINED_GLASS_PANE
     data: 14
     name: '&f'
-    slot:
+    slots:
       - 3
       - 5
   BLUE_STAINED_GLASS_PANE:
@@ -27,7 +27,7 @@ DECORATES:
     material: STAINED_GLASS_PANE
     data: 11
     name: '&f'
-    slot:
+    slots:
       - 9
       - 10
       - 11
@@ -38,7 +38,7 @@ DECORATES:
     update: false
     material: STAINED_GLASS_PANE
     name: '&f'
-    slot:
+    slots:
       - 18
       - 26
       - 27
@@ -52,7 +52,7 @@ DECORATES:
     material: STAINED_GLASS_PANE
     data: 6
     name: '&f'
-    slot:
+    slots:
       - 46
       - 47
       - 48
@@ -115,22 +115,35 @@ DECORATES:
     name: '&aSort Items By Unsued'
     lore:
       - '&cComing soon...'
+CONVERT:
+  COAL:
+    DATA: 0
+    MATERIAL: COAL_ORE
+  IRON_INGOT:
+    DATA: 0
+    MATERIAL: IRON_ORE
+  GOLD_INGOT:
+    DATA: 0
+    MATERIAL: GOLD_ORE
+  DIAMOND:
+    DATA: 0
+    MATERIAL: DIAMOND_ORE
+  EMERALD:
+    DATA: 0
+    MATERIAL: EMERALD_ORE
+  COBBLESTONE:
+    DATA: 0
+    MATERIAL: STONE
+  INK_SACK:
+    DATA: 4
+    MATERIAL: LAPIS_ORE
 ITEMS:
   '0':
-    Convert_Status: true
-    Actions:
-      BLOCK: COAL_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 19
     Block:
       update: true
       material: COAL_ORE
       amount: 1
+      slot: 19
       name: '                  &8Coal Ore'
       lore:
         - '&8● &2Used Space: &8#storage_COAL_ORE# &f/ &8#used_COAL_ORE#'
@@ -148,6 +161,7 @@ ITEMS:
       update: false
       material: COAL
       amount: 1
+      slot: 19
       name: '                    &8Coal'
       lore:
         - '&8● &2Used Space: &8#storage_COAL_ORE# &f/ &8#used_COAL_ORE#'
@@ -162,20 +176,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &8Coal &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &8Coal&7.'
   '1':
-    Convert_Status: true
-    Actions:
-      BLOCK: IRON_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 20
     Block:
       update: true
       material: IRON_ORE
       amount: 1
+      slot: 20
       name: '               &fIron Ore'
       lore:
         - '&f● &2Used Space: &f#storage_IRON_ORE# / #used_IRON_ORE#'
@@ -193,6 +198,7 @@ ITEMS:
       update: true
       material: IRON_INGOT
       amount: 1
+      slot: 20
       name: '                &fIron Ingot'
       lore:
         - '&f● &2Used Space: &f#storage_IRON_ORE# / #used_IRON_ORE#'
@@ -207,20 +213,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &fIron &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &fIron&7.'
   '2':
-    Convert_Status: true
-    Actions:
-      BLOCK: GOLD_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 21
     Block:
       update: true
       material: GOLD_ORE
       amount: 1
+      slot: 21
       name: '                 &eGold Ore'
       lore:
         - '&e● &2Used Space: &e#storage_GOLD_ORE# &f/ &e#used_GOLD_ORE#'
@@ -238,6 +235,7 @@ ITEMS:
       update: true
       material: GOLD_INGOT
       amount: 1
+      slot: 21
       name: '                &eGold Ingot'
       lore:
         - '&e● &2Used Space: &e#storage_GOLD_ORE# &f/ &e#used_GOLD_ORE#'
@@ -252,20 +250,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &eGold &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &eGold&7.'
   '3':
-    Convert_Status: true
-    Actions:
-      BLOCK: LAPIS_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALLee
-    Slot: 22
     Block:
       update: true
       material: LAPIS_ORE
       amount: 1
+      slot: 22
       name: '             &9Lapis Lazuli Ore'
       lore:
         - '&9● &2Used Space: &9#storage_LAPIS_ORE# &f/ &9#used_LAPIS_ORE#'
@@ -284,6 +273,7 @@ ITEMS:
       material: INK_SACK
       data: 4
       amount: 1
+      slot: 22
       name: '               &9Lapis Lazuli'
       lore:
         - '&9● &2Used Space: &9#storage_LAPIS_ORE# &f/ &9#used_LAPIS_ORE#'
@@ -298,20 +288,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &9Lapis &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &9Lapis&7.'
   '4':
-    Convert_Status: true
-    Actions:
-      BLOCK: REDSTONE_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 23
     Block:
       update: true
       material: REDSTONE_ORE
       amount: 1
+      slot: 23
       name: '              &cRedstone Ore'
       lore:
         - '&c● &2Used Space: &c#storage_REDSTONE_ORE# &f/ &c#used_REDSTONE_ORE#'
@@ -329,6 +310,7 @@ ITEMS:
       update: true
       material: REDSTONE
       amount: 1
+      slot: 23
       name: '                &cRedstone'
       lore:
         - '&c● &2Used Space: &c#storage_REDSTONE_ORE# &f/ &c#used_REDSTONE_ORE#'
@@ -343,20 +325,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &cRedstone &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &cRedstone&7.'
   '5':
-    Convert_Status: true
-    Actions:
-      BLOCK: DIAMOND_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 24
     Block:
       update: true
       material: DIAMOND_ORE
       amount: 1
+      slot: 24
       name: '              &bDiamond Ore'
       lore:
         - '&b● &2Used Space: &b#storage_DIAMOND_ORE# &f/ &b#used_DIAMOND_ORE#'
@@ -374,6 +347,7 @@ ITEMS:
       update: true
       material: DIAMOND
       amount: 1
+      slot: 24
       name: '                &bDiamond'
       lore:
         - '&b● &2Used Space: &b#storage_DIAMOND_ORE# &f/ &b#used_DIAMOND_ORE#'
@@ -388,20 +362,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &bDiamond &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &bDiamond&7.'
   '6':
-    Convert_Status: true
-    Actions:
-      BLOCK: EMERALD_ORE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 25
     Block:
       update: true
       material: EMERALD_ORE
       amount: 1
+      slot: 25
       name: '              &aEmerald Ore'
       lore:
         - '&a● &2Used Space: &a#storage_EMERALD_ORE# &f/ &a#used_EMERALD_ORE#'
@@ -419,6 +384,7 @@ ITEMS:
       update: true
       material: EMERALD
       amount: 1
+      slot: 25
       name: '                &aEmerald'
       lore:
         - '&a● &2Used Space: &a#storage_EMERALD_ORE# &f/ &a#used_EMERALD_ORE#'
@@ -433,20 +399,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &aEmerald &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &aEmerald7.'
   '7':
-    Convert_Status: false
-    Actions:
-      BLOCK: COAL_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 28
     Block:
       update: true
       material: COAL_BLOCK
       amount: 1
+      slot: 28
       name: '                 &8Coal Block'
       lore:
         - '&8● &2Used Space: &8#storage_COAL_BLOCK# &f/ &8#used_COAL_BLOCK#'
@@ -461,20 +418,11 @@ ITEMS:
         - '&3[&6Drop&3] &7Type amount &8Coal Block &7to sell.'
         - '&3[&6Control + Drop&3] &7Sell all &8Coal Block&7.'
   '8':
-    Convert_Status: false
-    Actions:
-      BLOCK: IRON_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
-    Slot: 29
     Block:
       update: true
       material: IRON_BLOCK
       amount: 1
+      slot: 29
       name: '                 &fIron Block'
       lore:
         - '&f● &2Used Space: &f#storage_IRON_BLOCK# / #used_IRON_BLOCK#'
@@ -503,6 +451,7 @@ ITEMS:
       update: true
       material: GOLD_BLOCK
       amount: 1
+      slot: 30
       name: '                 &eGold Block'
       lore:
         - '&e● &2Used Space: &e#storage_GOLD_BLOCK# &f/ &e#used_GOLD_BLOCK#'
@@ -531,6 +480,7 @@ ITEMS:
       update: true
       material: LAPIS_BLOCK
       amount: 1
+      slot: 31
       name: '              &9Lapis Lazuli Block'
       lore:
         - '&9● &2Used Space: &9#storage_LAPIS_BLOCK# &f/ &9#used_LAPIS_BLOCK#'
@@ -559,6 +509,7 @@ ITEMS:
       update: true
       material: REDSTONE_BLOCK
       amount: 1
+      slot: 32
       name: '                &cRedstone Block'
       lore:
         - '&c● &2Used Space: &c#storage_REDSTONE_BLOCK# &f/ &c#used_REDSTONE_BLOCK#'
@@ -587,6 +538,7 @@ ITEMS:
       update: true
       material: DIAMOND_BLOCK
       amount: 1
+      slot: 33
       name: '                 &bDiamond Block'
       lore:
         - '&b● &2Used Space: &b#storage_DIAMOND_BLOCK# &f/ &b#used_DIAMOND_BLOCK#'
@@ -615,6 +567,7 @@ ITEMS:
       update: true
       material: EMERALD_BLOCK
       amount: 1
+      slot: 34
       name: '                &aEmerald Block'
       lore:
         - '&a● &2Used Space: &a#storage_EMERALD_BLOCK# &f/ &a#used_EMERALD_BLOCK#'
@@ -643,6 +596,7 @@ ITEMS:
       update: true
       material: DIRT
       amount: 1
+      slot: 37
       name: '                 &4Dirt'
       lore:
         - '&4● &2Used Space: &4#storage_DIRT# / &4#used_DIRT#'
@@ -671,6 +625,7 @@ ITEMS:
       update: true
       material: LOG
       amount: 1
+      slot: 38
       name: '                &6Oak Log'
       lore:
         - '&6● &2Used Space: &6#storage_LOG# / &6#used_LOG#'
@@ -699,6 +654,7 @@ ITEMS:
       update: true
       material: COBBLESTONE
       amount: 1
+      slot: 39
       name: '                &7Cobble Stone'
       lore:
         - '&7● &2Used Space: &7#storage_STONE# / &7#used_STONE#'
@@ -716,6 +672,7 @@ ITEMS:
       update: true
       material: STONE
       amount: 1
+      slot: 39
       name: '                  &7Stone'
       lore:
         - '&f● &2Used Space: &7#storage_STONE# / &7#used_STONE#'
@@ -744,6 +701,7 @@ ITEMS:
       update: true
       material: NETHERRACK
       amount: 1
+      slot: 40
       name: '               &3Netherrack'
       lore:
         - '&3● &2Used Space: &3#storage_NETHERRACK# / &3#used_NETHERRACK#'
@@ -772,11 +730,12 @@ ITEMS:
       update: true
       material: ENDER_STONE
       amount: 1
+      slot: 41
       name: '               &dEnd Stone'
       lore:
         - '&d● &2Used Space: &d#storage_ENDER_STONE# / &d#used_ENDER_STONE#'
         - '&d● &5Empty Space: &d#count_ENDER_STONE# / &d#empty_ENDER_STONE#'
-        - '&d● &6Max Space: &d#max_storage_END_STONE#'
+        - '&d● &6Max Space: &d#max_storage_ENDER_STONE#'
         - '&d● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &dEnd Stone &7to take.'
@@ -800,6 +759,7 @@ ITEMS:
       update: true
       material: STAINED_GLASS
       amount: 1
+      slot: 42
       name: '             &fWhite Stained Glass'
       lore:
         - '&f● &2Used Space: &f#storage_STAINED_GLASS# / &f#used_STAINED_GLASS#'
@@ -829,11 +789,12 @@ ITEMS:
       material: STAINED_GLASS
       data: 4
       amount: 1
+      slot: 43
       name: '             &eYellow Stained Glass'
       lore:
         - '&e● &2Used Space: &e#storage_STAINED_GLASS;4# / &e#used_STAINED_GLASS;4#'
         - '&e● &5Empty Space: &e#count_STAINED_GLASS;4# / &e#empty_STAINED_GLASS;4#'
-        - '&e● &6Max Space: &e#max_storage_STAINED_GLASS;4'
+        - '&e● &6Max Space: &e#max_storage_STAINED_GLASS;4#'
         - '&e● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount &eYellow Glass &7to take.'
