@@ -21,12 +21,8 @@ public class Join implements Listener {
     @EventHandler
     public void onJoin(@NotNull PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        new PlayerData(p.getName()).load();
-        setautoSmelt(p, Files.getconfigfile().getBoolean("Auto.Smelt"));
-        setautoPick(p, Files.getconfigfile().getBoolean("Auto.Pickup"));
         for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-            Data.setMaxStorage(p, item, getMaxStorageData(p, item));
-            Data.setStorage(p, item, getStorageData(p, item));
+            loadPlayerData(p, item);
         }
         if (!(getPlayers() == null)) {
             if (!getPlayers().contains(p.getName())) {

@@ -29,7 +29,9 @@ public class Data {
      */
     public static int getStorageData(@NotNull Player p, String item) {
         item = item.toUpperCase();
-        return new PlayerData(p.getName()).getConfig().getInt("players." + p.getName() + ".items." + item + ".amount");
+        PlayerData playerData = new PlayerData(p.getName());
+        playerData.load();
+        return playerData.getConfig().getInt("players." + p.getName() + ".items." + item + ".amount");
     }
 
     /**
@@ -209,7 +211,9 @@ public class Data {
      */
     public static int getMaxStorageData(@NotNull Player p, String item) {
         item = item.toUpperCase();
-        return new PlayerData(p.getName()).getConfig().getInt("players." + p.getName() + ".items." + item + ".max");
+        PlayerData playerData = new PlayerData(p.getName());
+        playerData.load();
+        return playerData.getConfig().getInt("players." + p.getName() + ".items." + item + ".max");
     }
 
     /**
@@ -444,11 +448,20 @@ public class Data {
      */
     public static void savePlayerData(@NotNull Player p, String item) {
         PlayerData data = new PlayerData(p.getName());
+        data.load();
         data.getConfig().set("players." + p.getName() + ".auto.Smelt", autoSmelt(p));
         data.getConfig().set("players." + p.getName() + ".auto.Pick", autoPick(p));
         data.getConfig().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
         data.getConfig().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
         data.save();
+    }
+
+    public static void loadPlayerData(Player p, String item) {
+        PlayerData data = new PlayerData(p.getName());
         data.load();
+        setautoSmelt(p, Files.getconfigfile().getBoolean("Auto.Smelt"));
+        setautoPick(p, Files.getconfigfile().getBoolean("Auto.Pickup"));
+        setMaxStorage(p, item, getMaxStorageData(p, item));
+        setStorage(p, item, getStorageData(p, item));
     }
 }
