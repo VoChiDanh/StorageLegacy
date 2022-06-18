@@ -88,13 +88,6 @@ public final class Storage extends JavaPlugin implements Listener {
         Files.createfiles();
         checkFilesVersion();
         NMSAssistant nms = new NMSAssistant();
-        if (nms.isVersionGreaterThanOrEqualTo(13)) {
-            File.updateFile(Storage.get(), getconfigfile(), "config.yml");
-            File.updateFile(Storage.get(), getguifile(), "gui.yml");
-        } else {
-            File.updateFile(Storage.get(), getconfigfile(), "config-legacy.yml");
-            File.updateFile(Storage.get(), getguifile(), "gui-legacy.yml");
-        }
         File.updateFile(Storage.get(), getlanguagefile(), "language.yml");
         if (nms.isVersionGreaterThanOrEqualTo(19)) {
             DCore.dCoreLog("&eYou are running the plugin in 1.19+, if you find any bugs/errors please report them to github or discord!");
