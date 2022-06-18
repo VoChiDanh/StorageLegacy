@@ -57,7 +57,6 @@ public final class Storage extends JavaPlugin implements Listener {
                 p.kickPlayer("Rejoin in few second");
             }
         }
-        Metrics metrics = new Metrics(this, 14622);
         if (!setupEconomy()) {
             ecostatus = false;
             getLogger().severe(String.format("[%s] You need essentials and vault!", getDescription().getName()));
@@ -102,18 +101,20 @@ public final class Storage extends JavaPlugin implements Listener {
             DCore.dCoreLog("&eDiscord: https://discord.gg/CWjaq5fZN9");
             DCore.dCoreLog("&eGithub: " + getDescription().getWebsite());
         }
-        if (Files.getdatafile().contains("players")) {
-            for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
-                PlayerData playerData = new PlayerData(name);
-                playerData.load();
-                if (playerData.getConfig().getKeys(true).size() == 0) {
-                    playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
-                    playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
-                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
-                        playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
-                        playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+        if (getRawDataFile().exists()) {
+            if (Files.getdatafile().contains("players")) {
+                for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                    PlayerData playerData = new PlayerData(name);
+                    playerData.load();
+                    if (playerData.getConfig().getKeys(true).size() == 0) {
+                        playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                        playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                            playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                            playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                        }
+                        playerData.save();
                     }
-                    playerData.save();
                 }
             }
         }
@@ -149,7 +150,6 @@ public final class Storage extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         saveconfig();
-        savedata();
         savelanguage();
         savegui();
         if (ecostatus) {

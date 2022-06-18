@@ -107,13 +107,6 @@ public class Files {
         }
     }
 
-    public static void savedata() {
-        try {
-            data.save(dataFile);
-        } catch (IOException ignored) {
-        }
-    }
-
     public static void savegui() {
         try {
             gui.save(guiFile);
