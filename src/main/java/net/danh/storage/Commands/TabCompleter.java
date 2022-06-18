@@ -18,7 +18,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         List<String> none = new ArrayList<>();
-        List<String> aarg0 = Arrays.asList("help", "storage", "max_storage", "reload", "add", "take", "sell");
+        List<String> aarg0 = Arrays.asList("help", "storage", "max_storage", "reload", "add", "take", "sell", "convert");
         List<String> aarg1 = Arrays.asList("set", "add", "remove");
         List<String> arg0 = Arrays.asList("help", "add", "take", "sell");
         List<String> amount = Arrays.asList("all", "<positive number>");

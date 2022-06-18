@@ -2,6 +2,7 @@ package net.danh.storage.Manager;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.danh.dcore.NMS.NMSAssistant;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -42,7 +43,6 @@ public class Files {
             }
         }
         if (!languageFile.exists()) get().saveResource("language.yml", false);
-        if (!dataFile.exists()) get().saveResource("data.yml", false);
         if (!guiFile.exists()) {
             if (nmsAssistant.isVersionGreaterThanOrEqualTo(13)) {
                 get().saveResource("gui.yml", false);
@@ -57,12 +57,18 @@ public class Files {
 
         try {
             language.load(languageFile);
-            data.load(dataFile);
+            if (dataFile.exists()) {
+                data.load(dataFile);
+            }
             gui.load(guiFile);
             config.load(configFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
+    }
+
+    public static File getRawDataFile() {
+        return dataFile;
     }
 
     public static FileConfiguration getconfigfile() {
@@ -183,45 +189,7 @@ public class Files {
     public static List<String> lorepapi(List<String> lores, Player p) {
         List<String> final_lores = new ArrayList<>();
         for (String input : lores) {
-            String output = input.replaceAll("#total_storage#", getTotalStorage(p)).replaceAll("#total_max_storage#", getTotalMaxStorage(p)).replaceAll("#total_used#", getTotalUsed(p)).replaceAll("#total_empty#", getTotalEmpty(p)).replaceAll("#total_count#", getTotalCount(p)).replaceAll("#player#", p.getName());
-            if (ecostatus) {
-                output = output.replaceAll("#money#", String.valueOf(economy.getBalance(p)));
-                output = output.replaceAll("#money_commas#", String.format("%,d", (long) economy.getBalance(p)));
-                output = output.replaceAll("#money_fixed#", String.valueOf((long) economy.getBalance(p)));
-            } else {
-                output = output.replaceAll("#money#", "null");
-                output = output.replaceAll("#money_commas#", "null");
-                output = output.replaceAll("#money_fixed#", "null");
-            }
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                output = output.replaceAll("#storage_" + item + "#", String.valueOf(getStorage(p, item)));
-            }
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                output = output.replaceAll("#max_storage_" + item + "#", String.valueOf(getMaxStorage(p, item)));
-            }
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                output = output.replaceAll("#used_" + item + "#", getUsed(p, item));
-            }
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                output = output.replaceAll("#empty_" + item + "#", getEmpty(p, item));
-            }
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                output = output.replaceAll("#count_" + item + "#", getCount(p, item));
-            }
-            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                output = output.replaceAll("#price_" + item + "#", String.valueOf(getPrice(item)));
-            }
-            if (autoPick(p)) {
-                output = output.replaceAll("#auto_pickup#", getconfigfile().getString("Boolean.true"));
-            } else {
-                output = output.replaceAll("#auto_pickup#", getconfigfile().getString("Boolean.false"));
-            }
-            if (autoSmelt(p)) {
-                output = output.replaceAll("#auto_smelt#", getconfigfile().getString("Boolean.true"));
-            } else {
-                output = output.replaceAll("#auto_smelt#", getconfigfile().getString("Boolean.false"));
-            }
-            output = PlaceholderAPI.setPlaceholders(p, output);
+            String output = papi(input, p);
             final_lores.add(output);
         }
         return final_lores;
