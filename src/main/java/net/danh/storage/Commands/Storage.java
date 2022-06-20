@@ -136,7 +136,7 @@ public class Storage extends CMDBase {
                 if (isInt(args[2])) {
                     try {
                         if (Integer.parseInt(args[2]) > 0) {
-                            AddItems((p), args[1], Integer.parseInt(args[2]));
+                            AddItems((p), args[1].toUpperCase(), Integer.parseInt(args[2]));
                         } else {
                             sendPlayerMessage(p, getlanguagefile().getString("Invaild_Number"));
                         }

@@ -13,16 +13,16 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 import static net.danh.dcore.Utils.Chat.colorize;
-import static net.danh.storage.Manager.Files.*;
-import static net.danh.storage.Storage.*;
+import static net.danh.storage.Manager.Files.getconfigfile;
+import static net.danh.storage.Manager.Files.getlanguagefile;
+import static net.danh.storage.Storage.get;
 
 public class Data {
-    private static final HashMap<String, Integer> data = new HashMap<>();
-    private static final HashMap<String, Boolean> status = new HashMap<>();
     public static final HashMap<Player, String> item = new HashMap<>();
     public static final Set<Player> action = new HashSet<>();
     public static final HashMap<Player, ClickType> click = new HashMap<>();
-
+    private static final HashMap<String, Integer> data = new HashMap<>();
+    private static final HashMap<String, Boolean> status = new HashMap<>();
 
     /**
      * @param p    Player
@@ -270,7 +270,8 @@ public class Data {
         List<String> players = new ArrayList<>();
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
-                if (listOfFiles[i].getName().matches("(.+)(\\.yml)")) players.add(listOfFiles[i].getName().replaceAll("\\.yml", ""));
+                if (listOfFiles[i].getName().matches("(.+)(\\.yml)"))
+                    players.add(listOfFiles[i].getName().replaceAll("\\.yml", ""));
             }
         }
         return players;

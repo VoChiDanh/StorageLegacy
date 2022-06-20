@@ -51,7 +51,7 @@ Input:
   Chat: "&6How many item you want? Type amount, chat 'exit' to exit"
 Convert:
   Done: "&aSuccessfully converted"
-  Converted:  "&eYou have already converted"
+  Converted: "&eYou have already converted"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"

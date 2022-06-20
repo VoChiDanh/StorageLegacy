@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static net.danh.storage.Manager.Data.*;
-import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Manager.Data.loadPlayerData;
+import static net.danh.storage.Manager.Files.getconfigfile;
 
 public class Join implements Listener {
     @EventHandler

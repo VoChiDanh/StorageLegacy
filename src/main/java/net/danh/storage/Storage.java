@@ -18,7 +18,6 @@ import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
 import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

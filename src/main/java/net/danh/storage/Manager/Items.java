@@ -28,12 +28,12 @@ public class Items {
      * @param amount Amount
      */
     public static void AddItems(Player p, String name, Integer amount) {
-        name = name.toUpperCase();
         if (Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false).contains(name)) {
+            String convert_name = getconfigfile().getString("Blocks." + name.toUpperCase() + ".Convert").toUpperCase();
             NMSAssistant nmsAssistant = new NMSAssistant();
             ItemStack checkitems;
             if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                String[] iname = name.split(";");
+                String[] iname = convert_name.split(";");
                 if (iname.length == 1) {
                     checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
                 } else {
@@ -41,19 +41,19 @@ public class Items {
                     checkitems.setDurability(Short.parseShort(iname[1]));
                 }
             } else {
-                checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)));
+                checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(convert_name)));
             }
             if (p.getInventory().containsAtLeast(checkitems, amount)) {
                 ItemStack items;
                 if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                    String[] iname = name.split(";");
+                    String[] iname = convert_name.split(";");
                     if (iname.length == 1) {
                         items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount);
                     } else {
                         items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount, Short.parseShort(iname[1]));
                     }
                 } else {
-                    items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
+                    items = new ItemStack(Objects.requireNonNull(Material.getMaterial(convert_name)), amount);
                 }
                 p.getInventory().removeItem(items);
                 Data.addStorage(p, name, amount);
