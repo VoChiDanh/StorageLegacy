@@ -5,6 +5,38 @@ UPDATE:
   STATUS: true
   TIME: 1
   TYPE: ITEMS
+DECORATES_SLOTS:
+  - 46
+  - 47
+  - 48
+  - 49
+  - 50
+  - 51
+  - 52
+  - 18
+  - 26
+  - 27
+  - 35
+  - 36
+  - 44
+  - 45
+  - 53
+  - 9
+  - 10
+  - 11
+  - 15
+  - 16
+  - 17
+  - 3
+  - 5
+  - 2
+  - 6
+  - 13
+  - 0
+  - 1
+  - 4
+  - 7
+  - 8
 DECORATES:
   BLACK_STAINED_GLASS_PANE:
     update: false
