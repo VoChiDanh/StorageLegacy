@@ -4,7 +4,8 @@
 
 # Storage  [1.9.x - 1.18.x]
 
-> You will have a virtual storage to storage listed blocks in config, when you mine block was listed in config, you'll get block to virtual storage. You can sell it or take it to physical item
+> You will have a virtual storage to storage listed blocks in config, when you mine block was listed in config, you'll
+> get block to virtual storage. You can sell it or take it to physical item
 
 ## Commands
 

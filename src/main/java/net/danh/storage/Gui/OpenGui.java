@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -21,17 +20,12 @@ public class OpenGui {
 
     public static Inventory Open(Player p) {
         Inventory gui = Bukkit.createInventory(p, getguifile().getInt("ROWS") * 9, Chat.colorize(getguifile().getString("TITLE").replaceAll("#player#", p.getName())));
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                ItemDecorate(p, gui);
-                if (!Data.autoSmelt(p)) {
-                    ItemsBlock(p, gui);
-                } else {
-                    ItemsConvert(p, gui);
-                }
-            }
-        }.runTaskTimer(Storage.get(), 20L, 20L);
+        ItemDecorate(p, gui);
+        if (!Data.autoSmelt(p)) {
+            ItemsBlock(p, gui);
+        } else {
+            ItemsConvert(p, gui);
+        }
         return gui;
     }
 
