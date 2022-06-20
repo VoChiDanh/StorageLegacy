@@ -1,6 +1,7 @@
 package net.danh.storage.Events;
 
 import net.danh.dcore.NMS.NMSAssistant;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -67,7 +68,11 @@ public class BlockBreak implements Listener {
                 String data = String.valueOf(damaged);
                 blocks = material + ";" + data;
             } else {
-                blocks = e.getBlock().getType().toString();
+                if (!e.getBlock().getType().equals(Material.GLOWING_REDSTONE_ORE)) {
+                    blocks = e.getBlock().getType().toString();
+                } else {
+                    blocks = Material.REDSTONE_ORE.toString();
+                }
             }
         }
         List<String> w = getconfigfile().getStringList("Blacklist-World");
