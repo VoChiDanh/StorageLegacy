@@ -7,12 +7,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
 import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Storage.*;
 
 public class Data {
     private static final HashMap<String, Integer> data = new HashMap<>();
@@ -263,15 +265,15 @@ public class Data {
     }
 
     public static List<String> getPlayers() {
-        return getdatafile().getStringList("All_players");
-    }
-
-    public static void addPlayers(@NotNull Player p) {
-        List<String> players = getdatafile().getStringList("All_players");
-        players.add(p.getName());
-        Collections.sort(players);
-        getdatafile().set("All_players", players);
-        savedata();
+        File folder = get().getDataFolder();
+        File[] listOfFiles = folder.listFiles();
+        List<String> players = new ArrayList<>();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                if (listOfFiles[i].getName().matches("(.+)(\\.yml)")) players.add(listOfFiles[i].getName().replaceAll("\\.yml", ""));
+            }
+        }
+        return players;
     }
 
     /**

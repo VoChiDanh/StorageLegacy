@@ -39,20 +39,29 @@ public class Storage extends CMDBase {
             }
             if (p.hasPermission("Storage.admin")) {
                 if (args[0].equalsIgnoreCase("convert")) {
-                    for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
-                        PlayerData playerData = new PlayerData(name);
-                        playerData.load();
-                        if (playerData.getConfig().getKeys(true).size() == 0) {
-                            playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
-                            playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
-                            for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
-                                playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
-                                playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                    if (getRawDataFile().exists()) {
+                        try {
+                            for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                                PlayerData playerData = new PlayerData(name);
+                                playerData.load();
+                                if (playerData.getConfig().getKeys(true).size() == 0) {
+                                    playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                                    playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                                        playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                                        playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                                    }
+                                    playerData.save();
+                                }
                             }
-                            playerData.save();
+                            getRawDataFile().delete();
+                            sendPlayerMessage(p, getlanguagefile().getString("Convert.Done"));
+                        } catch (Exception e) {
+                            Bukkit.getLogger().warning("[Storage] The data.yml file is not a data file");
                         }
+                    } else {
+                        sendPlayerMessage(p, getlanguagefile().getString("Convert.Converted"));
                     }
-                    sendPlayerMessage(p, "&aDone");
                 }
                 if (args[0].equalsIgnoreCase("reload")) {
                     reloadfiles();
@@ -291,20 +300,29 @@ public class Storage extends CMDBase {
                 sendConsoleMessage(c, getlanguagefile().getStringList("User.Help_Admin"));
             }
             if (args[0].equalsIgnoreCase("convert")) {
-                for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
-                    PlayerData playerData = new PlayerData(name);
-                    playerData.load();
-                    if (playerData.getConfig().getKeys(true).size() == 0) {
-                        playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
-                        playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
-                        for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
-                            playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
-                            playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                if (getRawDataFile().exists()) {
+                    try {
+                        for (String name : Files.getdatafile().getConfigurationSection("players").getKeys(false)) {
+                            PlayerData playerData = new PlayerData(name);
+                            playerData.load();
+                            if (playerData.getConfig().getKeys(true).size() == 0) {
+                                playerData.getConfig().set("players." + name + ".auto.Smelt", getdatafile().getBoolean("players." + name + ".auto.Smelt"));
+                                playerData.getConfig().set("players." + name + ".auto.Pick", getdatafile().getBoolean("players." + name + ".auto.Pick"));
+                                for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks")).getKeys(false)) {
+                                    playerData.getConfig().set("players." + name + ".items." + item + ".max", getdatafile().getInt("players." + name + ".items." + item + ".max"));
+                                    playerData.getConfig().set("players." + name + ".items." + item + ".amount", getdatafile().getInt("players." + name + ".items." + item + ".amount"));
+                                }
+                                playerData.save();
+                            }
                         }
-                        playerData.save();
+                        getRawDataFile().delete();
+                        sendConsoleMessage(c, getlanguagefile().getString("Convert.Done"));
+                    } catch (Exception e) {
+                        Bukkit.getLogger().warning("[Storage] The data.yml file is not a data file");
                     }
+                } else {
+                    sendConsoleMessage(c, getlanguagefile().getString("Convert.Converted"));
                 }
-                sendConsoleMessage(c, "&aDone");
             }
             if (args[0].equalsIgnoreCase("reload")) {
                 reloadfiles();

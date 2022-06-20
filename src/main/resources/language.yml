@@ -49,6 +49,9 @@ Input:
   Space_Error: "&cThe input can not contain space character."
   Invaild_Number: "&cYou must type a number greater than 0"
   Chat: "&6How many item you want? Type amount, chat 'exit' to exit"
+Convert:
+  Done: "&aSuccessfully converted"
+  Converted:  "&eYou have already converted"
 Type:
   autosmelt: "&6Auto Smelt"
   autopickup: "&6Auto Pickup"
