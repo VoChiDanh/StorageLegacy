@@ -2,12 +2,14 @@ package net.danh.storage.Events;
 
 import net.danh.dcore.NMS.NMSAssistant;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -55,6 +57,14 @@ public class BlockBreak implements Listener {
         }
     }
 
+    public boolean isPlacedBlock(Block b) {
+        List<MetadataValue> metaDataValues = b.getMetadata("PlacedBlock");
+        for (MetadataValue value : metaDataValues) {
+            return value.asBoolean();
+        }
+        return false;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreaking(@NotNull BlockBreakEvent e) {
         Player p = e.getPlayer();
@@ -87,7 +97,7 @@ public class BlockBreak implements Listener {
                 if (items == null) {
                     return;
                 }
-                if (p.getInventory().getItemInMainHand().getItemMeta() != null && Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
+                if (!isPlacedBlock(e.getBlock()) && p.getInventory().getItemInMainHand().getItemMeta() != null && Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
                     if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
                         if (getconfigfile().getBoolean("Fortune.Vanilla")) {
                             int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
