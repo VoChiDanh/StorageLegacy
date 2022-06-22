@@ -1,5 +1,8 @@
 package net.danh.storage;
 
+import com.jeff_media.updatechecker.UpdateCheckSource;
+import com.jeff_media.updatechecker.UpdateChecker;
+import com.jeff_media.updatechecker.UserAgentBuilder;
 import net.danh.dcore.DCore;
 import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.File;
@@ -16,7 +19,6 @@ import net.danh.storage.Hook.PlaceholderAPI;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
-import net.danh.storage.Manager.SpigotUpdater;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -29,7 +31,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 
 import static net.danh.dcore.DCore.RegisterDCore;
-import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.storage.Manager.Files.*;
 
 public final class Storage extends JavaPlugin implements Listener {
@@ -110,23 +111,13 @@ public final class Storage extends JavaPlugin implements Listener {
                 }
             }
         }
-        (new BukkitRunnable() {
-            public void run() {
-                try {
-                    SpigotUpdater updater = new SpigotUpdater(Storage.instance, 100516);
-                    if (!updater.getLatestVersion().equals(getDescription().getVersion())) {
-                        if (updater.checkForUpdates()) getLogger().info(colorize("&6An update was found!"));
-                        getLogger().info(colorize("&aNew version: " + updater.getLatestVersion()));
-                        getLogger().info(colorize("&aYour version: " + Storage.get().getDescription().getVersion()));
-                        getLogger().info(colorize("&cDownload: " + updater.getResourceURL()));
-                    }
-
-                } catch (Exception e) {
-                    getLogger().warning("Could not check for updates! Stacktrace:");
-                    e.printStackTrace();
-                }
-            }
-        }).runTaskTimer(this, 3600 * 20L, 3600 * 20L);
+        new UpdateChecker(this, UpdateCheckSource.SPIGOT, "100516")
+                .setDownloadLink("https://www.spigotmc.org/resources/100516/")
+                .setNotifyOpsOnJoin(true)
+                .setNotifyByPermissionOnJoin("storage.admin")
+                .setUserAgent(new UserAgentBuilder().addPluginNameAndVersion())
+                .checkEveryXHours(0.5)
+                .checkNow();
         (new BukkitRunnable() {
             public void run() {
                 for (Player p : getServer().getOnlinePlayers()) {

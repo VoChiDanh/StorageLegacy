@@ -38,6 +38,10 @@
                             <pattern>org.bstats</pattern>
                             <shadedPattern>net.danh</shadedPattern>
                         </relocation>
+                        <relocation>
+                            <pattern>com.jeff_media.updatechecker</pattern>
+                            <shadedPattern>net.danh</shadedPattern>
+                        </relocation>
                     </relocations>
                 </configuration>
                 <executions>
@@ -91,6 +95,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>jeff-media-public</id>
+            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -121,6 +129,12 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
+            <version>3.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>SpigotUpdateChecker</artifactId>
             <version>3.0.0</version>
             <scope>compile</scope>
         </dependency>

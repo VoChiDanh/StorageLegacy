@@ -4,7 +4,6 @@ import net.danh.dcore.Commands.CMDBase;
 import net.danh.storage.Gui.OpenGui;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
-import net.danh.storage.Manager.SpigotUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -66,17 +65,6 @@ public class Storage extends CMDBase {
                 if (args[0].equalsIgnoreCase("reload")) {
                     reloadfiles();
                     sendPlayerMessage(p, getlanguagefile().getString("Admin.Reload"));
-                    try {
-                        SpigotUpdater updater = new SpigotUpdater(net.danh.storage.Storage.get(), 100516);
-                        if (!updater.getLatestVersion().equals(net.danh.storage.Storage.get().getDescription().getVersion())) {
-                            if (updater.checkForUpdates()) {
-                                sendPlayerMessage(p, "&6An update was found!", "&aNew version: " + updater.getLatestVersion(), "&aYour version: " + net.danh.storage.Storage.get().getDescription().getVersion(), "&cDownload: " + updater.getResourceURL());
-                            }
-                        }
-                    } catch (Exception e) {
-                        net.danh.storage.Storage.get().getLogger().warning("Could not check for updates! Stacktrace:");
-                        e.printStackTrace();
-                    }
                 }
             }
         }
@@ -327,20 +315,6 @@ public class Storage extends CMDBase {
             if (args[0].equalsIgnoreCase("reload")) {
                 reloadfiles();
                 sendConsoleMessage(c, getlanguagefile().getString("Admin.Reload"));
-                try {
-                    SpigotUpdater updater = new SpigotUpdater(net.danh.storage.Storage.get(), 100516);
-                    if (!updater.getLatestVersion().equals(net.danh.storage.Storage.get().getDescription().getVersion())) {
-                        if (updater.checkForUpdates()) {
-                            sendConsoleMessage(c, "&6An update was found!");
-                            sendConsoleMessage(c, "&aNew version: " + updater.getLatestVersion());
-                            sendConsoleMessage(c, "&aYour version: " + net.danh.storage.Storage.get().getDescription().getVersion());
-                            sendConsoleMessage(c, "&cDownload: " + updater.getResourceURL());
-                        }
-                    }
-                } catch (Exception e) {
-                    sendConsoleMessage(c, "Could not check for updates! Stacktrace:");
-                    e.printStackTrace();
-                }
             }
         }
         if (args.length == 4) {
