@@ -3,7 +3,7 @@ version: '${project.version}'
 main: net.danh.storage.Storage
 authors: [ VoChiDanh ]
 api-version: 1.13
-website: https://github.com/D-x-Z/Storage
+website: https://vochidanh.gitbook.io/storage/
 softdepend:
   - Vault
   - PlaceholderAPI

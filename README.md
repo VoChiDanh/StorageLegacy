@@ -1,6 +1,6 @@
 # Wiki
 
-> Visit our [wiki](https://dxzteam.gitbook.io/storage-wiki/)
+> Visit our [wiki](https://vochidanh.gitbook.io/storage/)
 
 # Storage  [1.9.x - 1.18.x]
 
