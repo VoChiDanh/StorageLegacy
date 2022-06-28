@@ -163,9 +163,9 @@ CONVERT:
   EMERALD:
     DATA: 0
     MATERIAL: EMERALD_ORE
-  COBBLESTONE:
+  STONE:
     DATA: 0
-    MATERIAL: STONE
+    MATERIAL: COBBLESTONE
   INK_SACK:
     DATA: 4
     MATERIAL: LAPIS_ORE
@@ -472,12 +472,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: GOLD_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 30
     Block:
       update: true
@@ -501,12 +495,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: LAPIS_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 31
     Block:
       update: true
@@ -530,12 +518,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: REDSTONE_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 32
     Block:
       update: true
@@ -559,12 +541,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: DIAMOND_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 33
     Block:
       update: true
@@ -588,12 +564,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: EMERALD_BLOCK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 34
     Block:
       update: true
@@ -617,12 +587,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: DIRT
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 37
     Block:
       update: true
@@ -646,12 +610,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: LOG
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 38
     Block:
       update: true
@@ -675,12 +633,6 @@ ITEMS:
     Convert_Status: true
     Actions:
       BLOCK: STONE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 39
     Block:
       update: true
@@ -722,12 +674,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: NETHERRACK
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 40
     Block:
       update: true
@@ -751,12 +697,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: ENDER_STONE
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 41
     Block:
       update: true
@@ -780,12 +720,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: STAINED_GLASS
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 42
     Block:
       update: true
@@ -809,12 +743,6 @@ ITEMS:
     Convert_Status: false
     Actions:
       BLOCK: STAINED_GLASS;4
-      LEFT: INPUT_TAKE
-      SHIFT_LEFT: TAKE_ALL
-      RIGHT: INPUT_ADD
-      SHIFT_RIGHT: ADD_ALL
-      DROP: INPUT_SELL
-      CONTROL_DROP: SELL_ALL
     Slot: 43
     Block:
       update: true
