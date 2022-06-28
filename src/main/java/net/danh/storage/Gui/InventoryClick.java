@@ -32,6 +32,9 @@ public class InventoryClick implements Listener {
                 e.setResult(Event.Result.DENY);
                 NMSAssistant nms = new NMSAssistant();
                 if (e.isCancelled()) {
+                    if (e.getInventory().getItem(e.getSlot()) == null) {
+                        return;
+                    }
                     String name = e.getInventory().getItem(e.getSlot()).getType().toString();
                     if (nms.isVersionLessThanOrEqualTo(12)) {
                         short i_data = e.getInventory().getItem(e.getSlot()).getDurability();
