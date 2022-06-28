@@ -32,11 +32,27 @@ public class InventoryClick implements Listener {
                 e.setResult(Event.Result.DENY);
                 NMSAssistant nms = new NMSAssistant();
                 if (e.isCancelled()) {
+                    if (e.getInventory().getItem(e.getSlot()) == null) {
+                        return;
+                    }
                     String name = e.getInventory().getItem(e.getSlot()).getType().toString();
-                    for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
-                        if (f_name.equalsIgnoreCase(name)) {
-                            name = getguifile().getString("CONVERT." + name + ".MATERIAL");
-                            break;
+                    if (nms.isVersionLessThanOrEqualTo(12)) {
+                        short i_data = e.getInventory().getItem(e.getSlot()).getDurability();
+                        for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
+                            if (f_name.equalsIgnoreCase(name)) {
+                                short data = Short.parseShort(getguifile().getString("CONVERT." + name + ".DATA"));
+                                if (data == i_data) {
+                                    name = getguifile().getString("CONVERT." + name + ".MATERIAL");
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        for (String f_name : getguifile().getConfigurationSection("CONVERT").getKeys(false)) {
+                            if (f_name.equalsIgnoreCase(name)) {
+                                name = getguifile().getString("CONVERT." + name + ".MATERIAL");
+                                break;
+                            }
                         }
                     }
                     int c_s = e.getSlot();
