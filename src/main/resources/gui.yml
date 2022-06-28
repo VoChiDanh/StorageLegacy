@@ -154,8 +154,8 @@ CONVERT:
     MATERIAL: DIAMOND_ORE
   EMERALD:
     MATERIAL: EMERALD_ORE
-  STONE:
-    MATERIAL: COBBLESTONE
+  COBBLESTONE:
+    MATERIAL: STONE
   LAPIS_LAZULI:
     MATERIAL: LAPIS_ORE
 ITEMS:
@@ -597,9 +597,9 @@ ITEMS:
       slot: 39
       name: '                &7Cobble Stone'
       lore:
-        - '&7● &2Used Space: &7#storage_COBBLESTONE# / &7#used_COBBLESTONE#'
-        - '&7● &5Empty Space: &7#count_COBBLESTONE# / &7#empty_COBBLESTONE#'
-        - '&7● &6Max Space: &7#max_storage_COBBLESTONE#'
+        - '&7● &2Used Space: &7#storage_STONE# / &7#used_STONE#'
+        - '&7● &5Empty Space: &7#count_STONE# / &7#empty_STONE#'
+        - '&7● &6Max Space: &7#max_storage_STONE#'
         - '&7● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount Cobble Stone to take.'
@@ -615,9 +615,9 @@ ITEMS:
       slot: 39
       name: '                  &7Stone'
       lore:
-        - '&f● &2Used Space: &7#storage_COBBLESTONE# / &7#used_COBBLESTONE#'
-        - '&f● &5Empty Space: &7#count_COBBLESTONE# / &7#empty_COBBLESTONE#'
-        - '&f● &6Max Space: &7#max_storage_COBBLESTONE#'
+        - '&f● &2Used Space: &7#storage_STONE# / &7#used_STONE#'
+        - '&f● &5Empty Space: &7#count_STONE# / &7#empty_STONE#'
+        - '&f● &6Max Space: &7#max_storage_STONE#'
         - '&f● &3Type: &cO&et&bh&6e&9r'
         - '&f'
         - '&3[&6Left&3] &7Type amount Stone to take.'
