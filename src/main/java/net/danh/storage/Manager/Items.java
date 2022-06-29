@@ -5,8 +5,10 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -36,132 +38,69 @@ public class Items {
                 if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
                     String[] iname = convert_name.split(";");
                     if (iname.length == 1) {
-                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
+                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount);
                     } else {
-                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
-                        checkitems.setDurability(Short.parseShort(iname[1]));
+                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount, Short.parseShort(iname[1]));
                     }
                 } else {
-                    checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(convert_name)));
-                }
-                if (p.getInventory().containsAtLeast(checkitems, amount)) {
-                    ItemStack items;
-                    if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                        String[] iname = convert_name.split(";");
-                        if (iname.length == 1) {
-                            items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount);
-                        } else {
-                            items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount, Short.parseShort(iname[1]));
-                        }
-                    } else {
-                        items = new ItemStack(Objects.requireNonNull(Material.getMaterial(convert_name)), amount);
-                    }
-                    p.getInventory().removeItem(items);
-                    Data.addStorage(p, name, amount);
-                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
-                            || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
-                        if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
-                            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
-                                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
-                                            .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                            .replaceAll("%amount%", String.valueOf(amount))
-                                            .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
-                        }
-                    } else {
-                        if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
-                            if (nmsAssistant.isVersionGreaterThanOrEqualTo(11)) {
-                                p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                        .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                        .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", name)
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
-                            } else {
-                                p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                        .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                        .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", name)
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
-                            }
-                        }
-                    }
-                } else {
-                    p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
-                            .replaceAll("%item%", String.valueOf(getAmountItem(p, name)))));
+                    checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(convert_name)), amount);
                 }
             } else {
+                if (name.equalsIgnoreCase("STONE")) {
+                    name = "COBBLESTONE";
+                }
                 if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
                     String[] iname = name.split(";");
-                    if (iname.length == 1) {
-                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
+                    if (iname.length > 1) {
+                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount, Short.parseShort(iname[1]));
                     } else {
-                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])));
-                        checkitems.setDurability(Short.parseShort(iname[1]));
+                        checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
                     }
                 } else {
-                    checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)));
+                    checkitems = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
                 }
-                if (p.getInventory().containsAtLeast(checkitems, amount)) {
-                    ItemStack items;
-                    if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                        String[] iname = name.split(";");
-                        if (iname.length == 1) {
-                            items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount);
+            }
+            if (getPlayerAmount(p, checkitems) >= amount) {
+                removeItems(p, checkitems, amount);
+                Data.addStorage(p, name, amount);
+                if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                        || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
+                    if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
+                        p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
+                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
+                                        .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                        .replaceAll("%amount%", String.valueOf(amount))
+                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                    }
+                } else {
+                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
+                        if (nmsAssistant.isVersionGreaterThanOrEqualTo(11)) {
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                    .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                    .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", name)
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
                         } else {
-                            items = new ItemStack(Objects.requireNonNull(Material.getMaterial(iname[0])), amount, Short.parseShort(iname[1]));
-                        }
-                    } else {
-                        items = new ItemStack(Objects.requireNonNull(Material.getMaterial(name)), amount);
-                    }
-                    p.getInventory().removeItem(items);
-                    Data.addStorage(p, name, amount);
-                    if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("ACTION_BAR")
-                            || Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("CHAT")) {
-                        if (Files.getconfigfile().getBoolean("Message.ADD.STATUS")) {
-                            p.spigot().sendMessage(ChatMessageType.valueOf(Files.getconfigfile().getString("Message.ADD.TYPE")),
-                                    new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Add_Item"))
-                                            .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                            .replaceAll("%amount%", String.valueOf(amount))
-                                            .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                            .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
-                        }
-                    } else {
-                        if (Objects.requireNonNull(getconfigfile().getString("Message.ADD.TYPE")).equalsIgnoreCase("TITLE")) {
-                            if (nmsAssistant.isVersionGreaterThanOrEqualTo(11)) {
-                                p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                        .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                        .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", name)
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.ADD.TITLE.FADEIN"), getconfigfile().getInt("Message.ADD.TITLE.STAY"), getconfigfile().getInt("Message.ADD.TITLE.FADEOUT"));
-                            } else {
-                                p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
-                                        .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
-                                        .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
-                                        .replaceAll("%amount%", name)
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
-                            }
+                            p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.TITLE"))
+                                    .replaceAll("%item%", getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.ADD.TITLE.SUBTITLE"))
+                                    .replaceAll("%item%", Items.getName(name).replaceAll("_", " ").replaceAll("-", " "))
+                                    .replaceAll("%amount%", name)
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
                         }
                     }
-                } else {
-                    p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
-                            .replaceAll("%item%", String.valueOf(getAmountItem(p, name)))));
                 }
+            } else {
+                p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
+                        .replaceAll("%item%", String.valueOf(getAmountItem(p, name)))));
             }
         } else {
             p.sendMessage(colorize(Files.getlanguagefile().getString("User.Not_Correct_Item")));
@@ -250,7 +189,7 @@ public class Items {
                 }
             } else {
                 p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))
-                        .replaceAll("%item%", String.valueOf(getStorage(p, name)))));
+                        .replaceAll("%item%", String.valueOf(getPlayerAmount(p, new ItemStack(Material.getMaterial(name), amount))))));
             }
         } else {
             p.sendMessage(colorize(getlanguagefile().getString("User.Not_Correct_Item")));
@@ -261,10 +200,48 @@ public class Items {
      * @param name Material
      * @return Other name ?
      */
-    @Deprecated
+
     public static String getName(@NotNull String name) {
         name = name.toUpperCase();
         return getconfigfile().getString("Blocks." + name + ".Name");
+    }
+
+    public static int getPlayerAmount(HumanEntity player, ItemStack item) {
+        final PlayerInventory inv = player.getInventory();
+        final ItemStack[] items = inv.getContents();
+        int c = 0;
+        for (final ItemStack is : items) {
+            if (is != null) {
+                if (is.isSimilar(item)) {
+                    c += is.getAmount();
+                }
+            }
+        }
+        return c;
+    }
+
+    public static void removeItems(Player player, ItemStack item, long amount) {
+        item = item.clone();
+        final PlayerInventory inv = player.getInventory();
+        final ItemStack[] items = inv.getContents();
+        int c = 0;
+        for (int i = 0; i < items.length; ++i) {
+            final ItemStack is = items[i];
+            if (is != null) {
+                if (is.isSimilar(item)) {
+                    if (c + is.getAmount() > amount) {
+                        final long canDelete = amount - c;
+                        is.setAmount((int) (is.getAmount() - canDelete));
+                        items[i] = is;
+                        break;
+                    }
+                    c += is.getAmount();
+                    items[i] = null;
+                }
+            }
+        }
+        inv.setContents(items);
+        player.updateInventory();
     }
 
     /**
@@ -360,58 +337,31 @@ public class Items {
     public static int getAmountItem(Player p, String name) {
         if (Data.autoSmelt(p)) {
             name = getconfigfile().getString("Blocks." + name.toUpperCase() + ".Convert").toUpperCase();
-            int amount = 0;
-            NMSAssistant nmsAssistant = new NMSAssistant();
-            if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                for (ItemStack is : p.getInventory().getContents()) {
-                    if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
-                        amount = amount + is.getAmount();
-                    }
-                }
+            int amount;
+            String[] iname = name.split(";");
+            if (iname.length == 1) {
+                amount = getPlayerAmount(p, new ItemStack(Material.getMaterial(name)));
             } else {
-                String[] iname = name.split(";");
-                if (iname.length == 1) {
-                    for (ItemStack is : p.getInventory().getContents()) {
-                        if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
-                            amount = amount + is.getAmount();
-                        }
-                    }
-                } else {
-                    short data = Short.parseShort(iname[1]);
-                    for (ItemStack is : p.getInventory().getContents()) {
-                        if (is != null && is.getType().equals(Material.getMaterial(iname[0])) && is.getDurability() == data) {
-                            amount = amount + is.getAmount();
-                        }
-                    }
-                }
+                short data = Short.parseShort(iname[1]);
+                ItemStack item = new ItemStack(Material.getMaterial(name));
+                item.setDurability(data);
+                amount = getPlayerAmount(p, item);
             }
             return amount;
         } else {
             name = name.toUpperCase();
-            int amount = 0;
-            NMSAssistant nmsAssistant = new NMSAssistant();
-            if (nmsAssistant.isVersionLessThanOrEqualTo(12)) {
-                for (ItemStack is : p.getInventory().getContents()) {
-                    if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
-                        amount = amount + is.getAmount();
-                    }
-                }
+            if (name.equalsIgnoreCase("STONE")) {
+                name = "COBBLESTONE".toUpperCase();
+            }
+            int amount;
+            String[] iname = name.split(";");
+            if (iname.length == 1) {
+                amount = getPlayerAmount(p, new ItemStack(Material.getMaterial(name)));
             } else {
-                String[] iname = name.split(";");
-                if (iname.length == 1) {
-                    for (ItemStack is : p.getInventory().getContents()) {
-                        if (is != null && is.getType().equals(Material.getMaterial(name)) && is.getDurability() == 0) {
-                            amount = amount + is.getAmount();
-                        }
-                    }
-                } else {
-                    short data = Short.parseShort(iname[1]);
-                    for (ItemStack is : p.getInventory().getContents()) {
-                        if (is != null && is.getType().equals(Material.getMaterial(iname[0])) && is.getDurability() == data) {
-                            amount = amount + is.getAmount();
-                        }
-                    }
-                }
+                short data = Short.parseShort(iname[1]);
+                ItemStack item = new ItemStack(Material.getMaterial(name));
+                item.setDurability(data);
+                amount = getPlayerAmount(p, item);
             }
             return amount;
         }

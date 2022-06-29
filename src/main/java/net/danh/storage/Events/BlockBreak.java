@@ -85,6 +85,9 @@ public class BlockBreak implements Listener {
                 }
             }
         }
+        if (e.getBlock().getType().equals(Material.COBBLESTONE)) {
+            blocks = Material.STONE.name();
+        }
         List<String> w = getconfigfile().getStringList("Blacklist-World");
         if (!w.contains(p.getWorld().getName())) {
             if (autoPick(p)) {

@@ -100,6 +100,11 @@ Blocks:
     Price: 10
     Convert: STONE
     Block: COBBLESTONE
+  COBBLESTONE:
+    Name: '&7Stone'
+    Price: 10
+    Convert: STONE
+    Block: COBBLESTONE
   NETHERRACK:
     Name: '&3Netherrack'
     Price: 15

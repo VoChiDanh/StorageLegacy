@@ -63,6 +63,9 @@ public class Data {
      */
     public static void addStorage(@NotNull Player p, String item, Integer amount) {
         item = item.toUpperCase();
+        if (item.equalsIgnoreCase("COBBLESTONE".toUpperCase())) {
+            item = "STONE".toUpperCase();
+        }
         if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
             data.replace(p.getName() + "_storage_" + item, getStorage(p, item) + amount);
             if (Objects.requireNonNull(getconfigfile().getString("Message.RECEIVE.TYPE")).equalsIgnoreCase("ACTION_BAR")
