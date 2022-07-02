@@ -16,6 +16,9 @@ public class Chat implements Listener {
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
         String msg = ChatColor.stripColor(e.getMessage());
+        if (p == null) {
+            return;
+        }
         if (!Data.item.isEmpty() && Data.click.containsValue(ClickType.LEFT) && Data.click.containsKey(p) && Data.action.contains(p)) {
             if (!msg.equalsIgnoreCase("exit")) {
                 new BukkitRunnable() {
@@ -25,9 +28,9 @@ public class Chat implements Listener {
                         Data.item.remove(p);
                         Data.click.remove(p);
                         Data.action.remove(p);
+                        e.setCancelled(true);
                     }
                 }.runTask(Storage.get());
-                e.setCancelled(true);
             }
             if (msg.equalsIgnoreCase("exit")) {
                 Data.item.remove(p);
@@ -46,9 +49,9 @@ public class Chat implements Listener {
                         Data.item.remove(p);
                         Data.click.remove(p);
                         Data.action.remove(p);
+                        e.setCancelled(true);
                     }
                 }.runTask(Storage.get());
-                e.setCancelled(true);
             }
             if (msg.equalsIgnoreCase("exit")) {
                 Data.item.remove(p);
@@ -67,9 +70,9 @@ public class Chat implements Listener {
                         Data.item.remove(p);
                         Data.click.remove(p);
                         Data.action.remove(p);
+                        e.setCancelled(true);
                     }
                 }.runTask(Storage.get());
-                e.setCancelled(true);
             }
             if (msg.equalsIgnoreCase("exit")) {
                 Data.item.remove(p);
