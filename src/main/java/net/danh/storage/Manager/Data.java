@@ -110,7 +110,7 @@ public class Data {
                     }
                 }
             }
-        } else {
+        } else if (getMaxStorage(p, item) <= add) {
             data.replace(p.getName() + "_storage_" + item, getMaxStorage(p, item));
             if (Objects.requireNonNull(getconfigfile().getString("Message.FULL.TYPE")).equalsIgnoreCase("ACTION_BAR")
                     || Objects.requireNonNull(getconfigfile().getString("Message.FULL.TYPE")).equalsIgnoreCase("CHAT")) {
