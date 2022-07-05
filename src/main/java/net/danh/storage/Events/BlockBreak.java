@@ -102,7 +102,12 @@ public class BlockBreak implements Listener {
                 }
                 if (!isPlacedBlock(e.getBlock()) && p.getInventory().getItemInMainHand().getItemMeta() != null && Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
                     if (getconfigfile().getBoolean("Fortune.Vanilla")) {
-                        addStorage(p, blocks, getRandomInt(e.getBlock().getDrops().size(), p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS)));
+                        int amount = getRandomInt(e.getBlock().getDrops().size(), p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) + e.getBlock().getDrops().size());
+                        if (amount > 0) {
+                            addStorage(p, blocks, amount);
+                        } else {
+                            addStorage(p, blocks, 1);
+                        }
                     } else {
                         fortune(e, p, blocks, p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
                     }
