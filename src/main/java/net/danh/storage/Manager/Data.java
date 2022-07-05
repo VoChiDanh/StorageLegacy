@@ -66,7 +66,8 @@ public class Data {
         if (item.equalsIgnoreCase("COBBLESTONE".toUpperCase())) {
             item = "STONE".toUpperCase();
         }
-        if (getMaxStorage(p, item) >= (getStorage(p, item) + amount)) {
+        int add = getStorage(p, item) + amount;
+        if (getMaxStorage(p, item) > add) {
             data.replace(p.getName() + "_storage_" + item, getStorage(p, item) + amount);
             if (Objects.requireNonNull(getconfigfile().getString("Message.RECEIVE.TYPE")).equalsIgnoreCase("ACTION_BAR")
                     || Objects.requireNonNull(getconfigfile().getString("Message.RECEIVE.TYPE")).equalsIgnoreCase("CHAT")) {
@@ -110,7 +111,7 @@ public class Data {
                 }
             }
         } else {
-            data.put(p.getName() + "_storage_" + item, getMaxStorage(p, item));
+            data.replace(p.getName() + "_storage_" + item, getMaxStorage(p, item));
             if (Objects.requireNonNull(getconfigfile().getString("Message.FULL.TYPE")).equalsIgnoreCase("ACTION_BAR")
                     || Objects.requireNonNull(getconfigfile().getString("Message.FULL.TYPE")).equalsIgnoreCase("CHAT")) {
                 p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.FULL.TYPE")),
@@ -271,7 +272,7 @@ public class Data {
         File folder = get().getDataFolder();
         File[] listOfFiles = folder.listFiles();
         List<String> players = new ArrayList<>();
-        for (int i = 0; i < listOfFiles.length; i++) {
+        for (int i = 0; i < (listOfFiles != null ? listOfFiles.length : 0); i++) {
             if (listOfFiles[i].isFile()) {
                 if (listOfFiles[i].getName().matches("(.+)(\\.yml)"))
                     players.add(listOfFiles[i].getName().replaceAll("\\.yml", ""));
