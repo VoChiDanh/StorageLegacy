@@ -48,7 +48,7 @@ public class BlockBreak implements Listener {
         int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
         if (amount > 0) {
             int chance = getconfigfile().getInt("Fortune.Chance") * level;
-            if (getRandomInt(1, 100) <= chance) {
+            if (getRandomInt(1, chance * 2) <= chance) {
                 int fortune = getRandomInt(getconfigfile().getInt("Fortune.Drop.Min"), getconfigfile().getInt("Fortune.Drop.Max"));
                 addStorage(p, blocks, fortune);
             } else {
@@ -101,19 +101,10 @@ public class BlockBreak implements Listener {
                     return;
                 }
                 if (!isPlacedBlock(e.getBlock()) && p.getInventory().getItemInMainHand().getItemMeta() != null && Objects.requireNonNull(p.getInventory().getItemInMainHand().getItemMeta()).hasEnchant(Enchantment.LOOT_BONUS_BLOCKS)) {
-                    if (nmsAssistant.isVersionGreaterThanOrEqualTo(12)) {
-                        if (getconfigfile().getBoolean("Fortune.Vanilla")) {
-                            int amount = e.getBlock().getDrops(p.getInventory().getItemInMainHand()).size();
-                            if (amount > 0) {
-                                addStorage(p, blocks, amount);
-                            } else {
-                                return;
-                            }
-                        } else {
-                            fortune(e, p, blocks, p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS));
-                        }
+                    if (getconfigfile().getBoolean("Fortune.Vanilla")) {
+                        addStorage(p, blocks, e.getBlock().getDrops().size() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
                     } else {
-                        fortune(e, p, blocks, p.getInventory().getItemInMainHand().getItemMeta().getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS));
+                        fortune(e, p, blocks, p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS));
                     }
                 } else {
                     drop(e, p, blocks);
