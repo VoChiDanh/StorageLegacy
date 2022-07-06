@@ -1,14 +1,14 @@
 package net.danh.storage.Gui;
 
 import net.danh.storage.Manager.Data;
-import net.danh.storage.Storage;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.scheduler.BukkitRunnable;
+
+import static net.danh.storage.Manager.Items.*;
 
 public class Chat implements Listener {
 
@@ -21,16 +21,11 @@ public class Chat implements Listener {
         }
         if (!Data.item.isEmpty() && Data.click.containsValue(ClickType.LEFT) && Data.click.containsKey(p) && Data.action.contains(p)) {
             if (!msg.equalsIgnoreCase("exit")) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        p.performCommand("storage take " + Data.item.get(p).toUpperCase() + " " + msg);
-                        Data.item.remove(p);
-                        Data.click.remove(p);
-                        Data.action.remove(p);
-                        e.setCancelled(true);
-                    }
-                }.runTask(Storage.get());
+                RemoveItems(p, Data.item.get(p).toUpperCase(), Integer.parseInt(msg));
+                Data.item.remove(p);
+                Data.click.remove(p);
+                Data.action.remove(p);
+                e.setCancelled(true);
             }
             if (msg.equalsIgnoreCase("exit")) {
                 Data.item.remove(p);
@@ -42,16 +37,11 @@ public class Chat implements Listener {
         }
         if (!Data.item.isEmpty() && Data.click.containsValue(ClickType.RIGHT) && Data.click.containsKey(p) && Data.action.contains(p)) {
             if (!msg.equalsIgnoreCase("exit")) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        p.performCommand("storage add " + Data.item.get(p).toUpperCase() + " " + msg);
-                        Data.item.remove(p);
-                        Data.click.remove(p);
-                        Data.action.remove(p);
-                        e.setCancelled(true);
-                    }
-                }.runTask(Storage.get());
+                AddItems(p, Data.item.get(p).toUpperCase(), Integer.parseInt(msg));
+                Data.item.remove(p);
+                Data.click.remove(p);
+                Data.action.remove(p);
+                e.setCancelled(true);
             }
             if (msg.equalsIgnoreCase("exit")) {
                 Data.item.remove(p);
@@ -63,16 +53,11 @@ public class Chat implements Listener {
         }
         if (!Data.item.isEmpty() && Data.click.containsValue(ClickType.DROP) && Data.click.containsKey(p) && Data.action.contains(p)) {
             if (!msg.equalsIgnoreCase("exit")) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        p.performCommand("storage sell " + Data.item.get(p).toUpperCase() + " " + msg);
-                        Data.item.remove(p);
-                        Data.click.remove(p);
-                        Data.action.remove(p);
-                        e.setCancelled(true);
-                    }
-                }.runTask(Storage.get());
+                SellItems(p, Data.item.get(p).toUpperCase(), Integer.parseInt(msg));
+                Data.item.remove(p);
+                Data.click.remove(p);
+                Data.action.remove(p);
+                e.setCancelled(true);
             }
             if (msg.equalsIgnoreCase("exit")) {
                 Data.item.remove(p);
