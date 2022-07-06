@@ -4,19 +4,22 @@ import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.Chat;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
-import net.danh.storage.Storage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
+import java.util.Objects;
 
+import static net.danh.dcore.Utils.Chat.colorize;
 import static net.danh.dcore.Utils.Player.sendPlayerMessage;
+import static net.danh.storage.Manager.Data.getMaxStorage;
+import static net.danh.storage.Manager.Data.getStorage;
 import static net.danh.storage.Manager.Files.*;
+import static net.danh.storage.Manager.Items.*;
 
 public class InventoryClick implements Listener {
 
@@ -80,31 +83,33 @@ public class InventoryClick implements Listener {
                             sendPlayerMessage(p, getlanguagefile().getString("Input.Chat"));
                         }
                         if (e.getClick() == ClickType.SHIFT_LEFT) {
-                            String finalName = name;
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    p.performCommand("storage take " + finalName + " all");
-                                }
-                            }.runTask(Storage.get());
+                            if (getStorage(Objects.requireNonNull(p), name) > 0) {
+                                RemoveItems(p, name, Math.min(getStorage(Objects.requireNonNull(p), name), getAmountEmpty(Objects.requireNonNull(p), name)));
+                            } else {
+                                sendPlayerMessage(p, getlanguagefile().getString("User.Not_Have_Any_Item"));
+                            }
                         }
                         if (e.getClick() == ClickType.SHIFT_RIGHT) {
-                            String finalName1 = name;
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    p.performCommand("storage add " + finalName1 + " all");
+                            if (getAmountItem((Objects.requireNonNull(p)), name) > 0) {
+                                if (getMaxStorage(Objects.requireNonNull(p), name) >= getStorage(Objects.requireNonNull(p), name) + getAmountItem((Objects.requireNonNull(p)), name)) {
+                                    AddItems((p), name, getAmountItem((Objects.requireNonNull(p)), name));
+                                } else {
+                                    if (getMaxStorage(Objects.requireNonNull(p), name) - getStorage(Objects.requireNonNull(p), name) > 0) {
+                                        AddItems((p), name, getMaxStorage(Objects.requireNonNull(p), name) - getStorage(Objects.requireNonNull(p), name));
+                                    } else {
+                                        p.sendMessage(colorize(getlanguagefile().getString("User.Add_Full_Storage")));
+                                    }
                                 }
-                            }.runTask(Storage.get());
+                            } else {
+                                sendPlayerMessage(p, getlanguagefile().getString("User.Not_Have_Any_Item"));
+                            }
                         }
                         if (e.getClick() == ClickType.CONTROL_DROP) {
-                            String finalName2 = name;
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    p.performCommand("storage sell " + finalName2 + " all");
-                                }
-                            }.runTask(Storage.get());
+                            if (getStorage(Objects.requireNonNull(p), name) > 0) {
+                                SellItems(p, name, getStorage(Objects.requireNonNull(p), name));
+                            } else {
+                                sendPlayerMessage(p, getlanguagefile().getString("User.Not_Have_Any_Item"));
+                            }
                         }
                     }
                 }
