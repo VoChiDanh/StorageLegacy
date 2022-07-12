@@ -1,9 +1,9 @@
 package net.danh.storage.Manager;
 
 import net.danh.dcore.NMS.NMSAssistant;
+import net.danh.storage.Storage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -262,37 +262,27 @@ public class Items {
                 }
                 removeStorage(p, name, amount);
                 int money = price * amount;
-                EconomyResponse r = economy.depositPlayer(p, money);
-                if (r.transactionSuccess()) {
-                    if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("ACTION_BAR")
-                            || Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("CHAT")) {
-                        p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.SELL.TYPE")),
-                                new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Sell"))
-                                        .replaceAll("%money%", String.valueOf(money))
-                                        .replaceAll("%item%", block.replaceAll("_", " ")
-                                                .replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
-                    } else {
-                        if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("TITLE")) {
-                            NMSAssistant nms = new NMSAssistant();
-                            if (nms.isVersionGreaterThanOrEqualTo(11)) {
-                                p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.TITLE"))
-                                        .replaceAll("%money%", String.valueOf(money))
-                                        .replaceAll("%item%", block.replaceAll("_", " ")
-                                                .replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.SUBTITLE"))
-                                        .replaceAll("%money%", String.valueOf(money))
-                                        .replaceAll("%item%", block.replaceAll("_", " ")
-                                                .replaceAll("-", " "))
-                                        .replaceAll("%amount%", String.valueOf(amount))
-                                        .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                        .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.SELL.TITLE.FADEIN"), getconfigfile().getInt("Message.SELL.TITLE.STAY"), getconfigfile().getInt("Message.SELL.TITLE.FADEOUT"));
-                            }
-                        } else {
+                if (Files.getconfigfile().getString("Economy").equalsIgnoreCase(Economy.Vault.name())) {
+                    economy.depositPlayer(p, money);
+                } else if (Files.getconfigfile().getString("Economy").equalsIgnoreCase(Economy.TokenManger.name())) {
+                    Storage.get().getTmAPI().addTokens(p.getName(), money);
+                } else if (Files.getconfigfile().getString("Economy").equalsIgnoreCase(Economy.PlayerPoints.name())) {
+                    Storage.get().getPpAPI().give(p.getUniqueId(), money);
+                }
+                if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("ACTION_BAR")
+                        || Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("CHAT")) {
+                    p.spigot().sendMessage(ChatMessageType.valueOf(getconfigfile().getString("Message.SELL.TYPE")),
+                            new TranslatableComponent(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Sell"))
+                                    .replaceAll("%money%", String.valueOf(money))
+                                    .replaceAll("%item%", block.replaceAll("_", " ")
+                                            .replaceAll("-", " "))
+                                    .replaceAll("%amount%", String.valueOf(amount))
+                                    .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))))));
+                } else {
+                    if (Objects.requireNonNull(getconfigfile().getString("Message.SELL.TYPE")).equalsIgnoreCase("TITLE")) {
+                        NMSAssistant nms = new NMSAssistant();
+                        if (nms.isVersionGreaterThanOrEqualTo(11)) {
                             p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.TITLE"))
                                     .replaceAll("%money%", String.valueOf(money))
                                     .replaceAll("%item%", block.replaceAll("_", " ")
@@ -305,11 +295,23 @@ public class Items {
                                             .replaceAll("-", " "))
                                     .replaceAll("%amount%", String.valueOf(amount))
                                     .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
-                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
+                                    .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))), getconfigfile().getInt("Message.SELL.TITLE.FADEIN"), getconfigfile().getInt("Message.SELL.TITLE.STAY"), getconfigfile().getInt("Message.SELL.TITLE.FADEOUT"));
                         }
+                    } else {
+                        p.sendTitle(colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.TITLE"))
+                                .replaceAll("%money%", String.valueOf(money))
+                                .replaceAll("%item%", block.replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name))))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name))), colorize(Objects.requireNonNull(getconfigfile().getString("Message.SELL.TITLE.SUBTITLE"))
+                                .replaceAll("%money%", String.valueOf(money))
+                                .replaceAll("%item%", block.replaceAll("_", " ")
+                                        .replaceAll("-", " "))
+                                .replaceAll("%amount%", String.valueOf(amount))
+                                .replaceAll("%storage%", String.format("%,d", getStorage(p, name)))
+                                .replaceAll("%max%", String.format("%,d", getMaxStorage(p, name)))));
                     }
-                } else {
-                    p.sendMessage(colorize(getlanguagefile().getString("Errol")));
                 }
             } else {
                 p.sendMessage(colorize(Objects.requireNonNull(getlanguagefile().getString("User.Not_Enough"))

@@ -7,6 +7,8 @@ website: https://vochidanh.gitbook.io/storage/
 softdepend:
   - Vault
   - PlaceholderAPI
+  - PlayerPoints
+  - TokenManager
 commands:
   Storage:
     aliases:

@@ -4,6 +4,9 @@ Blacklist-World:
 VERSION: 1.0-B7
 Vanilla_Drops: true
 Tool_Sensitive: false
+Economy: "Vault"
+# PlayerPoints
+# TokenManager
 Auto:
   Smell: false
   Pickup: true

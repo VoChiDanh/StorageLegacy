@@ -3,6 +3,7 @@ package net.danh.storage;
 import com.jeff_media.updatechecker.UpdateCheckSource;
 import com.jeff_media.updatechecker.UpdateChecker;
 import com.jeff_media.updatechecker.UserAgentBuilder;
+import me.realized.tokenmanager.api.TokenManager;
 import net.danh.dcore.DCore;
 import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.File;
@@ -17,6 +18,8 @@ import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
 import net.milkbowl.vault.economy.Economy;
+import org.black_ixx.playerpoints.PlayerPoints;
+import org.black_ixx.playerpoints.PlayerPointsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -37,6 +40,8 @@ public final class Storage extends JavaPlugin implements Listener {
     public static boolean papistatus;
     private static Storage instance;
 
+    private PlayerPointsAPI ppAPI;
+    private TokenManager tmAPI;
     public static Storage get() {
         return instance;
     }
@@ -64,6 +69,14 @@ public final class Storage extends JavaPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with Vault!");
+        }
+        if (getServer().getPluginManager().getPlugin("PlayerPoints") != null) {
+            this.ppAPI = PlayerPoints.getInstance().getAPI();
+            getLogger().log(Level.INFO, "Successfully hooked with PlayerPoints!");
+        }
+        if (getServer().getPluginManager().getPlugin("TokenManager") != null) {
+            tmAPI = (TokenManager) Bukkit.getServer().getPluginManager().getPlugin("TokenManager");
+            getLogger().log(Level.INFO, "Successfully hooked with TokenManager!");
         }
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with PlaceholderAPI!");
@@ -172,5 +185,13 @@ public final class Storage extends JavaPlugin implements Listener {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) economy = economyProvider.getProvider();
         return (economy != null);
+    }
+
+    public PlayerPointsAPI getPpAPI() {
+        return ppAPI;
+    }
+
+    public TokenManager getTmAPI() {
+        return tmAPI;
     }
 }
