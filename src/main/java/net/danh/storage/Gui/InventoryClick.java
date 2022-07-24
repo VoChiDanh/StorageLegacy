@@ -4,6 +4,7 @@ import net.danh.dcore.NMS.NMSAssistant;
 import net.danh.dcore.Utils.Chat;
 import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -36,6 +37,14 @@ public class InventoryClick implements Listener {
                 NMSAssistant nms = new NMSAssistant();
                 if (e.isCancelled()) {
                     if (e.getInventory().getItem(e.getSlot()) == null) {
+                        return;
+                    }
+                    if (e.getSlot() < 0 || e.getSlot() > e.getInventory().getSize()) {
+                        e.setCancelled(true);
+                        return;
+                    }
+                    if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) {
+                        e.setCancelled(true);
                         return;
                     }
                     String name = e.getInventory().getItem(e.getSlot()).getType().toString();
