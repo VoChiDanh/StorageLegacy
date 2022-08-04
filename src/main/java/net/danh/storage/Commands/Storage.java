@@ -5,10 +5,12 @@ import net.danh.storage.Gui.OpenGui;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -523,5 +525,10 @@ public class Storage extends CMDBase {
                 }
             }
         }
+    }
+
+    @Override
+    public List<String> TabComplete(CommandSender commandSender, String[] strings) {
+        return null;
     }
 }

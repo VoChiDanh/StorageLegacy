@@ -4,10 +4,12 @@ import net.danh.dcore.Commands.CMDBase;
 import net.danh.dcore.Utils.Chat;
 import net.danh.storage.Manager.Files;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
 import java.util.Objects;
 
 import static net.danh.dcore.Utils.Player.sendPlayerMessageType;
@@ -63,5 +65,10 @@ public class AutoPickup extends CMDBase {
                 }
             }
         }
+    }
+
+    @Override
+    public List<String> TabComplete(CommandSender commandSender, String[] strings) {
+        return null;
     }
 }

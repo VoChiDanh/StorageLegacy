@@ -43,6 +43,21 @@
                             <shadedPattern>net.danh</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>net/danh/dcore/Utils/Progress*</exclude>
+                                <exclude>net/danh/dcore/Utils/Progress*</exclude>
+                                <exclude>net/danh/dcore/Utils/Items*</exclude>
+                                <exclude>net/danh/dcore/List/Contain*</exclude>
+                                <exclude>net/danh/dcore/Events/EnchantItemEvent*</exclude>
+                                <exclude>net/danh/dcore/Enchant/Lore*</exclude>
+                                <exclude>net/danh/dcore/Indicator/Hologram*</exclude>
+                                <exclude>net/danh/dcore/Indicator/RemoveHolo*</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -127,7 +142,7 @@
         <dependency>
             <groupId>com.github.D-x-Z</groupId>
             <artifactId>DCore</artifactId>
-            <version>0713e72740</version>
+            <version>3d4f60cf5d</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -147,6 +162,11 @@
             <artifactId>playerpoints</artifactId>
             <version>3.2.4</version>
             <scope>provided</scope>
+        </dependency><!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.Realizedd</groupId>

@@ -10,11 +10,12 @@ import net.danh.dcore.Utils.File;
 import net.danh.storage.Commands.AutoPickup;
 import net.danh.storage.Commands.AutoSmelt;
 import net.danh.storage.Commands.TabCompleter;
+import net.danh.storage.Database.Database;
+import net.danh.storage.Database.SQLite;
 import net.danh.storage.Events.*;
 import net.danh.storage.Gui.Chat;
 import net.danh.storage.Gui.InventoryClick;
 import net.danh.storage.Hook.PlaceholderAPI;
-import net.danh.storage.Manager.Data;
 import net.danh.storage.Manager.Files;
 import net.danh.storage.Manager.PlayerData;
 import net.milkbowl.vault.economy.Economy;
@@ -40,8 +41,10 @@ public final class Storage extends JavaPlugin implements Listener {
     public static boolean papistatus;
     private static Storage instance;
 
+    public static Database db;
     private PlayerPointsAPI ppAPI;
     private TokenManager tmAPI;
+
     public static Storage get() {
         return instance;
     }
@@ -98,6 +101,8 @@ public final class Storage extends JavaPlugin implements Listener {
         RegisterDCore(this);
         Files.createfiles();
         checkFilesVersion();
+        this.db = new SQLite(Storage.get());
+        this.db.load();
         NMSAssistant nms = new NMSAssistant();
         File.updateFile(Storage.get(), getlanguagefile(), "language.yml");
         if (nms.isVersionGreaterThanOrEqualTo(19)) {
@@ -132,9 +137,7 @@ public final class Storage extends JavaPlugin implements Listener {
         (new BukkitRunnable() {
             public void run() {
                 for (Player p : getServer().getOnlinePlayers()) {
-                    for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                        Data.savePlayerData(p, item);
-                    }
+                    db.save(p);
                 }
             }
         }).runTaskTimer(this, 1800 * 20L, 1800 * 20L);
@@ -151,9 +154,7 @@ public final class Storage extends JavaPlugin implements Listener {
             Files.savelanguage();
             Files.savegui();
             for (Player p : getServer().getOnlinePlayers()) {
-                for (String item : Objects.requireNonNull(getconfigfile().getConfigurationSection("Blocks.")).getKeys(false)) {
-                    Data.savePlayerData(p, item);
-                }
+                this.db.save(p);
             }
         }
     }
@@ -193,5 +194,9 @@ public final class Storage extends JavaPlugin implements Listener {
 
     public TokenManager getTmAPI() {
         return tmAPI;
+    }
+
+    public Database getDb() {
+        return db;
     }
 }

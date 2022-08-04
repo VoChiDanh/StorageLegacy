@@ -1,6 +1,7 @@
 package net.danh.storage.Manager;
 
 import net.danh.dcore.NMS.NMSAssistant;
+import net.danh.storage.Storage;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TranslatableComponent;
 import org.bukkit.entity.Player;
@@ -43,7 +44,7 @@ public class Data {
      */
     public static int getStorage(@NotNull Player p, String item) {
         item = item.toUpperCase();
-        return data.get(p.getName() + "_storage_" + item);
+        return data.getOrDefault(p.getName() + "_storage_" + item, 0);
     }
 
     /**
@@ -229,7 +230,7 @@ public class Data {
      */
     public static int getMaxStorage(@NotNull Player p, String item) {
         item = item.toUpperCase();
-        return data.get(p.getName() + "_max_" + item);
+        return data.getOrDefault(p.getName() + "_max_" + item, 10000);
     }
 
     /**
@@ -449,26 +450,12 @@ public class Data {
         return df.format(e) + "%";
     }
 
-    /**
-     * @param p    Player
-     * @param item Material
-     */
-    public static void savePlayerData(@NotNull Player p, String item) {
-        PlayerData data = new PlayerData(p.getName());
-        data.load();
-        data.getConfig().set("players." + p.getName() + ".auto.Smelt", autoSmelt(p));
-        data.getConfig().set("players." + p.getName() + ".auto.Pick", autoPick(p));
-        data.getConfig().set("players." + p.getName() + ".items." + item + ".max", getMaxStorage(p, item));
-        data.getConfig().set("players." + p.getName() + ".items." + item + ".amount", getStorage(p, item));
-        data.save();
-    }
-
     public static void loadPlayerData(Player p, String item) {
         PlayerData data = new PlayerData(p.getName());
         data.load();
-        setautoSmelt(p, Files.getconfigfile().getBoolean("Auto.Smelt"));
-        setautoPick(p, Files.getconfigfile().getBoolean("Auto.Pickup"));
-        setMaxStorage(p, item, getMaxStorageData(p, item));
-        setStorage(p, item, getStorageData(p, item));
+        setautoSmelt(p, Boolean.parseBoolean(Storage.db.getData("smelt", p.getName())));
+        setautoPick(p, Boolean.parseBoolean(Storage.db.getData("pickup", p.getName())));
+        setMaxStorage(p, item, Storage.db.getMaterial(p.getName(), item, false));
+        setStorage(p, item, Storage.db.getMaterial(p.getName(), item, true));
     }
 }
